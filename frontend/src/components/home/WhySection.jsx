@@ -1,0 +1,90 @@
+import { Brain, Calendar, Droplet, Feather, Heart, Layers, Leaf, MessageCircle, Recycle, ShieldCheck, Sparkles, Sprout, Users, Wind } from 'lucide-react'
+import { CenterHead, DoodleNote, PillLink } from './HomeUi.jsx'
+import { bar, barIcon, barStrong, barText, cn, container, section, accent, tones } from './homeStyles.js'
+import padInHand from '../../assets/home/piax_assets/34_why_pad_in_hand.png'
+import layersArt from '../../assets/35_why_layers.png'
+import globeArt from '../../assets/home/piax_assets/36_why_globe_leaf.png'
+import appArt from '../../assets/home/piax_assets/37_why_app_phone.png'
+import womanPhoto from '../../assets/38_why_woman.png'
+import avatar1 from '../../assets/reviews/review_1.jpg'
+import avatar2 from '../../assets/reviews/review_3.jpg'
+import avatar3 from '../../assets/reviews/review_5.jpg'
+
+const avatars = [avatar1, avatar2, avatar3]
+
+const reasons = [
+  {
+    title: <>Unmatched<br />Comfort</>, text: 'Ultra-thin, ultra-soft and rash-free — even on your heaviest days.', icon: Feather, art: padInHand, tone: 'pink',
+    points: [[Leaf, 'Soft bamboo top sheet'], [Wind, 'Breathable layers'], [Heart, 'Gentle on sensitive skin']],
+  },
+  {
+    title: <>Reliable<br />Protection</>, text: '8-layer technology with leak-lock channels for worry-free days and nights.', icon: ShieldCheck, art: layersArt, tone: 'mint',
+    points: [[Layers, '8-layer absorption'], [Droplet, 'Leak-lock channels'], [Calendar, 'Up to 12 hours protection']],
+  },
+  {
+    title: <>Kind to<br />the Planet</>, text: 'Sustainable materials and compostable pads for a cleaner, greener tomorrow.', icon: Sprout, art: globeArt, tone: 'cream',
+    points: [[Leaf, 'Plant-based materials'], [Recycle, 'Compostable & oxo-biodegradable'], [Sprout, 'Smaller environmental footprint']],
+  },
+  {
+    title: <>Powered<br />by Intelligence</>, text: 'Track, understand and make better choices with PIAX AI and personalized insights.', icon: Brain, art: appArt, tone: 'lilac',
+    points: [[Calendar, 'Cycle tracking'], [MessageCircle, 'AI health support'], [Sparkles, 'Personalized recommendations']],
+  },
+]
+
+export default function WhySection() {
+  return (
+    <section className={section}>
+      <div className={cn(container, 'flex flex-col')}>
+        <CenterHead
+          tag="Why PIAX"
+          title={<>More than a pad. <em className={accent}>A better</em> period experience.</>}
+          text="Thoughtfully designed for your comfort, your health and a healthier planet."
+        >
+          <DoodleNote className="top-0 right-0 hidden text-left xl:block">Care today<br />for brighter<br />tomorrows.</DoodleNote>
+        </CenterHead>
+
+        <div data-stagger className="grid flex-1 gap-4 md:grid-cols-2 lg:gap-6 lg:grid-cols-[repeat(4,minmax(0,1fr))_minmax(0,.85fr)]">
+          {reasons.map(({ title, text, icon: Icon, art, tone, points }, index) => (
+            <article key={index} className={cn('flex min-h-[250px] overflow-hidden rounded-[18px] py-6 pl-6 shadow-soft', tones[tone].bg)}>
+              <div className="min-w-0 flex-[1.2]">
+                <span className={cn('mb-4 flex size-11 items-center justify-center rounded-full text-ink', tones[tone].accent)}>
+                  <Icon size={24} strokeWidth={1.6} />
+                </span>
+                <h3 className="mb-2 text-[17px] font-bold leading-[1.08] tracking-[-.025em] text-ink">{title}</h3>
+                <p className="mb-4 text-[12.5px] leading-[1.35]">{text}</p>
+                <ul>
+                  {points.map(([PointIcon, label]) => (
+                    <li key={label} className="mt-2 flex items-center gap-2 text-[11px]">
+                      <PointIcon size={16} strokeWidth={1.5} className="shrink-0 rounded-full border border-[#3b504b] p-0.5" /> {label}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <img src={art} alt="" className="max-h-[200px] min-w-0 flex-[.8] self-center object-contain mix-blend-multiply" />
+            </article>
+          ))}
+          <div className="hidden overflow-hidden rounded-[18px] lg:block">
+            <img src={womanPhoto} alt="Relaxed woman smiling with eyes closed" className="size-full object-cover object-[58%_center]" />
+          </div>
+        </div>
+
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-6 rounded-[18px] bg-white/70 px-6 py-5 lg:flex-nowrap lg:justify-start">
+          <div className="flex flex-col items-center gap-4 text-center md:flex-row md:text-left lg:shrink-0 lg:border-r lg:border-line lg:pr-8">
+            <div className="flex shrink-0 -space-x-3" role="img" aria-label="PIAX customers">
+              {avatars.map((src) => (
+                <img key={src} src={src} alt="" loading="lazy" decoding="async" className="size-11 rounded-full border-2 border-white object-cover object-[center_25%] shadow-soft" />
+              ))}
+            </div>
+            <p className="max-w-[380px] text-sm leading-[1.45] text-ink">&ldquo;Finally a pad that feels good, works even better, and is kind to the planet.&rdquo;</p>
+          </div>
+          <ul className="flex flex-1 flex-col justify-center gap-4 md:flex-row md:gap-8">
+            <li className={bar}><Users size={26} strokeWidth={1.4} className={barIcon} /><span className={barText}><strong className={barStrong}>10,000+</strong>Happy Customers</span></li>
+            <li className={bar}><Leaf size={26} strokeWidth={1.4} className={barIcon} /><span className={barText}><strong className={barStrong}>Sustainable</strong>by Design</span></li>
+            <li className={bar}><Heart size={26} strokeWidth={1.4} className={barIcon} /><span className={barText}><strong className={barStrong}>Real Care</strong>Real Impact</span></li>
+          </ul>
+          <PillLink to="/products">Explore Our Products</PillLink>
+        </div>
+      </div>
+    </section>
+  )
+}

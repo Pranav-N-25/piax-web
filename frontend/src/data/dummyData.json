@@ -1,0 +1,141 @@
+{
+  "users": [
+    { "id": "user-1", "name": "Aarohi Mehta", "email": "customer@example.com", "role": "CUSTOMER" },
+    { "id": "user-2", "name": "Nikhil Shah", "email": "business@example.com", "role": "BUSINESS" },
+    { "id": "user-3", "name": "PIAX Admin", "email": "admin@example.com", "role": "ADMIN" }
+  ],
+  "products": [
+    {
+      "id": "piax-soft-xl", "slug": "soft-ultra-thin-anion-pads-xl", "name": "PIAX Soft & Ultra-Thin Anion-Infused Pads", "subtitle": "Extra Large (XL) – 6 Pads",
+      "description": "Our signature ultra-thin pad with an anion strip and 8-layer protection, made for heavier days.",
+      "type": "Day Pads", "category": "Day Pads", "collections": ["day-pads", "heavy-flow"], "flows": ["Heavy"], "size": "XL", "sizes": ["XL"], "length": "290mm", "boxCount": 6,
+      "price": 99, "mrp": 129, "rating": 4.8, "reviewCount": 2500, "popularity": 1, "createdAt": "2026-06-01",
+      "badge": "Best Seller", "tone": "mint", "image": "soft-xl",
+      "features": ["Ultra-Thin", "Anion Infused", "8-Layer Protection", "Compostable", "Rash-Free", "Fragrance-Free"],
+      "specs": [{ "icon": "ruler", "label": "290mm" }, { "icon": "feather", "label": "Ultra-Thin" }, { "icon": "layers", "label": "8 Layers" }, { "icon": "leaf", "label": "Compostable" }],
+      "availability": "In stock", "subscriptionEligible": true, "relatedArticleIds": ["article-heavy-flow"]
+    },
+    {
+      "id": "piax-day-pads", "slug": "day-pads-large", "name": "PIAX Day Pads", "subtitle": "Large (L) – 6 Pads",
+      "description": "Breathable, rash-free comfort for everyday wear on moderate-flow days.",
+      "type": "Day Pads", "category": "Day Pads", "collections": ["day-pads"], "flows": ["Moderate"], "size": "L", "sizes": ["L"], "length": "275mm", "boxCount": 6,
+      "price": 99, "mrp": null, "rating": 4.7, "reviewCount": 860, "popularity": 2, "createdAt": "2026-05-12",
+      "badge": null, "accentIcon": "sun", "tone": "pink", "image": "day",
+      "features": ["Ultra-Thin", "Rash-Free", "Fragrance-Free"],
+      "specs": [{ "icon": "ruler", "label": "275mm" }, { "icon": "feather", "label": "Ultra-Thin" }, { "icon": "wind", "label": "Breathable" }, { "icon": "leaf", "label": "Rash-Free" }],
+      "availability": "In stock", "subscriptionEligible": true, "relatedArticleIds": ["article-cramps"]
+    },
+    {
+      "id": "piax-night-pads", "slug": "night-pads-xxl", "name": "PIAX Night Pads", "subtitle": "Double Extra Large (XXL) – 6 Pads",
+      "description": "Longer, wider coverage with leak-lock channels for uninterrupted sleep.",
+      "type": "Night Pads", "category": "Night Pads", "collections": ["night-pads", "heavy-flow"], "flows": ["Heavy"], "size": "XXL", "sizes": ["XXL"], "length": "320mm", "boxCount": 6,
+      "price": 99, "mrp": null, "rating": 4.9, "reviewCount": 640, "popularity": 3, "createdAt": "2026-04-20",
+      "badge": null, "accentIcon": "moon", "tone": "lilac", "image": "night",
+      "features": ["8-Layer Protection", "Anion Infused", "Rash-Free"],
+      "specs": [{ "icon": "ruler", "label": "320mm" }, { "icon": "shield", "label": "Extra Coverage" }, { "icon": "layers", "label": "8 Layers" }, { "icon": "lock", "label": "Leak-Lock" }],
+      "availability": "In stock", "subscriptionEligible": true, "relatedArticleIds": ["article-heavy-flow"]
+    },
+    {
+      "id": "piax-heavy-flow", "slug": "heavy-flow-pads-xxl", "name": "PIAX Heavy Flow Pads", "subtitle": "XXL (320mm) – 6 Pads",
+      "description": "High-absorbency core and leak-lock channels for your heaviest days.",
+      "type": "Day Pads", "category": "Heavy Flow", "collections": ["heavy-flow"], "flows": ["Heavy"], "size": "XXL", "sizes": ["XXL"], "length": "320mm", "boxCount": 6,
+      "price": 99, "mrp": null, "rating": 4.8, "reviewCount": 410, "popularity": 4, "createdAt": "2026-09-10",
+      "badge": "New", "tone": "peach", "image": "heavy",
+      "features": ["8-Layer Protection", "Rash-Free", "Compostable"],
+      "specs": [{ "icon": "ruler", "label": "320mm" }, { "icon": "droplet", "label": "High Absorbency" }, { "icon": "lock", "label": "Leak-Lock" }, { "icon": "leaf", "label": "Rash-Free" }],
+      "availability": "In stock", "subscriptionEligible": true, "relatedArticleIds": ["article-heavy-flow"]
+    },
+    {
+      "id": "piax-panty-liners", "slug": "panty-liners-regular", "name": "PIAX Panty Liners", "subtitle": "Regular – 20 Liners",
+      "description": "Light, breathable liners for daily freshness and light-flow days.",
+      "type": "Panty Liners", "category": "Panty Liners", "collections": ["panty-liners"], "flows": ["Light"], "size": "Liner", "sizes": [], "length": "155mm", "boxCount": 20,
+      "price": 99, "mrp": null, "rating": 4.6, "reviewCount": 320, "popularity": 5, "createdAt": "2026-03-02",
+      "badge": null, "tone": "mint", "image": "liners",
+      "features": ["Ultra-Thin", "Rash-Free", "Fragrance-Free"],
+      "specs": [{ "icon": "ruler", "label": "155mm" }, { "icon": "feather", "label": "Ultra-Thin" }, { "icon": "sparkles", "label": "Daily Freshness" }, { "icon": "leaf", "label": "Rash-Free" }],
+      "availability": "In stock", "subscriptionEligible": true, "relatedArticleIds": ["article-first-period"]
+    },
+    {
+      "id": "piax-build-your-own", "slug": "build-your-own-pack", "name": "Build Your Own Pack", "subtitle": "Custom Size & Count",
+      "description": "Choose your size, pad type and count — a pack built around your flow.",
+      "type": "Custom Pack", "category": "Custom Pack", "collections": ["custom-pack"], "flows": ["Light", "Moderate", "Heavy"], "size": "Custom", "sizes": ["M", "L", "XL", "XXL", "XXXL"], "length": "260–360mm", "boxCount": 6,
+      "price": 99, "priceFrom": true, "mrp": null, "rating": 4.7, "reviewCount": 290, "popularity": 6, "createdAt": "2026-07-15",
+      "badge": null, "tone": "cream", "image": "custom", "customizable": true,
+      "features": ["Ultra-Thin", "8-Layer Protection", "Compostable"],
+      "specs": [{ "icon": "check", "label": "Choose size (M–XXXL)" }, { "icon": "check", "label": "6 to 12 pads" }, { "icon": "sparkles", "label": "Your flow, your pack" }],
+      "availability": "In stock", "subscriptionEligible": false, "relatedArticleIds": ["article-heavy-flow"]
+    },
+    {
+      "id": "piax-care-bundle", "slug": "period-care-bundle", "name": "PIAX Period Care Bundle", "subtitle": "Day + Night + Liners",
+      "description": "Day pads, night pads and liners together for complete cycle care.",
+      "type": "Bundle", "category": "Bundles", "collections": ["bundles"], "flows": ["Light", "Moderate", "Heavy"], "size": "Mixed", "sizes": ["L", "XXL"], "length": "155–320mm", "boxCount": 32,
+      "price": 249, "mrp": 279, "rating": 4.8, "reviewCount": 530, "popularity": 7, "createdAt": "2026-08-01",
+      "badge": "Save 10%", "tone": "pink", "image": "bundle",
+      "features": ["Ultra-Thin", "8-Layer Protection", "Compostable", "Rash-Free"],
+      "specs": [{ "icon": "check", "label": "Complete cycle care" }, { "icon": "sparkles", "label": "Better value" }, { "icon": "leaf", "label": "Sustainable" }],
+      "availability": "In stock", "subscriptionEligible": true, "relatedArticleIds": ["article-cramps"]
+    },
+    {
+      "id": "piax-trial-pack", "slug": "trial-pack", "name": "PIAX Trial Pack", "subtitle": "Mixed Sizes – 6 Pads",
+      "description": "Two each of M, L and XL so you can find the size that feels right.",
+      "type": "Trial Pack", "category": "Bundles", "collections": ["bundles"], "flows": ["Light", "Moderate", "Heavy"], "size": "Mixed", "sizes": ["M", "L", "XL"], "length": "260–290mm", "boxCount": 6,
+      "price": 99, "mrp": null, "rating": 4.6, "reviewCount": 180, "popularity": 8, "createdAt": "2026-02-14",
+      "badge": null, "tone": "sage", "image": "trial",
+      "features": ["Ultra-Thin", "Rash-Free", "Fragrance-Free"],
+      "specs": [{ "icon": "check", "label": "Try different sizes" }, { "icon": "sparkles", "label": "Ideal for first-time users" }],
+      "availability": "In stock", "subscriptionEligible": false, "relatedArticleIds": ["article-first-period"]
+    }
+  ],
+  "productCategories": [
+    { "slug": "all", "name": "All Products", "icon": "all" },
+    { "slug": "day-pads", "name": "Day Pads", "icon": "sun" },
+    { "slug": "night-pads", "name": "Night Pads", "icon": "moon" },
+    { "slug": "heavy-flow", "name": "Heavy Flow", "icon": "droplets" },
+    { "slug": "custom-pack", "name": "Custom Pack", "icon": "custom" },
+    { "slug": "panty-liners", "name": "Panty Liners", "icon": "liners" },
+    { "slug": "bundles", "name": "Bundles", "icon": "bundles" }
+  ],
+  "customPack": {
+    "sizes": [
+      { "size": "M", "length": "260mm", "perPad": 16.5 },
+      { "size": "L", "length": "275mm", "perPad": 16.5 },
+      { "size": "XL", "length": "290mm", "perPad": 16.5 },
+      { "size": "XXL", "length": "320mm", "perPad": 18 },
+      { "size": "XXXL", "length": "360mm", "perPad": 20 }
+    ],
+    "padCounts": [6, 12],
+    "types": ["Day", "Night"],
+    "nightPerPadExtra": 1,
+    "flows": ["Light", "Moderate", "Heavy"]
+  },
+  "subscription": {
+    "discountPercent": 10,
+    "frequencies": [
+      { "value": "4w", "label": "Every 4 weeks" },
+      { "value": "6w", "label": "Every 6 weeks" },
+      { "value": "8w", "label": "Every 8 weeks" }
+    ]
+  },
+  "articles": [
+    { "id": "article-cramps", "slug": "why-do-period-cramps-happen", "category": "period-pain", "title": "Why do period cramps happen?", "subtitle": "A calm, clear guide to what your body is doing.", "author": "PIAX Editorial", "reviewer": "Dr. Ananya Rao", "readingTime": 5, "date": "12 Sep 2026", "accent": "mint", "content": ["Period cramps are caused by contractions in the uterus. These contractions help the uterus shed its lining and can feel different from person to person.", "Gentle movement, warmth, hydration and rest can help you find relief. If pain is severe or disrupts daily life, speak with a qualified healthcare professional."], "relatedArticleIds": ["article-heavy-flow"], "relatedProductIds": ["piax-day-pads"] },
+    { "id": "article-heavy-flow", "slug": "understanding-heavy-flow", "category": "flow-and-products", "title": "Understanding your flow", "subtitle": "How to choose protection that feels right for heavier days.", "author": "PIAX Editorial", "reviewer": "Dr. Ananya Rao", "readingTime": 4, "date": "08 Sep 2026", "accent": "peach", "content": ["Flow can change across a cycle and across different stages of life. A product that feels right should give you coverage without distracting from your day.", "Start by noticing when your flow is heaviest, then choose length, absorbency and fit around your routine."], "relatedArticleIds": ["article-cramps"], "relatedProductIds": ["piax-heavy-flow", "piax-night-pads"] },
+    { "id": "article-first-period", "slug": "your-first-period-guide", "category": "first-period", "title": "Your first period, made less mysterious", "subtitle": "A reassuring place to start asking questions.", "author": "PIAX Editorial", "reviewer": "PIAX Care Team", "readingTime": 6, "date": "01 Sep 2026", "accent": "lilac", "content": ["Your first period is a new experience, and there is no single correct way to feel about it. Learning what to expect can make the unknown feel more manageable.", "Keep a small care kit nearby and give yourself room to learn what feels comfortable."], "relatedArticleIds": ["article-cramps"], "relatedProductIds": ["piax-day-pads"] }
+  ],
+  "categories": [
+    { "slug": "first-period", "name": "First period", "description": "A reassuring starting place for new questions." },
+    { "slug": "menstrual-cycle", "name": "Menstrual cycle", "description": "Understand the rhythm behind your cycle." },
+    { "slug": "period-care", "name": "Period care", "description": "Small rituals that can make a difference." },
+    { "slug": "flow-and-products", "name": "Flow & products", "description": "Find protection that fits your day." },
+    { "slug": "period-pain", "name": "Period pain", "description": "Clear context for cramps and symptoms." },
+    { "slug": "hygiene", "name": "Hygiene", "description": "Feel fresh, informed and comfortable." },
+    { "slug": "myths-and-facts", "name": "Myths & facts", "description": "Less noise, more clarity." }
+  ],
+  "orders": [{ "id": "PX-2048", "status": "On the way", "date": "18 Sep 2026", "total": 528, "items": ["Everyday Day Pads", "Overnight Comfort Pads"] }],
+  "insights": [{ "title": "A little preparation may help", "description": "Your demo history suggests your next period may arrive in about 6 days. Predictions are estimates, not medical certainty.", "dataUsed": "Demo tracking entries" }],
+  "aiResponses": {
+    "heavy flow": { "answer": "For heavier days, look for a longer pad with a secure core and wider back coverage. PIAX Night Pads or PIAX Heavy Flow Pads are good demo matches to explore.", "productIds": ["piax-night-pads", "piax-heavy-flow"], "articleIds": ["article-heavy-flow"], "followUp": ["How do I choose a pad size?", "What helps with cramps?"] },
+    "cramp": { "answer": "Warmth, gentle movement, hydration and rest can be supportive for cramps. If pain is severe or affects daily life, a healthcare professional can help you find the right care.", "productIds": ["piax-day-pads"], "articleIds": ["article-cramps"], "followUp": ["Tell me about heavy flow", "How can I track symptoms?"] },
+    "first period": { "answer": "It is normal to have questions before a first period. A small care kit and a little knowledge can make the experience feel more manageable.", "productIds": ["piax-day-pads"], "articleIds": ["article-first-period"], "followUp": ["What should I keep in my kit?"] },
+    "default": { "answer": "I can help you explore period care, products, symptoms and cycle tracking. Ask me about heavy flow, cramps, your first period or finding your size.", "productIds": [], "articleIds": ["article-cramps"], "followUp": ["What should I use for heavy flow?", "Why do cramps happen?"] }
+  }
+}

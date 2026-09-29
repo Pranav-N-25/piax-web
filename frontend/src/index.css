@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=Figtree:wght@400;500;600;700;800&family=Fraunces:ital,opsz,wght@1,9..144,600;1,9..144,700&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  /* layout breakpoints: md 720px, lg 1100px, xl 1280px */
+  --breakpoint-md: 45rem;
+  --breakpoint-lg: 68.75rem;
+  --breakpoint-xl: 80rem;
+
+  --font-sans: 'Figtree', system-ui, sans-serif;
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-hand: 'Poppins', system-ui, sans-serif;
+  --font-doodle: 'Caveat', 'Segoe Print', cursive;
+  --font-dm: 'DM Sans', sans-serif;
+  --font-playfair: 'Playfair Display', Georgia, serif;
+  --font-poppins: 'Poppins', sans-serif;
+
+  /* home */
+  --color-brand: #0b5b4e;
+  --color-brand-2: #0f6b5b;
+  --color-brand-soft: #d8eee3;
+  --color-ink: #0f2622;
+  --color-body: #263c37;
+  --color-muted: #5a6c68;
+  --color-mist: #eef7f2;
+  --color-line: #d6e7df;
+
+  /* card tones: soft background + stronger accent */
+  --color-tone-pink: #fde7ea;
+  --color-tone-pink-2: #f7c3ca;
+  --color-tone-rose: #fce5ee;
+  --color-tone-rose-2: #f5c1d3;
+  --color-tone-mint: #e0f2e9;
+  --color-tone-mint-2: #b9e0cc;
+  --color-tone-sage: #e7f3ed;
+  --color-tone-sage-2: #c3e2d2;
+  --color-tone-lilac: #eee8fc;
+  --color-tone-lilac-2: #d5c7f4;
+  --color-tone-blue: #e2effa;
+  --color-tone-blue-2: #bcd8f0;
+  --color-tone-peach: #feebe0;
+  --color-tone-peach-2: #f8c9ae;
+  --color-tone-cream: #fdf3dd;
+  --color-tone-cream-2: #f3d9a6;
+
+  /* inner pages */
+  --color-leaf: #007f6d;
+  --color-charcoal: #323232;
+  --color-mint: #dcefe7;
+  --color-sage: #c3ded2;
+  --color-paper: #f8f8f3;
+  --color-rule: #d7e2dc;
+  --color-stone: #68736e;
+  --color-forest: #253f38;
+  --color-leaf-dark: #006a5b;
+  --color-foam: #eef8f4;
+
+  --shadow-soft: 0 10px 30px rgba(18, 70, 58, .07);
+  --shadow-lift: 0 8px 20px rgba(11, 91, 78, .18);
+
+  /* Draws a pathLength="1" stroke from start to end (used as an SVG mask). */
+  --animate-connector-draw: connector-draw .45s cubic-bezier(.4, 0, .2, 1) both;
+
+  @keyframes connector-draw {
+    from { stroke-dashoffset: 1; }
+    to { stroke-dashoffset: 0; }
+  }
+}
+
+/* ---------- Home page motion ----------
+   Calm, readable motion for every age: soft fade-up (no bounce, no spin), short
+   staggers, and only opacity/transform so it stays smooth on low-end phones.
+   Keyframe animations with `backwards` fill leave each element's own hover
+   transitions untouched once the reveal has played. */
+@keyframes home-rise {
+  from { opacity: 0; transform: translate3d(0, 28px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  /* Hero copy eases in on load; the photo is left alone so it paints immediately. */
+  [data-hero-copy] > * {
+    animation: home-rise .9s cubic-bezier(.22, 1, .36, 1) backwards;
+  }
+  [data-hero-copy] > :nth-child(2) { animation-delay: .1s; }
+  [data-hero-copy] > :nth-child(3) { animation-delay: .2s; }
+  [data-hero-copy] > :nth-child(4) { animation-delay: .3s; }
+  [data-hero-copy] > :nth-child(n + 5) { animation-delay: .4s; }
+
+  /* Sections below the hero: each block of the section rises in turn…
+     (delays live in custom properties so selector specificity can't reset them) */
+  [data-reveal] > section:not(:first-child):not([data-visible]) > * > *,
+  [data-reveal] > section:not(:first-child):not([data-visible]) [data-stagger] > * {
+    opacity: 0;
+  }
+  [data-reveal] > section[data-visible]:not(:first-child) > * > :not([data-stagger]) {
+    animation: home-rise .8s cubic-bezier(.22, 1, .36, 1) var(--rise-delay, 0s) backwards;
+  }
+  [data-reveal] > section > * > :nth-child(2) { --rise-delay: .08s; }
+  [data-reveal] > section > * > :nth-child(3) { --rise-delay: .16s; }
+  [data-reveal] > section > * > :nth-child(n + 4) { --rise-delay: .24s; }
+
+  /* …and card rows follow one card at a time. */
+  [data-reveal] > section[data-visible]:not(:first-child) [data-stagger] > * {
+    animation: home-rise .7s cubic-bezier(.22, 1, .36, 1) var(--card-delay, .5s) backwards;
+  }
+  [data-stagger] > :nth-child(1) { --card-delay: .12s; }
+  [data-stagger] > :nth-child(2) { --card-delay: .18s; }
+  [data-stagger] > :nth-child(3) { --card-delay: .24s; }
+  [data-stagger] > :nth-child(4) { --card-delay: .3s; }
+  [data-stagger] > :nth-child(5) { --card-delay: .36s; }
+  [data-stagger] > :nth-child(6) { --card-delay: .42s; }
+  [data-stagger] > :nth-child(7) { --card-delay: .46s; }
+}
