@@ -65,6 +65,33 @@
     from { stroke-dashoffset: 1; }
     to { stroke-dashoffset: 0; }
   }
+
+  /* PIAX AI phone chat: bubbles pop in, typing dots bounce, composer caret blinks. */
+  --animate-chat-in: chat-in .35s cubic-bezier(.22, 1, .36, 1) both;
+  --animate-typing-dot: typing-dot 1s ease-in-out infinite;
+  --animate-caret: caret 1s steps(1) infinite;
+
+  @keyframes chat-in {
+    from { opacity: 0; transform: translateY(8px) scale(.96); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes typing-dot {
+    0%, 60%, 100% { transform: translateY(0); opacity: .45; }
+    30% { transform: translateY(-3px); opacity: 1; }
+  }
+  @keyframes caret {
+    50% { opacity: 0; }
+  }
+
+  /* Guiding cursor: drifts toward the pad, taps, and drifts back. */
+  --animate-cursor-guide: cursor-guide 2.4s ease-in-out infinite;
+
+  @keyframes cursor-guide {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    40% { transform: translate(7px, 6px) scale(1); }
+    50% { transform: translate(7px, 6px) scale(.82); }
+    60% { transform: translate(7px, 6px) scale(1); }
+  }
 }
 
 /* ---------- Home page motion ----------
@@ -112,3 +139,29 @@
   [data-stagger] > :nth-child(6) { --card-delay: .42s; }
   [data-stagger] > :nth-child(7) { --card-delay: .46s; }
 }
+
+/* ---------- How it works step illustrations (StepArt.jsx) ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .step-float { animation: step-float 3.2s ease-in-out infinite; }
+  .step-shadow { animation: step-shadow 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .step-twinkle { animation: step-twinkle 1.8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .step-quiz-scan { animation: step-quiz-scan 3.6s ease-in-out infinite; }
+  .step-quiz-check { stroke-dasharray: 1; animation: step-quiz-check 3.6s ease-in-out infinite; }
+  .step-drop { animation: step-drop 2.8s cubic-bezier(.5, 0, .5, 1) infinite; }
+  .step-pop { animation: step-pop 2.8s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+  .step-wheel { animation: step-spin .6s linear infinite; }
+  .step-road { animation: step-road .6s linear infinite; }
+  .step-bump { animation: step-bump .6s ease-in-out infinite; }
+  .step-speed { animation: step-speed 1s ease-out infinite; }
+}
+@keyframes step-float { 50% { transform: translateY(-7px); } }
+@keyframes step-shadow { 50% { transform: scaleX(.8); opacity: .3; } }
+@keyframes step-twinkle { 0%, 100% { transform: scale(.4); opacity: .2; } 50% { transform: scale(1); opacity: 1; } }
+@keyframes step-quiz-scan { 0%, 20% { transform: translateY(0); } 33%, 53% { transform: translateY(22px); } 66%, 86% { transform: translateY(44px); } 100% { transform: translateY(0); } }
+@keyframes step-quiz-check { 0%, 8% { stroke-dashoffset: 1; } 18%, 100% { stroke-dashoffset: 0; } }
+@keyframes step-drop { 0% { transform: translateY(-16px); opacity: 0; } 25% { opacity: 1; } 55%, 70% { transform: translateY(34px); opacity: 1; } 85%, 100% { transform: translateY(40px); opacity: 0; } }
+@keyframes step-pop { 0%, 55% { transform: scale(0); } 68% { transform: scale(1.15); } 78%, 92% { transform: scale(1); } 100% { transform: scale(0); } }
+@keyframes step-spin { to { transform: rotate(360deg); } }
+@keyframes step-road { to { stroke-dashoffset: 24; } }
+@keyframes step-bump { 50% { transform: translateY(-1.5px); } }
+@keyframes step-speed { 0% { transform: translateX(8px); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateX(-6px); opacity: 0; } }

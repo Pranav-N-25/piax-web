@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { ArrowLeft, ArrowRight, Check, CircleCheck, Droplet, Heart, Leaf, Shield, Sparkles, Sprout, Truck, Wind } from 'lucide-react'
 import { useCart } from '../../context/CartContext.jsx'
-import { DoodleNote, Tag } from './HomeUi.jsx'
-import { accent, btn, cn, container, heading, section } from './homeStyles.js'
+import { DoodleNote, Foliage, Tag } from './HomeUi.jsx'
+import { accent, btn, cn, container, heading, section, tones } from './homeStyles.js'
 import recommendedPack from '../../assets/13_recommended_xl_pack.png'
 
 const steps = [
@@ -81,6 +81,8 @@ export default function MatchSection() {
 
   return (
     <section className={section} id="match">
+      <Foliage art="broad" className="-bottom-10 -right-[120px] w-[clamp(200px,22vw,340px)] opacity-60 max-lg:hidden" />
+      <Foliage art="shadowFrond" className="top-0 -left-16 w-[clamp(180px,20vw,300px)] opacity-80 max-md:hidden" />
       <div className={cn(container, 'flex flex-col')}>
         <div className="grid flex-1 items-stretch gap-6 lg:gap-8 md:grid-cols-[1fr_1.3fr] lg:grid-cols-[minmax(0,.95fr)_minmax(0,1.4fr)_minmax(0,1fr)]">
           <div className="relative">
@@ -96,10 +98,11 @@ export default function MatchSection() {
                 </li>
               ))}
             </ul>
-            <DoodleNote inline className="mt-12 ml-2 hidden lg:block">Every body.<br />A happier period.</DoodleNote>
+            <DoodleNote inline arrow="right" className="mt-12 ml-2 hidden lg:block">Every body.<br />A happier period.</DoodleNote>
           </div>
 
-          <div className="flex flex-col rounded-[26px] bg-white p-4 text-center shadow-soft md:p-6">
+          {/* Sized to its content rather than stretched to the row's tallest column. */}
+          <div className="flex flex-col self-start rounded-[26px] bg-white p-4 text-center shadow-soft md:p-6">
             <ol className="mx-auto mb-4 grid max-w-[420px] grid-cols-3">
               {steps.map(({ label }, index) => {
                 const isDone = index < step || done
@@ -122,7 +125,7 @@ export default function MatchSection() {
               })}
             </ol>
 
-            <div className="flex min-h-[212px] flex-1 flex-col justify-center rounded-2xl bg-[#fafcfb] p-4 md:p-5">
+            <div className="flex min-h-[212px] flex-col justify-center rounded-2xl bg-[#fafcfb] p-4 md:p-5">
               {done ? (
                 <div className="flex flex-col items-center gap-2 pt-2 text-brand">
                   <Sparkles size={30} />
@@ -180,7 +183,7 @@ export default function MatchSection() {
             )}
           </div>
 
-          <div className="relative mx-auto flex w-full max-w-[440px] flex-col rounded-[26px] bg-linear-to-b from-[#dff1e8] to-[#eef8f3] p-6 shadow-soft md:col-span-full lg:col-span-1 lg:mx-0 lg:max-w-none">
+          <div className={cn('relative mx-auto flex w-full max-w-[440px] flex-col rounded-[26px] border border-white/80 p-6 shadow-soft md:col-span-full lg:col-span-1 lg:mx-0 lg:max-w-none', tones.mint.fade)}>
             <p className="flex items-center gap-2 text-[13px] font-semibold text-ink"><Sparkles size={16} /> Recommended for you</p>
             <img src={recommendedPack} alt={`${match.name} pack`} className="mx-auto my-4 w-[88%] mix-blend-multiply" />
             <h3 className={cn(heading, 'text-xl')}>{match.name}</h3>
@@ -205,9 +208,9 @@ export default function MatchSection() {
           </div>
         </div>
 
-        <ul className="mx-auto mt-10 grid max-w-[980px] grid-cols-2 gap-y-4 rounded-[20px] bg-white/70 px-6 py-5 md:grid-cols-4 md:gap-y-0 md:rounded-[30px]">
+        <ul className="mx-auto mt-10 grid max-w-260 grid-cols-2 gap-x-6 gap-y-5 rounded-[20px] bg-white/70 px-6 py-5 sm:px-8 md:grid-cols-4 md:gap-x-0 md:gap-y-0 md:rounded-[30px] md:px-4 md:py-6">
           {perks.map(({ icon: Icon, text }, index) => (
-            <li key={index} className={cn('flex items-center gap-3 text-[13px] leading-[1.3] text-body md:justify-center', index > 0 && 'md:border-l md:border-line')}>
+            <li key={index} className={cn('flex items-center gap-3 text-[13px] leading-[1.3] text-body md:justify-center md:px-6', index > 0 && 'md:border-l md:border-line')}>
               <Icon size={28} strokeWidth={1.5} className="shrink-0 text-brand" /><span>{text}</span>
             </li>
           ))}

@@ -1,6 +1,6 @@
-import { BadgeCheck, Droplet, Globe, Leaf, Recycle, Sprout } from 'lucide-react'
+import { BadgeCheck, Cloud, Droplet, Flower2, Globe, Leaf, Package, Recycle, Sprout } from 'lucide-react'
 import { useInView } from '../../hooks/useInView.js'
-import { DoodleNote, PillLink, Tag } from './HomeUi.jsx'
+import { DoodleNote, Foliage, PillLink, Tag } from './HomeUi.jsx'
 import { cn, container, eyebrow, h2, heading, section, accent } from './homeStyles.js'
 import MaterialTexture from './insidePad/MaterialTexture.jsx'
 import PadLayerExplorer from './insidePad/PadLayerExplorer.jsx'
@@ -9,6 +9,9 @@ const materials = [
   { icon: Sprout, text: <>Plant-based<br />top layer</> },
   { icon: Recycle, text: <>Compostable<br />back sheet</> },
   { icon: Globe, text: <>Lower<br />environmental<br />impact</> },
+  { icon: Cloud, text: <>Organic cotton<br />top sheet</> },
+  { icon: Flower2, text: <>Perfume-free<br />care</> },
+  { icon: Package, text: <>Plastic-conscious<br />packaging</> },
 ]
 
 const badges = [
@@ -23,6 +26,7 @@ export default function InsidePadSection() {
 
   return (
     <section className={section}>
+      <Foliage art="twigRight" className="top-6 -right-10 w-[clamp(80px,8vw,130px)] opacity-50 max-lg:hidden" />
       <div ref={revealRef} className={cn(container, 'flex flex-col gap-10 lg:gap-12')}>
         {/* Row 1 · story on the left, the interactive 8-layer pad on the right */}
         <div className="grid items-center gap-10 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1.6fr)] lg:gap-12">
@@ -39,7 +43,7 @@ export default function InsidePadSection() {
                 </li>
               ))}
             </ul>
-            <DoodleNote inline className="mt-10 hidden lg:block">Care that goes deeper.</DoodleNote>
+            <DoodleNote inline arrow="right" className="mt-10 hidden lg:block">Care that goes deeper.</DoodleNote>
           </div>
 
           <PadLayerExplorer revealed={inView} />
@@ -52,7 +56,7 @@ export default function InsidePadSection() {
             <h3 className={cn(heading, 'mt-4 mb-2 text-2xl')}>Better materials<br />for a <em className={accent}>brighter tomorrow.</em></h3>
             <p className="text-[15px]">Sustainable choices for a healthier you and a healthier planet.</p>
           </div>
-          <ul className="grid grid-cols-3 gap-2 px-6 py-6 md:col-start-1 md:pt-0 lg:col-start-auto lg:py-8">
+          <ul className="grid grid-cols-3 gap-x-2 gap-y-5 px-6 py-6 md:col-start-1 md:pt-0 lg:col-start-auto lg:py-8">
             {materials.map(({ icon: Icon, text }, index) => (
               <li key={index} className="flex flex-col items-center gap-2 text-center text-xs leading-[1.25] text-ink">
                 <span className="flex size-12 items-center justify-center rounded-full border border-[#bfdccf] bg-white text-brand"><Icon size={24} strokeWidth={1.4} /></span>

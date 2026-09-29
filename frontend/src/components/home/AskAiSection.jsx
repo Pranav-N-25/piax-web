@@ -1,5 +1,5 @@
 import { BookOpen, Calendar, FileText, Heart, Languages, Lock, MessageCircle, MessagesSquare, Pill, ShieldCheck, Sparkles } from 'lucide-react'
-import { PillLink, Tag } from './HomeUi.jsx'
+import { DoodleBurst, Foliage, PillLink, Tag } from './HomeUi.jsx'
 import { cn, container, h2, heading, section, accent, tones } from './homeStyles.js'
 import AiPhoneMockup from './AiPhoneMockup.jsx'
 
@@ -8,19 +8,6 @@ const features = [
   { icon: Lock, title: 'Private and confidential', text: 'Your data stays yours' },
   { icon: Heart, title: 'Personalized to you', text: 'Answers that consider your cycle, symptoms and lifestyle' },
   { icon: Languages, title: 'Available in English & தமிழ்', text: 'Talk in the language you’re comfortable with' },
-]
-
-const questionsLeft = [
-  ['Is this normal?', 'pink'],
-  ['My period is late. Should I worry?', 'lilac'],
-  ['What’s the best pad for heavy flow?', 'pink'],
-  ['Can I exercise during my period?', 'lilac'],
-]
-const questionsRight = [
-  ['Why do I get mood swings?', 'pink'],
-  ['How can I reduce period cramps?', 'lilac'],
-  ['What’s a healthy cycle length?', 'lilac'],
-  ['Is spotting normal?', 'pink'],
 ]
 
 const supports = [
@@ -32,11 +19,10 @@ const supports = [
   { icon: BookOpen, title: 'Trusted Resources', text: 'Backed by experts, always', tone: 'blue' },
 ]
 
-const bubble = 'rounded-[14px] px-4 py-3 text-xs leading-[1.3] text-ink shadow-soft'
-
 export default function AskAiSection() {
   return (
     <section className={section}>
+      <Foliage art="sprigArch" className="bottom-4 -right-10 w-[clamp(110px,11vw,170px)] -scale-x-100 opacity-70 max-md:hidden" />
       <div className={cn(container, 'grid items-stretch gap-8 md:grid-cols-2 lg:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_minmax(0,1.05fr)]')}>
         <div>
           <Tag>PIAX AI</Tag>
@@ -57,17 +43,14 @@ export default function AskAiSection() {
           <p className="mt-4 text-[11.5px] text-muted">Not a replacement for a doctor. For educational support only.</p>
         </div>
 
-        <div className="relative grid items-center justify-items-center gap-4 pt-8 md:grid-cols-[1fr_auto_1fr] md:justify-items-stretch">
-          <div className="hidden gap-6 md:grid">
-            {questionsLeft.map(([text, tone], index) => (
-              <span key={text} className={cn(bubble, tones[tone].bg, index % 2 === 0 && 'translate-x-3')}>{text}</span>
-            ))}
-          </div>
-          <AiPhoneMockup className="mx-auto" />
-          <div className="hidden gap-6 md:grid">
-            {questionsRight.map(([text, tone], index) => (
-              <span key={text} className={cn(bubble, tones[tone].bg, index % 2 === 1 && '-translate-x-2.5')}>{text}</span>
-            ))}
+        <div className="relative flex items-center justify-center pt-8">
+          <div className="relative">
+            {/* Doodle bursts around the phone: top-right, left, lower-left and right, like the reference. */}
+            <DoodleBurst className="absolute -top-2 -right-9 rotate-20 max-sm:hidden" />
+            <DoodleBurst className="absolute top-[38%] -left-12 rotate-[-70deg] max-sm:hidden" />
+            <DoodleBurst className="absolute -bottom-3 -left-8 rotate-200 max-sm:hidden" />
+            <DoodleBurst className="absolute top-[52%] -right-12 rotate-100 max-sm:hidden" />
+            <AiPhoneMockup className="mx-auto" />
           </div>
         </div>
 

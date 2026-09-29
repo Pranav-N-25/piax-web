@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { BookOpen, ChevronDown, Leaf, Mail, MessagesSquare, MessageSquare } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { DoodleNote, PillLink, Tag } from './HomeUi.jsx'
+import { DoodleNote, Foliage, PillLink, Tag } from './HomeUi.jsx'
 import { cn, container, h2, heading, section, accent } from './homeStyles.js'
 import faqWoman from '../../assets/faq_woman_with_pack.png'
 
@@ -29,6 +29,7 @@ export default function FaqSection() {
 
   return (
     <section className={section}>
+      <Foliage art="twigRight" className="bottom-8 -left-8 w-[clamp(80px,8vw,120px)] -scale-x-100 opacity-45 max-lg:hidden" />
       <div className={cn(container, 'grid items-stretch gap-8 lg:gap-10 md:grid-cols-[1fr_1.4fr] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_minmax(0,1.05fr)]')}>
         <div className="flex flex-col items-start">
           <Tag>FAQ</Tag>
@@ -37,11 +38,12 @@ export default function FaqSection() {
             <em className={accent}><u className="decoration-2 underline-offset-[6px]">Our</u> honest answers.</em>
           </h2>
           <p>No awkwardness. No judgement.<br />Just real information, always.</p>
-          <DoodleNote inline className="mt-6 ml-1 hidden lg:block">Curious today.<br />Confident tomorrow.</DoodleNote>
+          <DoodleNote inline arrow="right" className="mt-6 ml-1 hidden lg:block">Curious today.<br />Confident tomorrow.</DoodleNote>
           <img src={faqWoman} alt="Smiling woman hugging a pack of PIAX pads" loading="lazy" decoding="async" className="mt-8 min-h-56 w-full flex-1 object-contain object-bottom" />
         </div>
 
-        <div className="rounded-[22px] bg-white/60 px-6 py-4">
+        {/* Sized to its questions; grows as an answer opens instead of stretching to the row. */}
+        <div className="self-start rounded-[22px] bg-white/60 px-6 py-4">
           {faqs.map(([question, answer], index) => {
             const isOpen = open === index
             return (

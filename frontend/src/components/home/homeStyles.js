@@ -3,16 +3,16 @@ import { blockGap, container as pageContainer, gridGap, headGap, sectionY } from
 
 export { cn }
 
-// Card tones: `bg` is the soft fill, `accent` the stronger chip/icon fill.
+// Card tones: `bg` is the soft fill, `accent` the stronger chip/icon fill, `fade` white at the top into the tone at the bottom.
 export const tones = {
-  pink: { bg: 'bg-tone-pink', accent: 'bg-tone-pink-2', icon: 'text-tone-pink-2', fade: 'bg-[linear-gradient(180deg,var(--color-tone-pink),#fff_140%)]' },
-  rose: { bg: 'bg-tone-rose', accent: 'bg-tone-rose-2', icon: 'text-tone-rose-2', fade: 'bg-[linear-gradient(180deg,var(--color-tone-rose),#fff_140%)]' },
-  mint: { bg: 'bg-tone-mint', accent: 'bg-tone-mint-2', icon: 'text-tone-mint-2', fade: 'bg-[linear-gradient(180deg,var(--color-tone-mint),#fff_140%)]' },
-  sage: { bg: 'bg-tone-sage', accent: 'bg-tone-sage-2', icon: 'text-tone-sage-2', fade: 'bg-[linear-gradient(180deg,var(--color-tone-sage),#fff_140%)]' },
-  lilac: { bg: 'bg-tone-lilac', accent: 'bg-tone-lilac-2', icon: 'text-tone-lilac-2', fade: 'bg-[linear-gradient(180deg,var(--color-tone-lilac),#fff_140%)]' },
-  blue: { bg: 'bg-tone-blue', accent: 'bg-tone-blue-2', icon: 'text-tone-blue-2', fade: 'bg-[linear-gradient(180deg,var(--color-tone-blue),#fff_140%)]' },
-  peach: { bg: 'bg-tone-peach', accent: 'bg-tone-peach-2', icon: 'text-tone-peach-2', fade: 'bg-[linear-gradient(180deg,var(--color-tone-peach),#fff_140%)]' },
-  cream: { bg: 'bg-tone-cream', accent: 'bg-tone-cream-2', icon: 'text-tone-cream-2', fade: 'bg-[linear-gradient(180deg,var(--color-tone-cream),#fff_140%)]' },
+  pink: { bg: 'bg-tone-pink', accent: 'bg-tone-pink-2', icon: 'text-tone-pink-2', fade: 'bg-[linear-gradient(180deg,#fff_8%,var(--color-tone-pink)_100%)]' },
+  rose: { bg: 'bg-tone-rose', accent: 'bg-tone-rose-2', icon: 'text-tone-rose-2', fade: 'bg-[linear-gradient(180deg,#fff_8%,var(--color-tone-rose)_100%)]' },
+  mint: { bg: 'bg-tone-mint', accent: 'bg-tone-mint-2', icon: 'text-tone-mint-2', fade: 'bg-[linear-gradient(180deg,#fff_8%,var(--color-tone-mint)_100%)]' },
+  sage: { bg: 'bg-tone-sage', accent: 'bg-tone-sage-2', icon: 'text-tone-sage-2', fade: 'bg-[linear-gradient(180deg,#fff_8%,var(--color-tone-sage)_100%)]' },
+  lilac: { bg: 'bg-tone-lilac', accent: 'bg-tone-lilac-2', icon: 'text-tone-lilac-2', fade: 'bg-[linear-gradient(180deg,#fff_8%,var(--color-tone-lilac)_100%)]' },
+  blue: { bg: 'bg-tone-blue', accent: 'bg-tone-blue-2', icon: 'text-tone-blue-2', fade: 'bg-[linear-gradient(180deg,#fff_8%,var(--color-tone-blue)_100%)]' },
+  peach: { bg: 'bg-tone-peach', accent: 'bg-tone-peach-2', icon: 'text-tone-peach-2', fade: 'bg-[linear-gradient(180deg,#fff_8%,var(--color-tone-peach)_100%)]' },
+  cream: { bg: 'bg-tone-cream', accent: 'bg-tone-cream-2', icon: 'text-tone-cream-2', fade: 'bg-[linear-gradient(180deg,#fff_8%,var(--color-tone-cream)_100%)]' },
 }
 
 // Spacing follows an 8px grid: 24px page gutter, 16/24px card gaps,

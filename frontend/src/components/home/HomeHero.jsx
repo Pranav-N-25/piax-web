@@ -1,10 +1,11 @@
 import React from 'react';
 
 import heroModel from './assets/hero_model.png';
-import avatarKaavya from './assets/avatar_kaavya.png';
-import avatarAnanya from './assets/avatar_ananya.jpg';
-import avatarPriya from './assets/avatar_priya.jpg';
-import avatarDivya from './assets/avatar_divya.jpg';
+import avatarDiya from '../../assets/reviews/avatars/avatar_1.jpg';
+import avatarAishwarya from '../../assets/reviews/avatars/avatar_2.jpg';
+import avatarMeera from '../../assets/reviews/avatars/avatar_3.jpg';
+import avatarSahana from '../../assets/reviews/avatars/avatar_4.jpg';
+import { Foliage } from './HomeUi.jsx';
 
 // Vite/CRA return a string for image imports; Next.js returns { src, width, height }.
 const src = (img) => (typeof img === 'string' ? img : img?.src);
@@ -96,10 +97,10 @@ const btnBase =
   'max-[600px]:w-full';
 
 const avatars = [
-  { img: avatarKaavya, name: 'Kaavya' },
-  { img: avatarAnanya, name: 'Ananya' },
-  { img: avatarPriya, name: 'Priya' },
-  { img: avatarDivya, name: 'Divya' },
+  { img: avatarDiya, name: 'Diya' },
+  { img: avatarAishwarya, name: 'Aishwarya' },
+  { img: avatarMeera, name: 'Meera' },
+  { img: avatarSahana, name: 'Sahana' },
 ];
 
 export default function HomeHero() {
@@ -114,11 +115,6 @@ export default function HomeHero() {
       }
     >
       <style>{`
-        @keyframes heroPulseDot {
-          0% { box-shadow: 0 0 0 0 rgba(0,135,116,0.5); }
-          70% { box-shadow: 0 0 0 8px rgba(0,135,116,0); }
-          100% { box-shadow: 0 0 0 0 rgba(0,135,116,0); }
-        }
         @keyframes heroFloatChipY {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-8px); }
@@ -130,6 +126,11 @@ export default function HomeHero() {
         aria-hidden="true"
         className="pointer-events-none absolute -bottom-[220px] -left-[160px] z-0 h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(0,135,116,0.14)_0%,transparent_70%)]"
       />
+
+      {/* Botanical frame: a cluster anchoring the bottom-left corner and a light twig at the top-right,
+          both cropped by the viewport edge and kept clear of the headline. */}
+      <Foliage art="clusterLeft" className="-bottom-[70px] -left-[90px] z-[1] w-[clamp(240px,24vw,380px)] opacity-90 max-[1024px]:hidden" />
+      <Foliage art="twigRight" className="top-2 -right-6 z-[1] w-[clamp(80px,9vw,140px)] rotate-[18deg] opacity-60 max-[960px]:hidden" />
 
       {/* Full-bleed model photo: covers the right half on desktop, the top band on mobile */}
       <div
@@ -151,15 +152,16 @@ export default function HomeHero() {
         />
       </div>
 
+      {/* Bottom fade into the page background, so the hero melts into the next section with no hard edge. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-1 h-[clamp(96px,16vh,200px)] bg-[linear-gradient(180deg,transparent_0%,rgba(238,247,242,0.55)_45%,var(--color-mist)_100%)]"
+      />
+
       <div className="relative z-[2] mx-auto w-full max-w-[1440px] px-6 max-[960px]:-mt-16">
         <div className="grid grid-cols-2 items-center gap-16 max-[1024px]:grid-cols-1 max-[1024px]:gap-10 max-[1024px]:text-center">
           {/* Left: Copy */}
           <div data-hero-copy className="flex flex-col items-start max-[1024px]:mx-auto max-[1024px]:max-w-[620px] max-[1024px]:items-center max-[960px]:order-1 max-[768px]:w-full">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[rgba(0,135,116,0.22)] bg-[rgba(224,245,239,0.85)] px-4 py-2 text-[12.5px] [font-weight:750] tracking-[0.04em] text-[#0c433b] shadow-[0_2px_8px_rgba(0,135,116,0.08)] backdrop-blur-[10px] max-[768px]:mx-auto max-[640px]:max-w-full max-[640px]:px-3 max-[640px]:text-[clamp(11px,3.2vw,12.5px)]">
-              <span className="h-2 w-2 shrink-0 rounded-full bg-[#008774] animate-[heroPulseDot_2s_infinite]" />
-              Gynaecologist Approved · BIS IS 5405:2025 Certified
-            </div>
-
             <h1 className="mb-4 [font-family:-apple-system,BlinkMacSystemFont,'SF_Pro_Display','Plus_Jakarta_Sans','Poppins',sans-serif] text-[clamp(36px,5vw,54px)] font-extrabold leading-[1.12] tracking-[-0.035em] text-[#052620] max-[768px]:w-full max-[768px]:text-center max-[640px]:text-[clamp(28px,8vw,36px)] max-[640px]:leading-[1.15] max-[375px]:text-[27px] max-[330px]:text-2xl">
               <span className="block">Your period, understood.</span>
               <span className="block text-[#008774]">Your care, delivered.</span>
@@ -190,7 +192,7 @@ export default function HomeHero() {
               {[
                 { Icon: CottonIcon, label: 'Organic cotton top sheet' },
                 { Icon: ShieldCheckIcon, label: 'Rash-free, perfume-free' },
-                { Icon: TruckIcon, label: 'Discreet doorstep delivery' },
+                { Icon: TruckIcon, label: 'Convenient home delivery' },
               ].map(({ Icon, label }) => (
                 <li key={label} className="inline-flex items-center gap-2 text-[13.5px] font-semibold text-[#10594d]">
                   <span className="text-[#008774]"><Icon size={16} /></span>
@@ -215,7 +217,7 @@ export default function HomeHero() {
                   <Stars size={13} />
                 </div>
                 <div className="text-[13px] text-[#415551]">
-                  <strong className="text-[13px] font-bold text-[#052620]">Rated 4.9/5</strong> by 10,000+ women in India
+                  <strong className="text-[13px] font-bold text-[#052620]">Rated 4.8/5</strong> by 10,000+ women in India
                 </div>
               </div>
             </div>
@@ -223,32 +225,6 @@ export default function HomeHero() {
 
           {/* Right: overlays that sit on top of the full-bleed photo */}
           <div className="relative min-h-[480px] max-[960px]:pointer-events-none max-[960px]:absolute max-[960px]:inset-x-0 max-[960px]:top-[calc(-1*clamp(340px,62vw,520px)+64px)] max-[960px]:h-[clamp(340px,62vw,520px)] max-[960px]:min-h-0 max-[600px]:top-[calc(-360px+64px)] max-[600px]:h-[360px]">
-            {/* Decorative leaves */}
-            <svg
-              viewBox="0 0 120 160"
-              aria-hidden="true"
-              className="pointer-events-none absolute -top-6 left-[-8%] z-[1] w-24 -rotate-[24deg] text-[rgba(0,135,116,0.35)] max-[960px]:hidden"
-            >
-              <path d="M60 155 C60 110 58 60 60 5" stroke="currentColor" strokeWidth="2" fill="none" />
-              <path d="M60 40 C35 30 22 12 20 2 C40 6 56 20 60 40Z" fill="currentColor" />
-              <path d="M60 40 C85 30 98 12 100 2 C80 6 64 20 60 40Z" fill="currentColor" />
-              <path d="M60 80 C32 72 16 52 12 38 C36 42 55 58 60 80Z" fill="currentColor" />
-              <path d="M60 80 C88 72 104 52 108 38 C84 42 65 58 60 80Z" fill="currentColor" />
-              <path d="M60 120 C30 114 12 94 8 80 C34 84 54 100 60 120Z" fill="currentColor" />
-              <path d="M60 120 C90 114 108 94 112 80 C86 84 66 100 60 120Z" fill="currentColor" />
-            </svg>
-            <svg
-              viewBox="0 0 120 160"
-              aria-hidden="true"
-              className="pointer-events-none absolute -bottom-4 left-[30%] z-[1] w-[84px] rotate-[28deg] text-[rgba(0,135,116,0.28)] max-[960px]:hidden"
-            >
-              <path d="M60 155 C60 110 58 60 60 5" stroke="currentColor" strokeWidth="2" fill="none" />
-              <path d="M60 50 C35 40 22 22 20 12 C40 16 56 30 60 50Z" fill="currentColor" />
-              <path d="M60 50 C85 40 98 22 100 12 C80 16 64 30 60 50Z" fill="currentColor" />
-              <path d="M60 100 C30 94 12 74 8 60 C34 64 54 80 60 100Z" fill="currentColor" />
-              <path d="M60 100 C90 94 108 74 112 60 C86 64 66 80 60 100Z" fill="currentColor" />
-            </svg>
-
             {/* Floating info chips */}
             <div className={`${chip} left-[-2%] top-[38%] max-[960px]:left-4 max-[960px]:top-[12%] max-[600px]:left-3 max-[600px]:top-4`}>
               <span className={`${chipIcon} bg-[linear-gradient(135deg,#f08a73,#e87055)]`}>
@@ -261,11 +237,11 @@ export default function HomeHero() {
             </div>
             <div className={`${chip} bottom-[6%] left-[12%] [animation-delay:1.5s] max-[960px]:hidden`}>
               <span className={`${chipIcon} bg-[linear-gradient(135deg,#008774,#10594d)]`}>
-                <ShieldCheckIcon size={18} />
+                <SparkleIcon size={18} />
               </span>
               <span className="text-left">
-                <strong className={chipTitle}>100% Rash-Free</strong>
-                <small className={chipSub}>Dermatologist tested</small>
+                <strong className={chipTitle}>Made for every woman</strong>
+                <small className={chipSub}>Comfort through every cycle</small>
               </span>
             </div>
           </div>

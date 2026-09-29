@@ -1,5 +1,5 @@
 import { Brain, Calendar, Droplet, Feather, Heart, Layers, Leaf, MessageCircle, Recycle, ShieldCheck, Sparkles, Sprout, Users, Wind } from 'lucide-react'
-import { CenterHead, DoodleNote, PillLink } from './HomeUi.jsx'
+import { CenterHead, DoodleNote, Foliage, PillLink } from './HomeUi.jsx'
 import { bar, barIcon, barStrong, barText, cn, container, section, accent, tones } from './homeStyles.js'
 import padInHand from '../../assets/home/piax_assets/34_why_pad_in_hand.png'
 import layersArt from '../../assets/35_why_layers.png'
@@ -14,19 +14,19 @@ const avatars = [avatar1, avatar2, avatar3]
 
 const reasons = [
   {
-    title: <>Unmatched<br />Comfort</>, text: 'Ultra-thin, ultra-soft and rash-free — even on your heaviest days.', icon: Feather, art: padInHand, tone: 'pink',
+    title: <>Unmatched<br />Comfort</>, text: 'Ultra-thin, ultra-soft and rash-free — even on your heaviest days.', icon: Feather, art: padInHand, fit: 'object-cover object-[center_35%]', tone: 'pink',
     points: [[Leaf, 'Soft bamboo top sheet'], [Wind, 'Breathable layers'], [Heart, 'Gentle on sensitive skin']],
   },
   {
-    title: <>Reliable<br />Protection</>, text: '8-layer technology with leak-lock channels for worry-free days and nights.', icon: ShieldCheck, art: layersArt, tone: 'mint',
+    title: <>Reliable<br />Protection</>, text: '8-layer technology with leak-lock channels for worry-free days and nights.', icon: ShieldCheck, art: layersArt, fit: 'object-contain object-[70%_center] scale-125', tone: 'mint',
     points: [[Layers, '8-layer absorption'], [Droplet, 'Leak-lock channels'], [Calendar, 'Up to 12 hours protection']],
   },
   {
-    title: <>Kind to<br />the Planet</>, text: 'Sustainable materials and compostable pads for a cleaner, greener tomorrow.', icon: Sprout, art: globeArt, tone: 'cream',
+    title: <>Kind to<br />the Planet</>, text: 'Sustainable materials and compostable pads for a cleaner, greener tomorrow.', icon: Sprout, art: globeArt, fit: 'object-cover object-[center_30%]', tone: 'cream',
     points: [[Leaf, 'Plant-based materials'], [Recycle, 'Compostable & oxo-biodegradable'], [Sprout, 'Smaller environmental footprint']],
   },
   {
-    title: <>Powered<br />by Intelligence</>, text: 'Track, understand and make better choices with PIAX AI and personalized insights.', icon: Brain, art: appArt, tone: 'lilac',
+    title: <>Powered<br />by Intelligence</>, text: 'Track, understand and make better choices with PIAX AI and personalized insights.', icon: Brain, art: appArt, fit: 'object-cover object-top', tone: 'lilac',
     points: [[Calendar, 'Cycle tracking'], [MessageCircle, 'AI health support'], [Sparkles, 'Personalized recommendations']],
   },
 ]
@@ -34,19 +34,33 @@ const reasons = [
 export default function WhySection() {
   return (
     <section className={section}>
+      <Foliage art="shadowFrond" className="-top-10 -left-24 w-[clamp(200px,22vw,340px)] opacity-80 max-md:hidden" />
+      <Foliage art="sprigArch" className="bottom-10 -left-12 w-[clamp(110px,11vw,170px)] opacity-70 max-lg:hidden" />
       <div className={cn(container, 'flex flex-col')}>
         <CenterHead
           tag="Why PIAX"
           title={<>More than a pad. <em className={accent}>A better</em> period experience.</>}
           text="Thoughtfully designed for your comfort, your health and a healthier planet."
         >
-          <DoodleNote className="top-0 right-0 hidden text-left xl:block">Care today<br />for brighter<br />tomorrows.</DoodleNote>
+          <DoodleNote arrow="down-left" className="top-0 right-0 hidden text-left xl:block">Care today<br />for brighter<br />tomorrows.</DoodleNote>
         </CenterHead>
 
         <div data-stagger className="grid flex-1 gap-4 md:grid-cols-2 lg:gap-6 lg:grid-cols-[repeat(4,minmax(0,1fr))_minmax(0,.85fr)]">
-          {reasons.map(({ title, text, icon: Icon, art, tone, points }, index) => (
-            <article key={index} className={cn('flex min-h-[250px] overflow-hidden rounded-[18px] py-6 pl-6 shadow-soft', tones[tone].bg)}>
-              <div className="min-w-0 flex-[1.2]">
+          {reasons.map(({ title, text, icon: Icon, art, fit, tone, points }, index) => (
+            <article key={index} className={cn('relative isolate flex min-h-[250px] overflow-hidden rounded-[18px] p-6 shadow-soft', tones[tone].bg)}>
+              {/* One art slot per card: same size and anchor, fading in from the left so text stays clear. */}
+              <img
+                src={art}
+                alt=""
+                loading="lazy"
+                decoding="async"
+                className={cn(
+                  'pointer-events-none absolute inset-y-0 right-0 -z-1 h-full w-[50%] mix-blend-multiply',
+                  'mask-[linear-gradient(to_right,transparent_0%,rgba(0,0,0,.25)_22%,#000_62%)]',
+                  fit,
+                )}
+              />
+              <div className="relative min-w-0 max-w-[62%]">
                 <span className={cn('mb-4 flex size-11 items-center justify-center rounded-full text-ink', tones[tone].accent)}>
                   <Icon size={24} strokeWidth={1.6} />
                 </span>
@@ -60,7 +74,6 @@ export default function WhySection() {
                   ))}
                 </ul>
               </div>
-              <img src={art} alt="" className="max-h-[200px] min-w-0 flex-[.8] self-center object-contain mix-blend-multiply" />
             </article>
           ))}
           <div className="hidden overflow-hidden rounded-[18px] lg:block">

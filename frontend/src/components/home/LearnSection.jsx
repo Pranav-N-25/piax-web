@@ -1,5 +1,5 @@
 import { Brain, Droplet, Dumbbell, Globe, GraduationCap, Heart, Leaf, MessageSquareText, ShieldCheck, Users } from 'lucide-react'
-import { DoodleNote, PillLink, RoundArrow, Tag } from './HomeUi.jsx'
+import { DoodleNote, Foliage, PillLink, RoundArrow, Tag } from './HomeUi.jsx'
 import { barIcon, barStrong, barText, cn, container, h2, iconRow, iconRowIcon, iconRowItem, section, accent, tile, tileText, tileTitle, tones } from './homeStyles.js'
 import learnWoman from '../../assets/24_need_first_period_photo.png'
 
@@ -28,6 +28,7 @@ const notes = [
 export default function LearnSection() {
   return (
     <section className={section}>
+      <Foliage art="shadowFrond" className="-top-8 -right-20 w-[clamp(200px,20vw,320px)] -scale-x-100 opacity-70 max-md:hidden" />
       <div className={cn(container, 'flex flex-col')}>
         <div className="grid flex-1 items-stretch gap-8 md:grid-cols-2 lg:gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.2fr)_minmax(0,1.05fr)]">
           <div>
@@ -59,7 +60,7 @@ export default function LearnSection() {
         </div>
 
         <div className="relative mt-10 flex justify-center">
-          <DoodleNote className="top-3 left-0 hidden text-xl min-[1400px]:block">Curious minds create<br />healthier tomorrows.</DoodleNote>
+          <DoodleNote arrow="right" className="top-3 left-0 hidden text-xl min-[1400px]:block">Curious minds create<br />healthier tomorrows.</DoodleNote>
           <ul className="flex max-w-[760px] flex-col gap-4 rounded-[18px] bg-white px-6 py-5 shadow-soft md:flex-row md:gap-0">
             {notes.map(({ icon: Icon, title, text }, index) => (
               <li key={title} className={cn('flex w-full flex-1 items-center gap-3 md:w-auto md:px-4', index > 0 && 'md:border-l md:border-line')}>

@@ -1,6 +1,7 @@
 import { Bike, Building2, ChartColumn, Handshake, Heart, Leaf, Monitor, ShoppingCart, Sprout, Store, Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { DoodleNote, PillLink, RoundArrow, Tag } from './HomeUi.jsx'
+import { DoodleNote, Foliage, PillLink, RoundArrow, Tag } from './HomeUi.jsx'
+import partnershipPhoto from '../../assets/home/business_partnership.jpg'
 import { barIcon, barStrong, barText, btn, cn, container, h2, heading, iconRow, iconRowIcon, iconRowItem, section, accent, tile, tileText, tileTitle, tones } from './homeStyles.js'
 
 const perks = [
@@ -29,6 +30,8 @@ const impact = [
 export default function BusinessSection() {
   return (
     <section className={section}>
+      <Foliage art="clusterLeft" className="bottom-0 -left-[150px] w-[clamp(160px,16vw,250px)] opacity-80 max-lg:hidden" />
+      <Foliage art="clusterRight" className="bottom-0 -right-[150px] w-[clamp(160px,16vw,250px)] opacity-80 max-lg:hidden" />
       <div className={cn(container, 'flex flex-col')}>
         <div className="grid flex-1 items-stretch gap-8 md:grid-cols-2 lg:gap-10 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,1.1fr)_minmax(0,1.05fr)]">
           <div>
@@ -62,20 +65,20 @@ export default function BusinessSection() {
           </div>
 
           <div className="relative flex md:col-span-full lg:col-span-1">
-            <figure className="relative m-0 flex min-h-[300px] flex-1 flex-col justify-end overflow-hidden rounded-[30px] bg-linear-to-br from-brand to-[#11755f] p-8 text-white lg:min-h-[340px] lg:rounded-[60px_0_0_60px] lg:pl-12">
-              <DoodleNote className="top-8 left-8 text-[26px] text-white/85 lg:left-12">Collaborate<br />for change.</DoodleNote>
-              <Handshake aria-hidden="true" size={150} strokeWidth={0.8} className="pointer-events-none absolute -top-4 -right-4 text-white/12" />
-              <span className="mb-6 flex size-14 items-center justify-center rounded-full bg-white/15"><Handshake size={28} strokeWidth={1.5} /></span>
-              <blockquote className="m-0">
-                <p className="font-serif text-[clamp(22px,2vw,28px)] leading-[1.25] italic">&ldquo;Healthy people. Thriving communities. A cleaner planet.&rdquo;</p>
-              </blockquote>
-              <figcaption className="mt-4 text-xs font-semibold uppercase tracking-[.18em] text-white/80">The PIAX Promise</figcaption>
+            <figure className="relative m-0 flex min-h-[300px] flex-1 overflow-hidden rounded-[30px] bg-brand lg:min-h-[340px] lg:rounded-[60px_0_0_60px]">
+              <img
+                src={partnershipPhoto}
+                alt="PIAX partners shaking hands over a desk with PIAX pad packs"
+                loading="lazy"
+                decoding="async"
+                className="absolute inset-0 size-full object-cover object-[62%_center]"
+              />
             </figure>
           </div>
         </div>
 
         <div className="relative mx-auto mt-10 max-w-[880px]">
-          <DoodleNote className="top-3 -left-[240px] hidden min-[1400px]:block">Better access.<br />Bigger impact.</DoodleNote>
+          <DoodleNote arrow="right" className="top-3 -left-[250px] hidden min-[1400px]:block">Better access.<br />Bigger impact.</DoodleNote>
           <ul className="flex flex-col items-center gap-4 rounded-[18px] bg-white px-6 py-5 shadow-soft md:flex-row md:gap-0">
             {impact.map(({ icon: Icon, title, text, small }, index) => (
               <li key={text} className={cn('flex w-full flex-1 items-center justify-start gap-3 md:w-auto md:justify-center md:px-4', index > 0 && 'md:border-l md:border-line')}>

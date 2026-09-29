@@ -1,5 +1,5 @@
 import { ArrowRight } from 'lucide-react'
-import { CenterHead, Divider, RoundArrow } from './HomeUi.jsx'
+import { CenterHead, Divider, Foliage, RoundArrow } from './HomeUi.jsx'
 import { accent, cardGrid, cn, container, roundArrow, sectionPlain, tones } from './homeStyles.js'
 import padPack from '../../assets/04_card_pad_pack.png'
 import shieldPad from '../../assets/05_card_shield_pad.png'
@@ -7,7 +7,6 @@ import cyclePhone from '../../assets/06_card_cycle_phone.png'
 import aiRobot from '../../assets/07_card_ai_robot.png'
 import locationPin from '../../assets/08_card_location_pin.png'
 import stockBoxes from '../../assets/09_card_stock_boxes.png'
-import leafSprig from '../../assets/home/piax_assets/10_leaf_sprig.png'
 
 const needs = [
   { title: 'I need pads', text: 'Shop PIAX pads now', tone: 'pink', art: padPack, to: '/products' },
@@ -22,14 +21,13 @@ const needs = [
 export default function NeedsSection() {
   return (
     <section className={sectionPlain}>
+      <Foliage art="sprigRound" className="top-4 -right-10 w-[clamp(100px,11vw,170px)] opacity-75 max-md:hidden" />
       <div className={container}>
         <CenterHead
           tag="Let PIAX guide you"
           title={<>What do you need <em className={accent}>today?</em></>}
           text={<>Choose a path that&apos;s right for you. We&apos;ll guide you from here.</>}
-        >
-          <img src={leafSprig} alt="" className="absolute -top-1.5 right-0 hidden w-14 md:block" />
-        </CenterHead>
+        />
 
         <div data-stagger className={cn('grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6', cardGrid)}>
           {needs.map(({ title, text, tone, art, to }) => (

@@ -75,7 +75,8 @@ function LayerConnectors({ geometry, activeId, revealed }) {
 
       {padLayers.map(({ id }) => {
         const { d, end } = route(id - 1, false)
-        const emphasis = activeId === id ? 0 : activeId ? 0.3 : 0.85
+        // Only the active layer keeps its pointer; the rest fade out so one description reads at a time.
+        const emphasis = activeId === id ? 0 : activeId ? 0 : 0.85
         return (
           <g key={id} className="transition-opacity duration-300 motion-reduce:transition-none" opacity={emphasis}>
             <path d={d} fill="none" stroke="#8fb9aa" strokeWidth="1" strokeDasharray="1.5 4.5" strokeLinecap="round" />
@@ -125,12 +126,32 @@ function LayerCard({ layer, active, dimmed, cardRef, onHover, onSelect }) {
   )
 }
 
-// Hover (mouse) previews a layer; click, tap or keyboard focus selects it.
-// One active id drives the pad, the connector and the cards together.
+const tourStepMs = 2600
+
+// While nobody is exploring, walks through the layers one by one so each description gets its turn.
+// Pauses as soon as the visitor hovers or selects, and never runs with reduced motion.
+function useLayerTour(enabled) {
+  const [tourId, setTourId] = useState(1)
+  const [still] = useState(() => window.matchMedia(reducedMotionQuery).matches)
+  const running = enabled && !still
+
+  useEffect(() => {
+    if (!running) return undefined
+    const timer = setInterval(() => setTourId((id) => id % padLayers.length + 1), tourStepMs)
+    return () => clearInterval(timer)
+  }, [running])
+
+  return running ? tourId : null
+}
+
+// Hover (mouse) previews a layer; click, tap or keyboard focus selects it. With neither, a guided
+// tour steps through the layers. One active id drives the pad, the connector and the cards together.
 export default function PadLayerExplorer({ revealed = true }) {
   const [hovered, setHovered] = useState(null)
   const [selected, setSelected] = useState(null)
-  const activeId = hovered ?? selected
+  const userId = hovered ?? selected
+  const tourId = useLayerTour(revealed && userId === null)
+  const activeId = userId ?? tourId
 
   const rootRef = useRef(null)
   const padRef = useRef(null)
@@ -182,7 +203,13 @@ export default function PadLayerExplorer({ revealed = true }) {
 
       <div className="relative">
         <p className="mb-2 flex items-center justify-center gap-2 text-xs font-medium text-muted md:justify-start">
-          <MousePointerClick size={16} strokeWidth={1.6} className="text-brand" aria-hidden="true" />
+          {/* Moves until the visitor starts exploring, hinting that the pad is interactive. */}
+          <MousePointerClick
+            size={16}
+            strokeWidth={1.6}
+            aria-hidden="true"
+            className={cn('text-brand motion-safe:animate-cursor-guide', userId !== null && 'motion-safe:animate-none')}
+          />
           <span className="md:hidden">Tap a layer to explore</span>
           <span className="hidden md:inline">Explore each layer</span>
         </p>

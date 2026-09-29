@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { ArrowLeft, ArrowRight, Briefcase, Flower2, GraduationCap, Heart, Leaf, Moon, Plane, Sun } from 'lucide-react'
-import { DoodleNote, PillLink, RoundArrow } from './HomeUi.jsx'
+import { DoodleNote, Foliage, PillLink, RoundArrow } from './HomeUi.jsx'
 import { cn, container, eyebrow, h2, section, accent, tones } from './homeStyles.js'
 import heavyPhoto from '../../assets/20_need_heavy_flow_photo.png'
 import nightPhoto from '../../assets/21_need_night_photo.png'
@@ -30,6 +30,7 @@ export default function ShopNeedsSection() {
 
   return (
     <section className={section}>
+      <Foliage art="shadowLeaves" className="-bottom-12 -left-20 w-[clamp(200px,22vw,320px)] max-md:hidden" />
       <div className={cn(container, 'flex flex-col')}>
         <div className="relative mb-8 flex flex-col items-start md:flex-row md:items-end md:gap-6 lg:mb-10">
           <div>
@@ -37,7 +38,7 @@ export default function ShopNeedsSection() {
             <h2 className={cn(h2, 'mb-4')}>Your period isn&apos;t the same <em className={accent}>every day.</em></h2>
             <p className="text-[17px]">Different days. Different needs. The right PIAX pad for every moment.</p>
           </div>
-          <DoodleNote className="top-2 right-[120px] hidden xl:block">Same you,<br />different days.</DoodleNote>
+          <DoodleNote arrow="down-right" className="top-2 right-[120px] hidden xl:block">Same you,<br />different days.</DoodleNote>
           <div className="mt-4 flex gap-3 md:mt-0 md:mb-2 md:ml-auto">
             <button type="button" aria-label="Previous" onClick={() => scroll(-1)} className="flex size-9 cursor-pointer items-center justify-center rounded-full border border-line bg-white text-muted">
               <ArrowLeft size={18} />
