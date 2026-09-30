@@ -12,7 +12,7 @@ import stockBoxes from '../../assets/09_card_stock_boxes.png'
 // that would tint its whites with the card colour.
 const needs = [
   { title: 'I need pads', text: 'Shop PIAX pads now', tone: 'pink', art: shieldPad, to: '/products', clean: true },
-  { title: 'Help me find my size', text: 'Get a personalised recommendation', tone: 'mint', art: padBox, to: '#match', clean: true },
+  { title: 'Help me find my size', text: 'Get a personalised recommendation', tone: 'mint', art: padBox, to: '/find-my-pad', clean: true },
   { title: 'I want to track my cycle', text: 'Understand your body better', tone: 'lilac', art: cyclePhone, to: '/app/cycle' },
   { title: 'I have a health question', text: 'Ask PIAX AI', tone: 'blue', art: aiRobot, to: '/ai' },
   { title: 'I need pads urgently', text: 'Find nearby availability', tone: 'peach', art: locationPin, to: '/support' },

@@ -1,9 +1,7 @@
-import { ArrowRight, Bike, Building2, ChartColumn, Handshake, Heart, Leaf, Monitor, ShoppingCart, Sprout, Store, Users } from 'lucide-react'
-import { Link } from 'react-router-dom'
-import BusinessContactForm from './BusinessContactForm.jsx'
-import { DoodleNote, Foliage, RoundArrow, Tag } from './HomeUi.jsx'
+import { Bike, Building2, ChartColumn, Handshake, Heart, Leaf, Monitor, ShoppingCart, Sprout, Store, Users } from 'lucide-react'
+import { DoodleNote, Foliage, PillLink, RoundArrow, Tag } from './HomeUi.jsx'
 import PartnershipEmblem from './PartnershipEmblem.jsx'
-import { barIcon, barStrong, barText, btn, cn, container, h2, heading, iconRow, iconRowIcon, iconRowItem, section, accent, tile, tileText, tileTitle, tones } from './homeStyles.js'
+import { barIcon, barStrong, barText, cn, container, h2, heading, iconRow, iconRowIcon, iconRowItem, section, accent, tile, tileText, tileTitle, tones } from './homeStyles.js'
 
 const perks = [
   { icon: ChartColumn, text: <>High-quality<br />products</> },
@@ -45,8 +43,7 @@ export default function BusinessSection() {
               ))}
             </ul>
             <div className="flex flex-wrap gap-4">
-              <a className={cn(btn.base, btn.solid)} href="#business-contact">Become a Partner<ArrowRight size={18} /></a>
-              <Link className={cn(btn.base, btn.outline)} to="/business">Download Brochure</Link>
+              <PillLink to="/business">Become a Partner</PillLink>
             </div>
           </div>
 
@@ -69,6 +66,8 @@ export default function BusinessSection() {
             <figure className="relative m-0 flex min-h-[300px] flex-1 lg:min-h-[340px]">
               <PartnershipEmblem className="absolute inset-0 size-full p-4 md:p-6" />
             </figure>
+            <DoodleNote arrow="down-right" className="-top-3 left-0 z-10 hidden text-[20px] md:block lg:-left-6">Built for businesses<br />that care.</DoodleNote>
+            <DoodleNote arrow="up" className="bottom-0 left-0 z-10 hidden text-[20px] md:block lg:-left-4">Your workplace + PIAX.<br />Care that shows up!</DoodleNote>
           </div>
         </div>
 
@@ -86,8 +85,6 @@ export default function BusinessSection() {
             ))}
           </ul>
         </div>
-
-        <BusinessContactForm />
       </div>
     </section>
   )

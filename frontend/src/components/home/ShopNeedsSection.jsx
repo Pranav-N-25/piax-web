@@ -8,20 +8,18 @@ import everydayPhoto from '../../assets/22_need_everyday_photo.png'
 import travelPhoto from '../../assets/23_need_travel_photo.png'
 import firstPhoto from '../../assets/24_need_first_period_photo.png'
 import sensitivePhoto from '../../assets/25_need_sensitive_skin_photo.png'
-import heavyPack from '../../assets/home/piax_assets/26_pack_heavy_flow.png'
-import nightPack from '../../assets/home/piax_assets/27_pack_night.png'
-import everydayPack from '../../assets/home/piax_assets/28_pack_everyday.png'
-import travelPack from '../../assets/home/piax_assets/29_pack_travel.png'
-import firstPack from '../../assets/home/piax_assets/30_pack_first_period.png'
-import sensitivePack from '../../assets/home/piax_assets/31_pack_sensitive_skin.png'
+import { bundles, padById } from '../../data/piaxRange.js'
+
+const packImage = (padId) => padById[padId].packs[0].image
+const bundleImage = (id) => bundles.find((bundle) => bundle.id === id).image
 
 const moments = [
-  { title: 'Heavy Flow', text: 'More protection for heavier days', icon: Sun, photo: heavyPhoto, pack: heavyPack, tone: 'pink' },
-  { title: 'Night Protection', text: 'Longer coverage while you sleep', icon: Moon, photo: nightPhoto, pack: nightPack, tone: 'lilac' },
-  { title: 'Everyday Comfort', text: 'Stay fresh and confident day after day', icon: Briefcase, photo: everydayPhoto, pack: everydayPack, tone: 'mint' },
-  { title: 'Travel', text: 'Compact care on the go', icon: Plane, photo: travelPhoto, pack: travelPack, tone: 'peach' },
-  { title: 'First Period', text: 'Gentle care for new beginnings', icon: GraduationCap, photo: firstPhoto, pack: firstPack, tone: 'rose' },
-  { title: 'Sensitive Skin', text: 'Rash-free, ultra-gentle comfort', icon: Leaf, photo: sensitivePhoto, pack: sensitivePack, tone: 'sage' },
+  { title: 'Heavy Flow', text: 'More protection for heavier days', icon: Sun, photo: heavyPhoto, pack: packImage('seren'), tone: 'blue' },
+  { title: 'Night Protection', text: 'Longer coverage while you sleep', icon: Moon, photo: nightPhoto, pack: packImage('nocte'), tone: 'cream' },
+  { title: 'Everyday Comfort', text: 'Stay fresh and confident day after day', icon: Briefcase, photo: everydayPhoto, pack: packImage('luma'), tone: 'mint' },
+  { title: 'Travel', text: 'Compact care on the go', icon: Plane, photo: travelPhoto, pack: packImage('vera'), tone: 'lilac' },
+  { title: 'First Period', text: 'Gentle care for new beginnings', icon: GraduationCap, photo: firstPhoto, pack: bundleImage('piax-discovery-4'), tone: 'rose' },
+  { title: 'Sensitive Skin', text: 'Rash-free, ultra-gentle comfort', icon: Leaf, photo: sensitivePhoto, pack: bundleImage('piax-cycle-pack-15'), tone: 'sage' },
 ]
 
 export default function ShopNeedsSection() {
@@ -65,8 +63,8 @@ export default function ShopNeedsSection() {
                 <h3 className="text-lg font-semibold leading-[1.08] tracking-[-.025em] text-ink">{title}</h3>
                 <p className="mt-2 min-h-9 text-sm leading-[1.3]">{text}</p>
                 <div className="mt-4 flex items-center justify-between">
-                  <img src={pack} alt={`PIAX ${title} pack`} className="w-[68%] mix-blend-multiply" />
-                  <RoundArrow to="/products" label={`$Shop ${title}`} className="bg-white/70" />
+                  <img src={pack} alt={`PIAX pack for ${title.toLowerCase()}`} loading="lazy" decoding="async" className="w-[68%]" />
+                  <RoundArrow to="/products" label={`Shop ${title}`} className="bg-white/70" />
                 </div>
               </div>
             </article>

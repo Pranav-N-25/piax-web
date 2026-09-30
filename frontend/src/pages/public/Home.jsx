@@ -1,4 +1,5 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useSectionReveal } from '../../hooks/useSectionReveal.js'
 import HomeHeader from '../../components/home/HomeHeader.jsx'
 import HomeHero from '../../components/home/HomeHero.jsx'
@@ -19,7 +20,13 @@ import HomeFooter from '../../components/home/HomeFooter.jsx'
 
 export default function Home() {
   const mainRef = useRef(null)
+  const { hash } = useLocation()
   useSectionReveal(mainRef)
+
+  // Links such as /#download jump to their section.
+  useEffect(() => {
+    if (hash) document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth' })
+  }, [hash])
 
   return (
     <div className="overflow-x-clip bg-mist font-sans text-base leading-[1.45] text-body">

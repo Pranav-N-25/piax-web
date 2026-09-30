@@ -3,7 +3,7 @@ import { ArrowLeft, ArrowRight, Check, CircleCheck, Droplet, Heart, Leaf, Shield
 import { useCart } from '../../context/CartContext.jsx'
 import { DoodleNote, Foliage, Tag } from './HomeUi.jsx'
 import { accent, btn, cn, container, heading, section, tones } from './homeStyles.js'
-import recommendedPack from '../../assets/13_recommended_xl_pack.png'
+import { padById } from '../../data/piaxRange.js'
 
 const steps = [
   {
@@ -41,11 +41,18 @@ const steps = [
   },
 ]
 
+// Each flow maps to a pad in the range; the recommendation shows its first (smallest) pack.
+const toMatch = (padId, fit) => {
+  const pad = padById[padId]
+  const pack = pad.packs[0]
+  return { id: pack.id, name: `${pad.name} ${pad.variant}`, size: pad.size, fit: `${fit} | ${pad.length}mm · ${pack.count} pads`, price: pack.price, mrp: pack.mrp, boxCount: pack.count, image: pack.image }
+}
+
 const matches = {
-  Light: { id: 'piax-regular', name: 'PIAX Regular Pads', size: 'Regular', fit: 'Best for light flow | 240mm', price: 79, mrp: 99 },
-  Regular: { id: 'piax-large', name: 'PIAX Large Pads', size: 'L', fit: 'Best for regular flow | 280mm', price: 89, mrp: 115 },
-  Heavy: { id: 'piax-xl', name: 'PIAX XL Pads', size: 'XL', fit: 'Best for heavy flow | 290mm', price: 99, mrp: 129 },
-  'Very Heavy': { id: 'piax-xxl', name: 'PIAX XXL Pads', size: 'XXL', fit: 'Best for very heavy flow | 320mm', price: 119, mrp: 155 },
+  Light: toMatch('vera', 'Best for light flow'),
+  Regular: toMatch('luma', 'Best for regular flow'),
+  Heavy: toMatch('nocte', 'Best for heavy flow & nights'),
+  'Very Heavy': toMatch('seren', 'Best for very heavy flow'),
 }
 
 const specs = [
@@ -75,7 +82,7 @@ export default function MatchSection() {
   const choose = (value) => setAnswers(answers.map((answer, index) => (index === step ? value : answer)))
 
   const addToCart = () => {
-    addItem({ ...match, boxCount: 6, tone: 'mint' })
+    addItem(match)
     setAdded(true)
   }
 
@@ -185,7 +192,7 @@ export default function MatchSection() {
 
           <div className={cn('relative mx-auto flex w-full max-w-[440px] flex-col rounded-[26px] border border-white/80 p-6 shadow-soft md:col-span-full lg:col-span-1 lg:mx-0 lg:max-w-none', tones.mint.fade)}>
             <p className="flex items-center gap-2 text-[13px] font-semibold text-ink"><Sparkles size={16} /> Recommended for you</p>
-            <img src={recommendedPack} alt={`${match.name} $pack`} className="mx-auto my-4 w-[88%] mix-blend-multiply" />
+            <img key={match.id} src={match.image} alt={`${match.name} box of ${match.boxCount} pads`} className="mx-auto my-4 w-[88%] motion-safe:animate-[home-rise_.45s_ease-out]" />
             <h3 className={cn(heading, 'text-xl')}>{match.name}</h3>
             <p className="mt-1 text-[13px] text-muted">{match.fit}</p>
             <ul className="my-4 grid grid-cols-4 gap-2">

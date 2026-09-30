@@ -6,7 +6,7 @@ import { cn, container, heading } from './homeStyles.js'
 import footerLogo from '../../assets/piax_logo.png'
 
 const columns = [
-  { title: 'For Consumers', links: [['Shop All Products', '/products'], ['Find My PIAX Match', '/#match'], ['PIAX App', '/'], ['Period Education (Learn)', '/learn'], ['Track Your Cycle', '/app/cycle'], ['Ask PIAX AI', '/ai'], ['Offers & Bundles', '/products'], ['Orders & Delivery', '/app/orders'], ['Help Center', '/support']] },
+  { title: 'For Consumers', links: [['Shop All Products', '/products'], ['Find My PIAX Match', '/find-my-pad'], ['PIAX App', '/'], ['Period Education (Learn)', '/learn'], ['Track Your Cycle', '/app/cycle'], ['Ask PIAX AI', '/ai'], ['Offers & Bundles', '/products'], ['Orders & Delivery', '/app/orders'], ['Help Center', '/support']] },
   { title: 'For Business', links: [['Become a Distributor', '/business'], ['Retail Partnership', '/business'], ['Quick Commerce', '/business'], ['Institutional Sales', '/business'], ['CSR Collaborations', '/business'], ['Vending Solutions', '/business'], ['Bulk Enquiries', '/business']] },
   { title: 'Support', links: [['FAQ', '/support'], ['Contact Us', '/support'], ['Track Order', '/app/orders'], ['Returns & Refunds', '/support'], ['Shipping Information', '/support'], ['Product Safety', '/support'], ['Report an Issue', '/support']] },
   { title: 'Company', links: [['About PIAX', '/about'], ['Our Mission', '/about'], ['Sustainability', '/sustainability'], ['Careers', '/about', true], ['Blog', '/learn'], ['Media & Press', '/about'], ['Partner with Us', '/business']] },

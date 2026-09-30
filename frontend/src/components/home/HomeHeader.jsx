@@ -15,7 +15,7 @@ const strip = [
 
 const nav = [
   { to: '/products', label: 'Shop', menu: true },
-  { to: '/products', label: 'Find My Pad' },
+  { to: '/find-my-pad', label: 'Find My Pad' },
   { to: '/ai', label: 'PIAX AI' },
   { to: '/learn', label: 'Learn', menu: true },
   { to: '/business', label: 'For Business', menu: true },

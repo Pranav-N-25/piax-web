@@ -1,4 +1,4 @@
-import { CheckCircle2, Globe, Mail, MessageCircle, Send } from 'lucide-react'
+import { CheckCircle2, Globe, LoaderCircle, Mail, MessageCircle, Send } from 'lucide-react'
 import { useState } from 'react'
 import { btn, cn, heading } from './homeStyles.js'
 
@@ -29,7 +29,7 @@ function whatsappText(form) {
   return encodeURIComponent(lines.filter(Boolean).join('\n'))
 }
 
-export default function BusinessContactForm() {
+export default function BusinessContactForm({ className = '' }) {
   const [form, setForm] = useState(empty)
   const [status, setStatus] = useState('idle')
   const [error, setError] = useState('')
@@ -60,26 +60,26 @@ export default function BusinessContactForm() {
   }
 
   return (
-    <div id="business-contact" className="mt-12 grid scroll-mt-24 gap-8 rounded-[24px] bg-white p-6 shadow-soft md:p-10 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1.4fr)] lg:gap-12">
+    <div id="business-contact" data-enter className={cn('mt-12 grid scroll-mt-24 gap-8 rounded-[24px] bg-white p-6 shadow-soft md:p-10 lg:grid-cols-[minmax(0,.8fr)_minmax(0,1.4fr)] lg:gap-12', className)}>
       <div className="flex flex-col">
         <h3 className={cn(heading, 'text-[clamp(24px,2.2vw,30px)]')}>Let’s talk partnership.</h3>
         <p className="mt-3 mb-6 text-[15px]">Share a few details and our partnerships team will get back to you within 1–2 business days. Prefer to chat? Reach us on WhatsApp.</p>
-        <ul className="flex flex-col gap-4 text-sm">
+        <ul data-enter-stagger className="flex flex-col gap-4 text-sm">
           <li>
-            <a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3 hover:text-brand-2">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand"><MessageCircle size={20} /></span>
+            <a href={`https://wa.me/${CONTACT.whatsapp}`} target="_blank" rel="noopener noreferrer" className="group flex items-center gap-3 hover:text-brand-2">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand transition-[transform,background-color,color] duration-200 group-hover:scale-110 group-hover:bg-brand group-hover:text-white"><MessageCircle size={20} /></span>
               <span><strong className="block text-ink">WhatsApp</strong>{CONTACT.whatsappLabel}</span>
             </a>
           </li>
           <li>
-            <a href={`mailto:${CONTACT.email}`} className="flex items-center gap-3 hover:text-brand-2">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand"><Mail size={20} /></span>
+            <a href={`mailto:${CONTACT.email}`} className="group flex items-center gap-3 hover:text-brand-2">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand transition-[transform,background-color,color] duration-200 group-hover:scale-110 group-hover:bg-brand group-hover:text-white"><Mail size={20} /></span>
               <span><strong className="block text-ink">Email</strong>{CONTACT.email}</span>
             </a>
           </li>
           <li>
-            <a href={`https://${CONTACT.website}`} className="flex items-center gap-3 hover:text-brand-2">
-              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand"><Globe size={20} /></span>
+            <a href={`https://${CONTACT.website}`} className="group flex items-center gap-3 hover:text-brand-2">
+              <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand transition-[transform,background-color,color] duration-200 group-hover:scale-110 group-hover:bg-brand group-hover:text-white"><Globe size={20} /></span>
               <span><strong className="block text-ink">Website</strong>{CONTACT.website}</span>
             </a>
           </li>
@@ -87,14 +87,14 @@ export default function BusinessContactForm() {
       </div>
 
       {status === 'sent' ? (
-        <div role="status" className="flex flex-col items-center justify-center gap-3 rounded-[18px] bg-tone-mint p-8 text-center">
+        <div role="status" data-enter className="flex flex-col items-center justify-center gap-3 rounded-[18px] bg-tone-mint p-8 text-center">
           <CheckCircle2 size={44} strokeWidth={1.5} className="text-brand" />
           <h4 className={cn(heading, 'text-xl')}>Thank you, {form.name.split(' ')[0]}!</h4>
           <p className="max-w-[420px] text-sm">We’ve received your details and sent a confirmation to <strong>{form.email}</strong>. Our team will be in touch shortly.</p>
           <button type="button" className={cn(btn.base, btn.outline, btn.small, 'mt-2')} onClick={() => { setForm(empty); setStatus('idle') }}>Send another enquiry</button>
         </div>
       ) : (
-        <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2">
+        <form data-enter-stagger onSubmit={submit} className="grid gap-4 sm:grid-cols-2">
           <label className={label}>Full name*<input name="name" required maxLength={100} autoComplete="name" value={form.name} onChange={update} className={input} /></label>
           <label className={label}>Business name<input name="company" maxLength={150} autoComplete="organization" value={form.company} onChange={update} className={input} /></label>
           <label className={label}>Email*<input name="email" type="email" required maxLength={200} autoComplete="email" value={form.email} onChange={update} className={input} /></label>
@@ -114,7 +114,7 @@ export default function BusinessContactForm() {
 
           <div className="flex flex-wrap gap-3 sm:col-span-2">
             <button type="submit" disabled={status === 'sending'} className={cn(btn.base, btn.solid)}>
-              <Send size={18} />{status === 'sending' ? 'Sending…' : 'Send enquiry'}
+              {status === 'sending' ? <LoaderCircle size={18} className="animate-spin" /> : <Send size={18} />}{status === 'sending' ? 'Sending…' : 'Send enquiry'}
             </button>
             <button type="button" onClick={openWhatsapp} className={cn(btn.base, btn.outline)}>
               <MessageCircle size={18} />Chat on WhatsApp

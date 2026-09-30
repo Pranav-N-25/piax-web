@@ -5,6 +5,7 @@ import avatarDiya from '../../assets/reviews/avatars/avatar_1.jpg';
 import avatarAishwarya from '../../assets/reviews/avatars/avatar_2.jpg';
 import avatarMeera from '../../assets/reviews/avatars/avatar_3.jpg';
 import avatarSahana from '../../assets/reviews/avatars/avatar_4.jpg';
+import { Link } from 'react-router-dom';
 import { Foliage } from './HomeUi.jsx';
 import { cn, container } from './homeStyles.js';
 
@@ -112,6 +113,8 @@ export default function HomeHero() {
         'py-12 lg:py-15 text-[#0c1c19] ' +
         "[font-family:'Poppins',-apple-system,BlinkMacSystemFont,'SF_Pro_Text',sans-serif] " +
         'bg-[linear-gradient(120deg,#e3f4ef_0%,#d3ece5_48%,#bfe3d9_100%)] ' +
+        // Stacked on mobile: start on the colour the photo fades into, ease down to the page colour.
+        'max-[960px]:bg-[linear-gradient(180deg,#d3ece5_0%,#d8eee7_30%,#e3f3ec_62%,var(--color-mist)_100%)] ' +
         'max-[960px]:block max-[960px]:min-h-0 max-[960px]:pt-0 max-[960px]:pb-12 max-[640px]:pb-10'
       }
     >
@@ -149,7 +152,7 @@ export default function HomeHero() {
           className={
             'pointer-events-none absolute inset-0 ' +
             'bg-[linear-gradient(90deg,#d3ece5_0%,rgba(211,236,229,0.85)_14%,rgba(211,236,229,0.25)_34%,transparent_52%),linear-gradient(0deg,rgba(211,236,229,0.55)_0%,transparent_22%),linear-gradient(135deg,rgba(0,135,116,0.10),rgba(0,135,116,0.04))] ' +
-            'max-[960px]:bg-[linear-gradient(0deg,#d3ece5_0%,rgba(211,236,229,0.6)_16%,transparent_40%),linear-gradient(135deg,rgba(0,135,116,0.08),rgba(0,135,116,0.03))]'
+            'max-[960px]:bg-[linear-gradient(0deg,#d3ece5_0%,rgba(211,236,229,0.92)_8%,rgba(211,236,229,0.6)_20%,rgba(211,236,229,0.25)_34%,transparent_48%),linear-gradient(135deg,rgba(0,135,116,0.08),rgba(0,135,116,0.03))]'
           }
         />
       </div>
@@ -157,10 +160,10 @@ export default function HomeHero() {
       {/* Bottom fade into the page background, so the hero melts into the next section with no hard edge. */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 z-1 h-[clamp(96px,16vh,200px)] bg-[linear-gradient(180deg,transparent_0%,rgba(238,247,242,0.55)_45%,var(--color-mist)_100%)]"
+        className="pointer-events-none absolute inset-x-0 bottom-0 z-1 h-[clamp(140px,24vh,280px)] bg-[linear-gradient(180deg,rgba(238,247,242,0)_0%,rgba(238,247,242,0.18)_25%,rgba(238,247,242,0.5)_50%,rgba(238,247,242,0.82)_75%,var(--color-mist)_100%)] max-[960px]:h-24"
       />
 
-      <div className={cn(container, 'relative z-[2] max-[960px]:-mt-16')}>
+      <div className={cn(container, 'relative z-[2] max-[960px]:pt-7 max-[640px]:pt-6')}>
         <div className="grid grid-cols-2 items-center gap-16 max-[1024px]:grid-cols-1 max-[1024px]:gap-10 max-[1024px]:text-center">
           {/* Left: Copy */}
           <div data-hero-copy className="flex flex-col items-start max-[1024px]:mx-auto max-[1024px]:max-w-[620px] max-[1024px]:items-center max-[960px]:order-1 max-[768px]:w-full">
@@ -181,13 +184,13 @@ export default function HomeHero() {
                 <CartBagIcon size={17} />
                 Shop Now
               </a>
-              <a
-                href="#find-my-pad"
+              <Link
+                to="/find-my-pad"
                 className={`${btnBase} gap-2 border-[1.5px] border-[rgba(10,63,54,0.14)] bg-white min-h-12 px-6 py-3 font-semibold text-[#052620] shadow-[0_2px_8px_rgba(0,0,0,0.03),0_1px_2px_rgba(5,38,32,0.02)] duration-[250ms] hover:border-[#008774] hover:text-[#008774] hover:shadow-[0_12px_30px_-6px_rgba(5,38,32,0.07),0_4px_12px_rgba(0,0,0,0.03)]`}
               >
                 <SparkleIcon size={16} />
                 Find My Pad
-              </a>
+              </Link>
             </div>
 
             <ul className="mb-8 flex list-none flex-wrap gap-x-6 gap-y-2 max-[960px]:justify-center max-[600px]:flex-col max-[600px]:items-center max-[600px]:gap-2">
@@ -226,7 +229,7 @@ export default function HomeHero() {
           </div>
 
           {/* Right: overlays that sit on top of the full-bleed photo */}
-          <div className="relative min-h-[480px] max-[960px]:pointer-events-none max-[960px]:absolute max-[960px]:inset-x-0 max-[960px]:top-[calc(-1*clamp(340px,62vw,520px)+64px)] max-[960px]:h-[clamp(340px,62vw,520px)] max-[960px]:min-h-0 max-[600px]:top-[calc(-360px+64px)] max-[600px]:h-[360px]">
+          <div className="relative min-h-[480px] max-[960px]:pointer-events-none max-[960px]:absolute max-[960px]:inset-x-0 max-[960px]:top-[calc(-1*clamp(340px,62vw,520px))] max-[960px]:h-[clamp(340px,62vw,520px)] max-[960px]:min-h-0 max-[600px]:-top-[360px] max-[600px]:h-[360px]">
             {/* Floating info chips */}
             <div className={`${chip} left-[-2%] top-[38%] max-[960px]:left-4 max-[960px]:top-[12%] max-[600px]:left-3 max-[600px]:top-4`}>
               <span className={`${chipIcon} bg-[linear-gradient(135deg,#f08a73,#e87055)]`}>

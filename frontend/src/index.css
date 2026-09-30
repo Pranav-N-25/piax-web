@@ -7,6 +7,14 @@
   --page-gutter: clamp(20px, 5vw, 72px);
 }
 
+/* Hidden page scroll bar: the page still scrolls by wheel, trackpad, touch and keyboard. */
+html {
+  scrollbar-width: none;
+}
+html::-webkit-scrollbar {
+  display: none;
+}
+
 @theme {
   /* layout breakpoints: md 720px, lg 1100px, xl 1280px */
   --breakpoint-md: 45rem;
@@ -175,6 +183,30 @@
   [data-stagger] > :nth-child(5) { --card-delay: .36s; }
   [data-stagger] > :nth-child(6) { --card-delay: .42s; }
   [data-stagger] > :nth-child(7) { --card-delay: .46s; }
+}
+
+/* Favourite heart on product photos (RangeUi.jsx): a quick pop when saved. */
+@keyframes heart-pop {
+  0% { transform: scale(.6); }
+  60% { transform: scale(1.25); }
+  100% { transform: none; }
+}
+
+/* ---------- Business contact form (BusinessContactForm.jsx) ----------
+   Same calm rise as the home page, played on load: the card first, then its
+   contact rows and form fields one after another. */
+@media (prefers-reduced-motion: no-preference) {
+  [data-enter] { animation: home-rise .8s cubic-bezier(.22, 1, .36, 1) backwards; }
+  [data-enter-stagger] > * { animation: home-rise .7s cubic-bezier(.22, 1, .36, 1) var(--enter-delay, .7s) backwards; }
+  [data-enter-stagger] > :nth-child(1) { --enter-delay: .2s; }
+  [data-enter-stagger] > :nth-child(2) { --enter-delay: .26s; }
+  [data-enter-stagger] > :nth-child(3) { --enter-delay: .32s; }
+  [data-enter-stagger] > :nth-child(4) { --enter-delay: .38s; }
+  [data-enter-stagger] > :nth-child(5) { --enter-delay: .44s; }
+  [data-enter-stagger] > :nth-child(6) { --enter-delay: .5s; }
+  [data-enter-stagger] > :nth-child(7) { --enter-delay: .56s; }
+  [data-enter-stagger] > :nth-child(8) { --enter-delay: .62s; }
+  [data-enter-stagger] > [role="alert"] { --enter-delay: 0s; }
 }
 
 /* ---------- How it works step illustrations (StepArt.jsx) ---------- */

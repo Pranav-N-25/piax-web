@@ -5,27 +5,34 @@ import { cn } from './homeStyles.js'
 
 // A PIAX AI chat shown on a phone, built in HTML so text and icons stay sharp
 // on every screen density. Purely illustrative: read out as one image.
-// It opens on the finished chat; while on screen it then plays the chat live: each question is typed into
-// the composer and sent, PIAX AI "types" and its answer slides in, then the chat resets and loops.
+// The first question and answer are always on screen. While the phone is in view the chat carries on
+// from there: each follow-up question is typed into the composer and sent, PIAX AI "types" and its
+// answer slides in. After the last reply the chat fades back to the opening exchange and continues again.
 const conversation = [
   { from: 'user', text: 'Is it normal to have period cramps on day 1?' },
   { from: 'ai', text: 'Yes, it’s completely normal to have cramps on the first day of your period. This happens due to natural muscle contractions in the uterus. 💚' },
   { from: 'user', text: 'What can I do to feel better?' },
-  { from: 'ai', text: 'You can try a warm compress, stay hydrated, light movement and rest. If the pain is severe or unusual, it’s best to consult a doctor.', reactions: true },
+  { from: 'ai', text: 'You can try a warm compress, stay hydrated, light movement and rest. If the pain is severe or unusual, it’s best to consult a doctor.' },
+  { from: 'user', text: 'Which PIAX pad is best for heavy days?' },
+  { from: 'ai', text: 'Try PIAX NOCTE (330mm) for heavy days and nights, or SEREN (360mm) for your heaviest days. 💚', reactions: true },
 ]
 
-const timing = { intro: 2600, start: 900, perChar: 38, beforeSend: 450, afterSend: 500, aiTyping: 1500, afterReply: 1400, hold: 4200 }
+// Messages always on screen: the opening question and answer.
+const OPENING = 2
+
+const timing = { intro: 1600, fade: 400, start: 700, perChar: 38, beforeSend: 450, afterSend: 500, aiTyping: 1500, afterReply: 1400, hold: 4200 }
 const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
-// The finished chat: every message visible, nothing being typed.
-const complete = { shown: conversation.length, draft: '', aiTyping: false, sending: false }
+// The resting chat: the opening exchange, nothing being typed.
+const opening = { shown: OPENING, draft: '', aiTyping: false, sending: false, fading: false }
+// With reduced motion the whole conversation is shown at once instead.
+const complete = { ...opening, shown: conversation.length }
 
-// Script state: how many messages are visible, the draft in the composer, and whether the AI is typing.
-// The phone starts with the whole conversation already on screen; once it's in view the finished chat
-// stays for a moment, then the conversation replays live. Out of view it returns to the finished chat.
+// Script state: how many messages are visible, the draft in the composer, whether the AI is typing and
+// whether the chat is fading back to its opening. Out of view it rests on the opening exchange.
 function useChatScript(playing, messages) {
   const [still] = useState(reducedMotion)
-  const [state, setState] = useState(complete)
+  const [state, setState] = useState(opening)
 
   useEffect(() => {
     if (!playing || still) return undefined
@@ -37,9 +44,7 @@ function useChatScript(playing, messages) {
     const run = async () => {
       await wait(timing.intro)
       while (!cancelled) {
-        set({ shown: 0, draft: '', aiTyping: false, sending: false })
-        await wait(timing.start)
-        for (let index = 0; index < messages.length && !cancelled; index += 1) {
+        for (let index = OPENING; index < messages.length && !cancelled; index += 1) {
           const { from, text } = messages[index]
           if (from === 'user') {
             for (let chars = 1; chars <= text.length && !cancelled; chars += 1) {
@@ -59,13 +64,20 @@ function useChatScript(playing, messages) {
           }
         }
         await wait(timing.hold)
+        // Fade out, drop back to the opening exchange, fade in and carry on.
+        set({ fading: true })
+        await wait(timing.fade)
+        set({ ...opening, fading: true })
+        await wait(60)
+        set({ fading: false })
+        await wait(timing.start)
       }
     }
     run()
     return () => {
       cancelled = true
       timers.forEach(clearTimeout)
-      setState(complete)
+      setState(opening)
     }
   }, [playing, still, messages])
 
@@ -85,13 +97,13 @@ const aiBubble = 'rounded-2xl rounded-tl-md bg-white px-3 py-2 text-[10.5px] lea
 export default function AiPhoneMockup({ className = '' }) {
   const [ref, inView] = useInView({ once: false, threshold: 0.35 })
   const messages = conversation
-  const { shown, draft, aiTyping, sending } = useChatScript(inView, messages)
+  const { shown, draft, aiTyping, sending, fading } = useChatScript(inView, messages)
 
   return (
     <div
       ref={ref}
       role="img"
-      aria-label="PIAX AI chat on a phone: asking whether period cramps on day one are normal, with a reassuring answer and tips to feel better"
+      aria-label="PIAX AI chat on a phone: asking whether period cramps on day one are normal, with a reassuring answer, tips to feel better and a pad suggestion for heavy days"
       className={cn('w-[250px] rounded-[42px] bg-[#1d2322] p-[7px] shadow-[0_24px_50px_-12px_rgba(15,60,50,.35)] ring-1 ring-black/10', className)}
     >
       <div aria-hidden="true" className="relative flex h-[500px] flex-col overflow-hidden rounded-[35px] bg-linear-to-b from-[#f4fbf8] to-[#eaf6f0] text-ink select-none">
@@ -110,8 +122,8 @@ export default function AiPhoneMockup({ className = '' }) {
         </div>
 
         {/* Conversation: pinned to the bottom so new messages push older ones up, as in a real chat. */}
-        <div className="flex min-h-0 flex-1 flex-col justify-end gap-2.5 overflow-hidden px-3 pb-3">
-          <div className={cn('flex flex-col items-center gap-2 px-3 pb-2 text-center transition-opacity duration-500', shown > 2 && 'opacity-60')}>
+        <div className={cn('flex min-h-0 flex-1 flex-col justify-end gap-2.5 overflow-hidden px-3 pb-3 transition-opacity duration-400', fading && 'opacity-0')}>
+          <div className={cn('flex flex-col items-center gap-2 px-3 pb-2 text-center transition-opacity duration-500', shown > OPENING && 'opacity-60')}>
             <LeafAvatar size="lg" />
             <p className="text-[10.5px] leading-[1.4] text-body">Here for your questions,<br />thoughts and overthinking. 💚</p>
           </div>

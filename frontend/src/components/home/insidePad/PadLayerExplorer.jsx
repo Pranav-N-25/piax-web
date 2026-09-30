@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { MousePointerClick } from 'lucide-react'
 import { cn } from '../homeStyles.js'
 import { gutterBleed } from '../../common/spacing.js'
+import { DoodleNote } from '../HomeUi.jsx'
 import PadVisual from './PadVisual.jsx'
 import { VIEW_WIDTH, layerTip } from './padGeometry.js'
 import { layerNumber, padLayers } from './padLayers.js'
@@ -203,17 +204,17 @@ export default function PadLayerExplorer({ revealed = true }) {
       <LayerConnectors geometry={geometry} activeId={activeId} revealed={revealed} />
 
       <div className="relative">
-        <p className="mb-2 flex items-center justify-center gap-2 text-xs font-medium text-muted md:justify-start">
-          {/* Moves until the visitor starts exploring, hinting that the pad is interactive. */}
+        {/* Handwritten hint with an arrow curling down onto the pad: it's interactive. The cursor glides and
+            clicks until the visitor starts exploring, then rests. */}
+        <DoodleNote inline arrow="down-right" className="mb-1 ml-2 w-fit text-[21px] md:ml-6">
           <MousePointerClick
-            size={16}
-            strokeWidth={1.6}
-            aria-hidden="true"
-            className={cn('text-brand motion-safe:animate-cursor-guide', userId !== null && 'motion-safe:animate-none')}
+            size={22}
+            strokeWidth={1.8}
+            className={cn('mr-2 inline-block align-[-4px] motion-safe:animate-cursor-guide', userId !== null && 'motion-safe:animate-none')}
           />
-          <span className="md:hidden">Tap a layer to explore</span>
-          <span className="hidden md:inline">Explore each layer</span>
-        </p>
+          <span className="md:hidden">Tap a layer to explore!</span>
+          <span className="hidden md:inline">Explore each layer!</span>
+        </DoodleNote>
         <div ref={padRef} className="relative mx-auto w-full max-w-[360px] md:max-w-[400px] lg:max-w-none">
           <PadVisual activeId={activeId} settled={revealed} onHover={setHovered} onSelect={selectFromPad} />
         </div>
