@@ -1,6 +1,7 @@
-import { Bike, Building2, ChartColumn, Handshake, Heart, Leaf, Monitor, ShoppingCart, Sprout, Store, Users } from 'lucide-react'
+import { ArrowRight, Bike, Building2, ChartColumn, Handshake, Heart, Leaf, Monitor, ShoppingCart, Sprout, Store, Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { DoodleNote, Foliage, PillLink, RoundArrow, Tag } from './HomeUi.jsx'
+import BusinessContactForm from './BusinessContactForm.jsx'
+import { DoodleNote, Foliage, RoundArrow, Tag } from './HomeUi.jsx'
 import PartnershipEmblem from './PartnershipEmblem.jsx'
 import { barIcon, barStrong, barText, btn, cn, container, h2, heading, iconRow, iconRowIcon, iconRowItem, section, accent, tile, tileText, tileTitle, tones } from './homeStyles.js'
 
@@ -44,7 +45,7 @@ export default function BusinessSection() {
               ))}
             </ul>
             <div className="flex flex-wrap gap-4">
-              <PillLink to="/business">Become a Partner</PillLink>
+              <a className={cn(btn.base, btn.solid)} href="#business-contact">Become a Partner<ArrowRight size={18} /></a>
               <Link className={cn(btn.base, btn.outline)} to="/business">Download Brochure</Link>
             </div>
           </div>
@@ -85,6 +86,8 @@ export default function BusinessSection() {
             ))}
           </ul>
         </div>
+
+        <BusinessContactForm />
       </div>
     </section>
   )
