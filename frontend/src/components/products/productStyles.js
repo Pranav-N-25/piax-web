@@ -1,8 +1,8 @@
 // Tailwind class sets shared by the products page.
-// Spacing: 1440px max width, 16–20px mobile gutter, 48–80px desktop gutter,
+// Spacing: the shared 1440px page container and gutter,
 // 56px (mobile) to 80px (desktop) between sections, 20–28px card padding.
 
-export const container = 'mx-auto w-full max-w-[1440px] px-4 min-[480px]:px-5 md:px-8 lg:px-12 xl:px-20'
+export { container } from '../common/spacing.js'
 export const sectionGap = 'mt-14 lg:mt-20'
 
 export const focusRing = 'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf'

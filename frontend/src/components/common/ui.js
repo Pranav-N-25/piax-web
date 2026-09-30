@@ -1,4 +1,5 @@
 import { extendTailwindMerge } from 'tailwind-merge'
+import { container } from './spacing.js'
 
 // Font sizes here are arbitrary values without a bundled line-height,
 // so a size class must not drop an explicit `leading-*` class.
@@ -10,7 +11,7 @@ const focusRing = 'focus-visible:outline-3 focus-visible:outline-offset-3 focus-
 
 // Shared Tailwind class sets for the inner (non-home) pages.
 export const ui = {
-  page: 'mx-auto w-full max-w-[1440px] px-6 pt-10 pb-15 md:pt-12 md:pb-20 lg:pt-15 lg:pb-30',
+  page: `${container} pt-10 pb-15 md:pt-12 md:pb-20 lg:pt-15 lg:pb-30`,
   pageHeading: 'mb-10 max-w-[700px]',
   pageHeadingNarrow: 'mb-10 max-w-[640px]',
   eyebrow: 'flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[.14em] text-leaf',

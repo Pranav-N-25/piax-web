@@ -32,7 +32,7 @@ export default function HomeHeader() {
   return (
     <>
       <div className="bg-[#0c4a40] text-[12.5px] text-[#e6f3ee]">
-        <div className="mx-auto flex min-h-10 max-w-[1440px] items-center justify-center px-6">
+        <div className={cn(container, 'flex min-h-10 items-center justify-center')}>
           {strip.map(({ icon: Icon, text, fill, className }, index) => (
             <span
               key={index}

@@ -4,6 +4,7 @@ import { CircleUserRound, Menu, Search, ShoppingBag, X } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { useCart } from '../../context/CartContext.jsx'
 import { cn } from '../common/ui.js'
+import { gutter } from '../common/spacing.js'
 
 export default function SiteLayout() {
   const [open, setOpen] = useState(false)
@@ -21,10 +22,11 @@ export default function SiteLayout() {
   if (pathname === '/' || pathname === '/products') return <Outlet />
 
   return <div className="min-h-screen overflow-hidden">
-    <header className="relative z-5 flex h-16 items-center justify-between border-b border-rule bg-[rgba(248,248,243,.94)] px-6">
+    <header className={cn('relative z-5 flex h-16 items-center justify-between border-b border-rule bg-[rgba(248,248,243,.94)]', gutter)}>
       <Brand onClick={() => setOpen(false)} />
       <nav className={cn(
-        'absolute inset-x-0 top-16 m-0 flex-col gap-1 border-b border-rule bg-paper px-6 py-4',
+        'absolute inset-x-0 top-16 m-0 flex-col gap-1 border-b border-rule bg-paper py-4',
+        gutter,
         'md:static md:mr-4 md:ml-auto md:flex md:flex-row md:items-center md:gap-1 md:border-0 md:bg-transparent md:p-0',
         open ? 'flex' : 'hidden',
       )}>
@@ -59,7 +61,7 @@ function Brand({ onClick, light = false }) {
 }
 
 function Footer() {
-  return <footer className="bg-forest px-6 pt-15 pb-8 text-[#d8eee5] md:grid md:grid-cols-[1.2fr_1fr_auto] md:gap-10">
+  return <footer className={cn('bg-forest pt-15 pb-8 text-[#d8eee5] md:grid md:grid-cols-[1.2fr_1fr_auto] md:gap-10', gutter)}>
     <div>
       <Brand light />
       <p className="mt-4 mb-4 text-[13px] text-[#9fc5b8]">Thoughtful period care for real life.</p>

@@ -1,7 +1,12 @@
 // Shared spacing tokens on an 8px grid.
 
-// Page container: 1440px max width with a 24px gutter.
-export const container = 'mx-auto w-full max-w-[1440px] px-6'
+// Page gutter: fluid left/right margin shared by every page (--page-gutter in index.css).
+export const gutter = 'px-(--page-gutter)'
+// Lets a scroll row run edge to edge while its first card still lines up with the page gutter.
+export const gutterBleed = '-mx-(--page-gutter) px-(--page-gutter)'
+
+// Page container: 1440px max width with the page gutter.
+export const container = `mx-auto w-full max-w-[1440px] ${gutter}`
 
 // Vertical rhythm between sections scales with screen height (45px on phones →
 // 102px on large displays): fluid padding, 80% of the original full-bleed rhythm.

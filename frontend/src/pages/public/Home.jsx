@@ -14,6 +14,7 @@ import HowItWorksSection from '../../components/home/HowItWorksSection.jsx'
 import BusinessSection from '../../components/home/BusinessSection.jsx'
 import LearnSection from '../../components/home/LearnSection.jsx'
 import FaqSection from '../../components/home/FaqSection.jsx'
+import AppBanner from '../../components/home/AppBanner.jsx'
 import HomeFooter from '../../components/home/HomeFooter.jsx'
 
 export default function Home() {
@@ -37,6 +38,7 @@ export default function Home() {
         <BusinessSection />
         <LearnSection />
         <FaqSection />
+        <AppBanner />
       </main>
       <HomeFooter />
     </div>

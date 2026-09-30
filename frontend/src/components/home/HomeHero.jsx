@@ -6,6 +6,7 @@ import avatarAishwarya from '../../assets/reviews/avatars/avatar_2.jpg';
 import avatarMeera from '../../assets/reviews/avatars/avatar_3.jpg';
 import avatarSahana from '../../assets/reviews/avatars/avatar_4.jpg';
 import { Foliage } from './HomeUi.jsx';
+import { cn, container } from './homeStyles.js';
 
 // Vite/CRA return a string for image imports; Next.js returns { src, width, height }.
 const src = (img) => (typeof img === 'string' ? img : img?.src);
@@ -127,6 +128,7 @@ export default function HomeHero() {
         className="pointer-events-none absolute -bottom-[220px] -left-[160px] z-0 h-[620px] w-[620px] rounded-full bg-[radial-gradient(circle,rgba(0,135,116,0.14)_0%,transparent_70%)]"
       />
 
+
       {/* Botanical frame: a cluster anchoring the bottom-left corner and a light twig at the top-right,
           both cropped by the viewport edge and kept clear of the headline. */}
       <Foliage art="clusterLeft" className="-bottom-[70px] -left-[90px] z-[1] w-[clamp(240px,24vw,380px)] opacity-90 max-[1024px]:hidden" />
@@ -158,7 +160,7 @@ export default function HomeHero() {
         className="pointer-events-none absolute inset-x-0 bottom-0 z-1 h-[clamp(96px,16vh,200px)] bg-[linear-gradient(180deg,transparent_0%,rgba(238,247,242,0.55)_45%,var(--color-mist)_100%)]"
       />
 
-      <div className="relative z-[2] mx-auto w-full max-w-[1440px] px-6 max-[960px]:-mt-16">
+      <div className={cn(container, 'relative z-[2] max-[960px]:-mt-16')}>
         <div className="grid grid-cols-2 items-center gap-16 max-[1024px]:grid-cols-1 max-[1024px]:gap-10 max-[1024px]:text-center">
           {/* Left: Copy */}
           <div data-hero-copy className="flex flex-col items-start max-[1024px]:mx-auto max-[1024px]:max-w-[620px] max-[1024px]:items-center max-[960px]:order-1 max-[768px]:w-full">

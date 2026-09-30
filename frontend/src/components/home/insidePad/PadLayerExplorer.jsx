@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { MousePointerClick } from 'lucide-react'
 import { cn } from '../homeStyles.js'
+import { gutterBleed } from '../../common/spacing.js'
 import PadVisual from './PadVisual.jsx'
 import { VIEW_WIDTH, layerTip } from './padGeometry.js'
 import { layerNumber, padLayers } from './padLayers.js'
@@ -221,7 +222,7 @@ export default function PadLayerExplorer({ revealed = true }) {
       <ol data-stagger
         ref={listRef}
         aria-label="The 8 layers inside a PIAX pad"
-        className="relative -mx-6 flex snap-x snap-mandatory gap-3 overflow-x-auto px-6 pb-2 [scrollbar-width:none] md:mx-0 md:grid md:gap-2 md:overflow-visible md:p-0 [&::-webkit-scrollbar]:hidden"
+        className={cn(gutterBleed, 'relative flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [scrollbar-width:none] md:mx-0 md:grid md:gap-2 md:overflow-visible md:p-0 [&::-webkit-scrollbar]:hidden')}
       >
         {padLayers.map((layer, index) => (
           <LayerCard

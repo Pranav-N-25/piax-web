@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ArrowRight, Globe, Heart, Leaf, Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { DoodleNote, Foliage } from './HomeUi.jsx'
+import { DoodleNote, Foliage, StoreBadges } from './HomeUi.jsx'
 import { cn, container, heading } from './homeStyles.js'
 import footerLogo from '../../assets/piax_logo.png'
 
@@ -18,12 +18,6 @@ const socials = [
   { label: 'LinkedIn', path: 'M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9.5h4v11H3v-11Zm6.5 0h3.8v1.6h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.6 4.78 6v5.4h-4v-4.8c0-1.15-.02-2.63-1.6-2.63-1.6 0-1.85 1.25-1.85 2.55v4.88h-4v-11Z' },
   { label: 'YouTube', path: 'M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8ZM9.75 15.02V8.98L15.5 12l-5.75 3.02Z' },
   { label: 'Facebook', path: 'M14 8.5V6.8c0-.8.2-1.3 1.4-1.3H17V2.2A21 21 0 0 0 14.6 2C12.2 2 10.6 3.4 10.6 6.1v2.4H8v3.4h2.6V22H14V11.9h2.6l.4-3.4h-3Z' },
-]
-
-// Store links go live with the app listings; until then they point nowhere, like the social icons.
-const stores = [
-  { label: 'Download on the', name: 'App Store', href: '#', path: 'M15.53 3.83c.84-1.01 1.4-2.43 1.25-3.83-1.21.05-2.67.8-3.54 1.82-.78.9-1.45 2.34-1.27 3.71 1.34.1 2.72-.69 3.56-1.7Zm-3.38 3.07c-.95 0-2.42-1.08-3.96-1.04-2.04.03-3.91 1.18-4.96 3.01-2.12 3.68-.55 9.1 1.52 12.09 1.01 1.45 2.21 3.09 3.79 3.04 1.52-.07 2.09-.99 3.94-.99 1.83 0 2.35.99 3.96.95 1.64-.03 2.68-1.48 3.68-2.95 1.16-1.69 1.64-3.33 1.66-3.42-.04-.01-3.18-1.22-3.22-4.86-.03-3.04 2.48-4.49 2.6-4.56-1.43-2.09-3.63-2.32-4.39-2.38-2-.15-3.68 1.1-4.62 1.1Z' },
-  { label: 'Get it on', name: 'Google Play', href: '#', path: 'M22.02 13.3 18.1 15.52l-3.52-3.5 3.55-3.52 3.89 2.2a1.49 1.49 0 0 1 0 2.6ZM1.34.92a1.49 1.49 0 0 0-.11.57v21.02c0 .22.04.42.12.6l11.15-11.09L1.34.92Zm12.2 10.07 3.26-3.24L3.45.2A1.47 1.47 0 0 0 2.5.02l11.04 10.97Zm0 2.07-11 10.93c.3.04.62-.02.91-.18l13.32-7.54-3.23-3.21Z' },
 ]
 
 const values = [
@@ -44,7 +38,7 @@ export default function HomeFooter() {
   }
 
   return (
-    <footer className="relative overflow-hidden bg-linear-to-b from-[#e9f6ef] to-[#dff1e7] pt-15 pb-8 lg:pt-20" id="download">
+    <footer className="relative overflow-hidden bg-linear-to-b from-[#e9f6ef] to-[#dff1e7] pt-15 pb-8 lg:pt-20">
       {/* Generous botanical close: foliage rises from both bottom corners past the content edge. */}
       <Foliage art="clusterLeft" className="-bottom-12 -left-24 w-[clamp(120px,22vw,340px)] opacity-85 max-md:-left-12 max-md:w-28 max-md:opacity-60" />
       <Foliage art="clusterRight" className="-bottom-10 -right-24 w-[clamp(120px,24vw,360px)] opacity-85 max-md:-right-12 max-md:w-28 max-md:opacity-60" />
@@ -115,22 +109,7 @@ export default function HomeFooter() {
             )}
 
             <p className="mt-8 mb-3 text-sm font-semibold text-ink">Get the PIAX app</p>
-            <div className="flex flex-wrap gap-3">
-              {stores.map(({ label, name, href, path }) => (
-                <a
-                  key={name}
-                  href={href}
-                  aria-label={`${label} ${name}`}
-                  className="inline-flex min-h-12 items-center gap-2.5 rounded-xl bg-[#052620] px-4 py-2 text-white shadow-soft transition-transform duration-200 hover:-translate-y-0.5"
-                >
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor" aria-hidden="true" className="shrink-0"><path d={path} /></svg>
-                  <span className="flex flex-col text-left leading-none">
-                    <small className="text-[9.5px] tracking-[.02em] text-white/75">{label}</small>
-                    <strong className="mt-0.5 text-[15px] font-semibold tracking-[-.01em]">{name}</strong>
-                  </span>
-                </a>
-              ))}
-            </div>
+            <StoreBadges />
           </div>
         </div>
 
