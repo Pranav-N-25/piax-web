@@ -152,14 +152,16 @@ const stores = [
   { label: 'Get it on', name: 'Google Play', href: '#', path: 'M22.02 13.3 18.1 15.52l-3.52-3.5 3.55-3.52 3.89 2.2a1.49 1.49 0 0 1 0 2.6ZM1.34.92a1.49 1.49 0 0 0-.11.57v21.02c0 .22.04.42.12.6l11.15-11.09L1.34.92Zm12.2 10.07 3.26-3.24L3.45.2A1.47 1.47 0 0 0 2.5.02l11.04 10.97Zm0 2.07-11 10.93c.3.04.62-.02.91-.18l13.32-7.54-3.23-3.21Z' },
 ]
 
-// App Store / Google Play badges. `tone="light"` inverts them for dark backgrounds.
-export function StoreBadges({ tone = 'dark', className = '' }) {
+// App Store / Google Play badges. `tone="light"` inverts them for dark backgrounds; `only` limits them to
+// some stores (by name) and `onSelect` reports which store was picked.
+export function StoreBadges({ tone = 'dark', only, onSelect, className = '' }) {
   return (
     <div className={cn('flex flex-wrap gap-3', className)}>
-      {stores.map(({ label, name, href, path }) => (
+      {stores.filter(({ name }) => !only || only.includes(name)).map(({ label, name, href, path }) => (
         <a
           key={name}
           href={href}
+          onClick={() => onSelect?.(name)}
           aria-label={`${label} ${name}`}
           className={cn(
             'inline-flex min-h-12 items-center gap-2.5 rounded-xl px-4 py-2 shadow-soft transition-transform duration-200 hover:-translate-y-0.5',

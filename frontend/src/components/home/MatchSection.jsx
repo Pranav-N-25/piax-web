@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ArrowLeft, ArrowRight, Check, CircleCheck, Droplet, Heart, Leaf, Shield, Sparkles, Sprout, Truck, Wind } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, CircleCheck, Droplet, Heart, Leaf, Shield, ShoppingCart, Sparkles, Sprout, Truck, Wind } from 'lucide-react'
 import { useCart } from '../../context/CartContext.jsx'
 import { DoodleNote, Foliage, Tag } from './HomeUi.jsx'
 import { accent, btn, cn, container, heading, section, tones } from './homeStyles.js'
@@ -84,7 +84,7 @@ export default function MatchSection() {
       <Foliage art="broad" className="-bottom-10 -right-[120px] w-[clamp(200px,22vw,340px)] opacity-60 max-lg:hidden" />
       <Foliage art="shadowFrond" className="top-0 -left-16 w-[clamp(180px,20vw,300px)] opacity-80 max-md:hidden" />
       <div className={cn(container, 'flex flex-col')}>
-        <div className="grid flex-1 items-stretch gap-6 lg:gap-8 md:grid-cols-[1fr_1.3fr] lg:grid-cols-[minmax(0,.95fr)_minmax(0,1.4fr)_minmax(0,1fr)]">
+        <div className="grid flex-1 items-center gap-6 lg:gap-8 md:grid-cols-[1fr_1.3fr] lg:grid-cols-[minmax(0,.95fr)_minmax(0,1.4fr)_minmax(0,1fr)]">
           <div className="relative">
             <Tag>Personalised just for you</Tag>
             <h2 className={cn(heading, 'mt-4 mb-4 text-[clamp(40px,4.2vw,58px)] leading-none tracking-[-.035em]')}>
@@ -101,8 +101,8 @@ export default function MatchSection() {
             <DoodleNote inline arrow="right" className="mt-12 ml-2 hidden lg:block">Every body.<br />A happier period.</DoodleNote>
           </div>
 
-          {/* Sized to its content rather than stretched to the row's tallest column. */}
-          <div className="flex flex-col self-start rounded-[26px] bg-white p-4 text-center shadow-soft md:p-6">
+          {/* Sized to its content and centred in the row, like the columns beside it. */}
+          <div className="flex flex-col rounded-[26px] bg-white p-4 text-center shadow-soft md:p-6">
             <ol className="mx-auto mb-4 grid max-w-[420px] grid-cols-3">
               {steps.map(({ label }, index) => {
                 const isDone = index < step || done
@@ -195,15 +195,25 @@ export default function MatchSection() {
                 </li>
               ))}
             </ul>
-            <div className="mt-auto flex flex-wrap items-center gap-3 rounded-2xl bg-white p-3">
-              <strong className="text-[22px] text-ink">₹{match.price}</strong>
-              <del className="text-sm text-[#8d9a96]">₹{match.mrp}</del>
-              <span className="rounded-md bg-[#fde2e7] px-2 py-[3px] text-[11px] font-bold text-[#c0355a]">
-                {Math.round((1 - match.price / match.mrp) * 100)}% OFF
-              </span>
-              <button type="button" onClick={addToCart} className={cn(btn.base, btn.solid, 'ml-auto min-h-10 flex-1 px-4')}>
-                {added ? 'Added ✓' : 'Add to Cart'}
-              </button>
+            {/* Price, MRP, discount and Add to Cart always share one row. When the box is too narrow for the
+                full label (the three-column layout just above lg), the button becomes a round cart icon. */}
+            <div className="@container mt-auto pt-2">
+              <div className="flex flex-row flex-nowrap items-center gap-2 @min-[15rem]:gap-3">
+                <strong className="shrink-0 text-[22px] leading-none text-ink">₹{match.price}</strong>
+                <del className="shrink-0 text-sm text-[#8d9a96]">₹{match.mrp}</del>
+                <span className="shrink-0 whitespace-nowrap rounded-md bg-[#fde2e7] px-2 py-[3px] text-[11px] font-bold text-[#c0355a]">
+                  {Math.round((1 - match.price / match.mrp) * 100)}% OFF
+                </span>
+                <button
+                  type="button"
+                  onClick={addToCart}
+                  aria-label={added ? 'Added to cart' : 'Add to Cart'}
+                  className={cn(btn.base, btn.solid, 'ml-auto min-h-10 shrink-0 gap-2 px-0 text-sm @max-[15rem]:size-10 @max-[15rem]:min-h-10 @min-[15rem]:flex-1 @min-[15rem]:px-4')}
+                >
+                  {added ? <Check size={18} /> : <ShoppingCart size={18} className="@min-[15rem]:hidden" />}
+                  <span className="@max-[15rem]:hidden">{added ? 'Added' : 'Add to Cart'}</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

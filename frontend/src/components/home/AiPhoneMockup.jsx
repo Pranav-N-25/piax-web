@@ -5,8 +5,8 @@ import { cn } from './homeStyles.js'
 
 // A PIAX AI chat shown on a phone, built in HTML so text and icons stay sharp
 // on every screen density. Purely illustrative: read out as one image.
-// While on screen it plays the chat live: each question is typed into the composer and sent,
-// PIAX AI "types" and its answer slides in, then the chat resets and loops.
+// It opens on the finished chat; while on screen it then plays the chat live: each question is typed into
+// the composer and sent, PIAX AI "types" and its answer slides in, then the chat resets and loops.
 const conversation = [
   { from: 'user', text: 'Is it normal to have period cramps on day 1?' },
   { from: 'ai', text: 'Yes, it’s completely normal to have cramps on the first day of your period. This happens due to natural muscle contractions in the uterus. 💚' },
@@ -14,13 +14,18 @@ const conversation = [
   { from: 'ai', text: 'You can try a warm compress, stay hydrated, light movement and rest. If the pain is severe or unusual, it’s best to consult a doctor.', reactions: true },
 ]
 
-const timing = { start: 900, perChar: 38, beforeSend: 450, afterSend: 500, aiTyping: 1500, afterReply: 1400, hold: 4200 }
+const timing = { intro: 2600, start: 900, perChar: 38, beforeSend: 450, afterSend: 500, aiTyping: 1500, afterReply: 1400, hold: 4200 }
 const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
+// The finished chat: every message visible, nothing being typed.
+const complete = { shown: conversation.length, draft: '', aiTyping: false, sending: false }
+
 // Script state: how many messages are visible, the draft in the composer, and whether the AI is typing.
+// The phone starts with the whole conversation already on screen; once it's in view the finished chat
+// stays for a moment, then the conversation replays live. Out of view it returns to the finished chat.
 function useChatScript(playing) {
   const [still] = useState(reducedMotion)
-  const [state, setState] = useState({ shown: 0, draft: '', aiTyping: false, sending: false })
+  const [state, setState] = useState(complete)
 
   useEffect(() => {
     if (!playing || still) return undefined
@@ -30,6 +35,7 @@ function useChatScript(playing) {
     const set = (patch) => !cancelled && setState((prev) => ({ ...prev, ...patch }))
 
     const run = async () => {
+      await wait(timing.intro)
       while (!cancelled) {
         set({ shown: 0, draft: '', aiTyping: false, sending: false })
         await wait(timing.start)
@@ -59,10 +65,11 @@ function useChatScript(playing) {
     return () => {
       cancelled = true
       timers.forEach(clearTimeout)
+      setState(complete)
     }
   }, [playing, still])
 
-  return still ? { shown: conversation.length, draft: '', aiTyping: false, sending: false } : state
+  return still ? complete : state
 }
 
 function LeafAvatar({ size = 'sm' }) {

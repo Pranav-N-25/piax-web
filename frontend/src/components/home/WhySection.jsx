@@ -76,8 +76,22 @@ export default function WhySection() {
               </div>
             </article>
           ))}
-          <div className="hidden overflow-hidden rounded-[18px] lg:block">
-            <img src={womanPhoto} alt="Relaxed woman smiling with eyes closed" className="size-full object-cover object-[58%_center]" />
+          {/* Free-form photo, no card: it rises a little above the cards, runs out to the page edge and
+              feathers into the background along its left, top and bottom edges. */}
+          <div className="relative hidden lg:block">
+            <img
+              src={womanPhoto}
+              alt="Relaxed woman smiling with eyes closed"
+              loading="lazy"
+              decoding="async"
+              className="absolute -top-12 bottom-0 -left-6 h-[calc(100%+3rem)] w-[calc(100%+1.5rem+var(--page-gutter))] max-w-none object-cover object-[60%_28%]"
+              style={{
+                maskImage: 'linear-gradient(to right, transparent 0%, #000 34%), linear-gradient(to bottom, transparent 0%, #000 20%, #000 90%, transparent 100%)',
+                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, #000 34%), linear-gradient(to bottom, transparent 0%, #000 20%, #000 90%, transparent 100%)',
+                maskComposite: 'intersect',
+                WebkitMaskComposite: 'source-in',
+              }}
+            />
           </div>
         </div>
 

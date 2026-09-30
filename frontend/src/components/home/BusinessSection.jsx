@@ -1,7 +1,7 @@
 import { Bike, Building2, ChartColumn, Handshake, Heart, Leaf, Monitor, ShoppingCart, Sprout, Store, Users } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { DoodleNote, Foliage, PillLink, RoundArrow, Tag } from './HomeUi.jsx'
-import partnershipPhoto from '../../assets/home/business_partnership.jpg'
+import PartnershipEmblem from './PartnershipEmblem.jsx'
 import { barIcon, barStrong, barText, btn, cn, container, h2, heading, iconRow, iconRowIcon, iconRowItem, section, accent, tile, tileText, tileTitle, tones } from './homeStyles.js'
 
 const perks = [
@@ -65,14 +65,8 @@ export default function BusinessSection() {
           </div>
 
           <div className="relative flex md:col-span-full lg:col-span-1">
-            <figure className="relative m-0 flex min-h-[300px] flex-1 overflow-hidden rounded-[30px] bg-brand lg:min-h-[340px] lg:rounded-[60px_0_0_60px]">
-              <img
-                src={partnershipPhoto}
-                alt="PIAX partners shaking hands over a desk with PIAX pad packs"
-                loading="lazy"
-                decoding="async"
-                className="absolute inset-0 size-full object-cover object-[62%_center]"
-              />
+            <figure className="relative m-0 flex min-h-[300px] flex-1 lg:min-h-[340px]">
+              <PartnershipEmblem className="absolute inset-0 size-full p-4 md:p-6" />
             </figure>
           </div>
         </div>

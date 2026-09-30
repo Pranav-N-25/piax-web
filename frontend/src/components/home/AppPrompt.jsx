@@ -1,0 +1,217 @@
+import { useCallback, useEffect, useRef, useState } from 'react'
+import { Bell, CalendarHeart, Repeat, X } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
+import { StoreBadges } from './HomeUi.jsx'
+import { cn } from './homeStyles.js'
+import appPromo from '../../assets/home/app-promo.webp'
+
+// "Try our mobile app" prompt, built on app-promotion UX research:
+// - Non-blocking: a corner card on desktop and a compact bottom sheet on phones (about a fifth of the
+//   screen; the big product artwork, description and benefit chips are desktop-only). No backdrop,
+//   no scroll lock, no focus theft, so it never hides the page (Google's intrusive-interstitial guidance).
+// - Earned timing: never on arrival. It appears a few seconds after the visitor reaches the footer, once
+//   they've read through the page, as a gentle next step rather than an interruption.
+// - Respectful frequency: at most once per visit, quiet for a while after "Not now" and for longer once
+//   someone has tapped a store link. Never while typing (e.g. in the footer's newsletter field) or while
+//   another dialog is open; it waits for the next free moment instead.
+// - Relevant: Android visitors see Google Play, iPhone and iPad visitors see the App Store, desktop sees both.
+const trigger = {
+  footerDelayMs: 3000, // how long after the footer comes into view
+  footerVisible: 0.15, // share of the footer that must be on screen to count as reached
+}
+const quietDays = { dismissed: 14, storeTapped: 90 }
+
+const storageKey = 'piax-app-prompt'
+const sessionKey = 'piax-app-prompt-shown'
+const day = 24 * 60 * 60 * 1000
+
+const benefits = [
+  { icon: CalendarHeart, text: 'Track your cycle' },
+  { icon: Bell, text: 'Period reminders' },
+  { icon: Repeat, text: 'Reorder in a tap' },
+]
+
+// Storage can be blocked (private mode, strict settings): the prompt then simply behaves per page view.
+function readStore(storage, key) {
+  try {
+    return storage.getItem(key)
+  } catch {
+    return null
+  }
+}
+
+function writeStore(storage, key, value) {
+  try {
+    storage.setItem(key, value)
+  } catch {
+    // Nothing to remember then.
+  }
+}
+
+function isQuiet() {
+  if (readStore(sessionStorage, sessionKey)) return true
+  try {
+    const { until = 0 } = JSON.parse(readStore(localStorage, storageKey) || '{}')
+    return Date.now() < until
+  } catch {
+    return false
+  }
+}
+
+function rememberFor(days) {
+  writeStore(localStorage, storageKey, JSON.stringify({ until: Date.now() + days * day }))
+}
+
+function detectPlatform() {
+  const agent = navigator.userAgent || ''
+  if (/android/i.test(agent)) return 'android'
+  // iPadOS reports itself as a Mac, so a touch-capable "Mac" is an iPad.
+  if (/iphone|ipad|ipod/i.test(agent) || (/macintosh/i.test(agent) && navigator.maxTouchPoints > 1)) return 'ios'
+  return 'desktop'
+}
+
+const storesFor = { android: ['Google Play'], ios: ['App Store'], desktop: undefined }
+
+// Moments when a prompt would interrupt: typing in a field, or another (modal) dialog holding the page.
+function userIsBusy() {
+  const active = document.activeElement
+  if (active && (active.matches('input, textarea, select') || active.isContentEditable)) return true
+  return document.body.style.overflow === 'hidden'
+}
+
+// Decides when to show the prompt; returns [open, close]. Watches the current page's footer and opens
+// the prompt `footerDelayMs` after the visitor reaches it. Pages swap their footer on navigation, so the
+// watch restarts with each route while the once-per-visit limit carries across them.
+function useAppPromptTrigger() {
+  const [open, setOpen] = useState(false)
+  const done = useRef(false)
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    if (done.current || isQuiet()) return undefined
+    const footer = document.querySelector('footer')
+    if (!footer || !('IntersectionObserver' in window)) return undefined
+
+    let timer
+    // Show once the delay has passed; if the visitor is busy right then, check again a second later.
+    const showWhenFree = () => {
+      if (userIsBusy()) {
+        timer = window.setTimeout(showWhenFree, 1000)
+        return
+      }
+      done.current = true
+      writeStore(sessionStorage, sessionKey, '1')
+      setOpen(true)
+    }
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return
+      observer.disconnect()
+      timer = window.setTimeout(showWhenFree, trigger.footerDelayMs)
+    }, { threshold: trigger.footerVisible })
+    observer.observe(footer)
+
+    return () => {
+      observer.disconnect()
+      window.clearTimeout(timer)
+    }
+  }, [pathname])
+
+  const close = useCallback(() => setOpen(false), [])
+  return [open, close]
+}
+
+// Product artwork: the PIAX app on a phone with PIAX pads and the watch face. Decorative.
+function PromoArt({ className = '' }) {
+  return <img src={appPromo} alt="" width="729" height="760" decoding="async" draggable={false} className={cn('h-auto max-w-none select-none', className)} />
+}
+
+export default function AppPrompt() {
+  const [open, close] = useAppPromptTrigger()
+  const [platform] = useState(detectPlatform)
+
+  const dismiss = useCallback(() => {
+    rememberFor(quietDays.dismissed)
+    close()
+  }, [close])
+
+  const storeTapped = () => {
+    rememberFor(quietDays.storeTapped)
+    close()
+  }
+
+  useEffect(() => {
+    if (!open) return undefined
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') dismiss()
+    }
+    document.addEventListener('keydown', onKeyDown)
+    return () => document.removeEventListener('keydown', onKeyDown)
+  }, [open, dismiss])
+
+  // The live region stays mounted so screen readers announce the card when it appears, without moving focus.
+  return (
+    <div aria-live="polite" className="pointer-events-none fixed inset-x-3 bottom-3 z-40 flex justify-end md:inset-x-auto md:right-6 md:bottom-6">
+      {open && (
+        <section
+          role="dialog"
+          aria-modal="false"
+          aria-labelledby="app-prompt-title"
+          aria-describedby="app-prompt-text"
+          className={cn(
+            'pointer-events-auto relative w-full rounded-3xl border border-line bg-white p-4 font-sans text-body shadow-[0_24px_60px_rgba(15,60,50,.22)] md:w-[400px] md:p-5',
+            'motion-safe:animate-app-prompt-in',
+          )}
+        >
+          <button
+            type="button"
+            onClick={dismiss}
+            aria-label="Close app suggestion"
+            className="absolute top-2 right-2 z-10 flex size-11 cursor-pointer items-center justify-center rounded-full text-muted hover:bg-mist hover:text-ink focus-visible:outline-2 focus-visible:outline-brand md:bg-white/15 md:text-white md:hover:bg-white/25 md:hover:text-white"
+          >
+            <X size={18} />
+          </button>
+
+          {/* Desktop: the artwork rises out of a brand-green header panel, above the card's top edge. */}
+          <div aria-hidden="true" className="relative -mx-5 -mt-5 mb-5 h-40 rounded-t-[23px] bg-linear-to-br from-[#1b8a74] via-brand-2 to-brand max-md:hidden">
+            <span className="absolute -top-8 -left-8 size-32 rounded-full bg-white/10" />
+            <span className="absolute right-10 bottom-6 size-16 rounded-full bg-white/10" />
+            <PromoArt className="absolute bottom-0 left-1/2 w-[230px] -translate-x-1/2 drop-shadow-[0_18px_24px_rgba(3,30,25,.35)]" />
+          </div>
+
+          <div className="flex items-center gap-4 pr-8">
+            <span aria-hidden="true" className="flex size-16 shrink-0 items-end justify-center overflow-hidden rounded-2xl bg-linear-to-br from-[#1b8a74] to-brand md:hidden">
+              <PromoArt className="w-[64px] translate-y-1" />
+            </span>
+            <div>
+              <h2 id="app-prompt-title" className="text-[18px] leading-tight font-bold tracking-[-.02em] text-ink">Get the PIAX app</h2>
+              <p className="mt-0.5 text-[12.5px] text-muted">Free on Android &amp; iOS · Trusted by 10,000+ women</p>
+            </div>
+          </div>
+
+          <p id="app-prompt-text" className="mt-4 text-[14px] leading-[1.45] max-md:sr-only">
+            Track your cycle, get gentle reminders and quick-order your favourite PIAX pads — all from your phone.
+          </p>
+          <ul className="mt-3 flex flex-wrap gap-2 max-md:hidden">
+            {benefits.map(({ icon: Icon, text }) => (
+              <li key={text} className="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-2.5 py-1 text-[12px] font-medium text-brand">
+                <Icon size={14} strokeWidth={1.8} /> {text}
+              </li>
+            ))}
+          </ul>
+
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 md:mt-5">
+            <StoreBadges only={storesFor[platform]} onSelect={storeTapped} />
+            <button
+              type="button"
+              onClick={dismiss}
+              className="min-h-11 cursor-pointer px-1 text-[13px] font-semibold text-muted underline-offset-4 hover:text-ink hover:underline focus-visible:outline-2 focus-visible:outline-brand"
+            >
+              Not now
+            </button>
+          </div>
+        </section>
+      )}
+    </div>
+  )
+}
