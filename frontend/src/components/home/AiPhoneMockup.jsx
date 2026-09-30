@@ -23,7 +23,7 @@ const complete = { shown: conversation.length, draft: '', aiTyping: false, sendi
 // Script state: how many messages are visible, the draft in the composer, and whether the AI is typing.
 // The phone starts with the whole conversation already on screen; once it's in view the finished chat
 // stays for a moment, then the conversation replays live. Out of view it returns to the finished chat.
-function useChatScript(playing) {
+function useChatScript(playing, messages) {
   const [still] = useState(reducedMotion)
   const [state, setState] = useState(complete)
 
@@ -39,8 +39,8 @@ function useChatScript(playing) {
       while (!cancelled) {
         set({ shown: 0, draft: '', aiTyping: false, sending: false })
         await wait(timing.start)
-        for (let index = 0; index < conversation.length && !cancelled; index += 1) {
-          const { from, text } = conversation[index]
+        for (let index = 0; index < messages.length && !cancelled; index += 1) {
+          const { from, text } = messages[index]
           if (from === 'user') {
             for (let chars = 1; chars <= text.length && !cancelled; chars += 1) {
               set({ draft: text.slice(0, chars) })
@@ -67,7 +67,7 @@ function useChatScript(playing) {
       timers.forEach(clearTimeout)
       setState(complete)
     }
-  }, [playing, still])
+  }, [playing, still, messages])
 
   return still ? complete : state
 }
@@ -84,7 +84,8 @@ const aiBubble = 'rounded-2xl rounded-tl-md bg-white px-3 py-2 text-[10.5px] lea
 
 export default function AiPhoneMockup({ className = '' }) {
   const [ref, inView] = useInView({ once: false, threshold: 0.35 })
-  const { shown, draft, aiTyping, sending } = useChatScript(inView)
+  const messages = conversation
+  const { shown, draft, aiTyping, sending } = useChatScript(inView, messages)
 
   return (
     <div
@@ -114,7 +115,7 @@ export default function AiPhoneMockup({ className = '' }) {
             <LeafAvatar size="lg" />
             <p className="text-[10.5px] leading-[1.4] text-body">Here for your questions,<br />thoughts and overthinking. 💚</p>
           </div>
-          {conversation.slice(0, shown).map(({ from, text, reactions }) => (from === 'user' ? (
+          {messages.slice(0, shown).map(({ from, text, reactions }) => (from === 'user' ? (
             <p key={text} className="ml-10 origin-bottom-right rounded-2xl rounded-tr-md bg-[#cfe9dc] px-3 py-2 text-[10.5px] leading-[1.4] motion-safe:animate-chat-in">{text}</p>
           ) : (
             <div key={text} className="flex origin-bottom-left items-start gap-1.5 motion-safe:animate-chat-in">

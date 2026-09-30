@@ -35,7 +35,7 @@ export default function ShopNeedsSection() {
         <div className="relative mb-8 flex flex-col items-start md:flex-row md:items-end md:gap-6 lg:mb-10">
           <div>
             <p className={eyebrow}>Shop by your needs</p>
-            <h2 className={cn(h2, 'mb-4')}>Your period isn&apos;t the same <em className={accent}>every day.</em></h2>
+            <h2 className={cn(h2, 'mb-4')}>Your period isn’t the same <em className={accent}>every day.</em></h2>
             <p className="text-[17px]">Different days. Different needs. The right PIAX pad for every moment.</p>
           </div>
           <DoodleNote arrow="down-right" className="top-2 right-[120px] hidden xl:block">Same you,<br />different days.</DoodleNote>
@@ -66,7 +66,7 @@ export default function ShopNeedsSection() {
                 <p className="mt-2 min-h-9 text-sm leading-[1.3]">{text}</p>
                 <div className="mt-4 flex items-center justify-between">
                   <img src={pack} alt={`PIAX ${title} pack`} className="w-[68%] mix-blend-multiply" />
-                  <RoundArrow to="/products" label={`Shop ${title}`} className="bg-white/70" />
+                  <RoundArrow to="/products" label={`$Shop ${title}`} className="bg-white/70" />
                 </div>
               </div>
             </article>

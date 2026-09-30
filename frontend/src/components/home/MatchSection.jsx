@@ -50,14 +50,14 @@ const matches = {
 
 const specs = [
   { icon: Shield, text: <>Extra long<br />coverage</> },
-  { icon: Leaf, text: <>Ultra-thin<br />&amp; comfortable</> },
-  { icon: Wind, text: <>Rash-free<br />&amp; breathable</> },
-  { icon: Sprout, text: <>Sustainable<br />&amp; compostable</> },
+  { icon: Leaf, text: <>Ultra-thin<br />& comfortable</> },
+  { icon: Wind, text: <>Rash-free<br />& breathable</> },
+  { icon: Sprout, text: <>Sustainable<br />& compostable</> },
 ]
 
 const perks = [
   { icon: Truck, text: <>Free shipping<br />on orders above ₹499</> },
-  { icon: Leaf, text: <>Sustainable<br />&amp; plastic-conscious packaging</> },
+  { icon: Leaf, text: <>Sustainable<br />& plastic-conscious packaging</> },
   { icon: Shield, text: <>Lab tested<br />(IS 5405:2019)</> },
   { icon: Heart, text: <>Trusted by<br />10,000+ women</> },
 ]
@@ -90,7 +90,7 @@ export default function MatchSection() {
             <h2 className={cn(heading, 'mt-4 mb-4 text-[clamp(40px,4.2vw,58px)] leading-none tracking-[-.035em]')}>
               Find your<br /><em className={accent}>PIAX</em> match
             </h2>
-            <p className="mb-6 text-[17px]">Answer a few simple questions and we&apos;ll recommend the perfect PIAX pad for you in 30 seconds.</p>
+            <p className="mb-6 text-[17px]">Answer a few simple questions and we’ll recommend the perfect PIAX pad for you in 30 seconds.</p>
             <ul className="grid gap-3">
               {['Personalised recommendations', 'Based on your flow, lifestyle & preference', 'No sign-up required'].map((item) => (
                 <li key={item} className="flex items-center gap-3 text-[15px]">
@@ -131,7 +131,7 @@ export default function MatchSection() {
                   <Sparkles size={30} />
                   <h3 className={cn(heading, 'text-xl')}>Your PIAX match is ready!</h3>
                   <p className="text-sm text-body">{answers.filter(Boolean).join(' • ')}</p>
-                  <p className="text-sm text-muted">We recommend <strong>{match.name}</strong> — {match.fit.toLowerCase()}.</p>
+                  <p className="text-sm text-muted">We recommend <strong>{match.name}</strong> — {match.fit}</p>
                   <button type="button" className={cn(btn.base, btn.outline, 'mt-4 min-h-10')} onClick={() => setStep(0)}>
                     <ArrowLeft size={18} /> Start again
                   </button>
@@ -178,14 +178,14 @@ export default function MatchSection() {
                 onClick={() => setStep(step + 1)}
                 className={cn(btn.base, btn.solid, 'mt-6 w-full md:w-auto md:min-w-[260px]')}
               >
-                {step === steps.length - 1 ? 'See my match' : 'Next'} <ArrowRight size={18} />
+                {(step === steps.length - 1 ? 'See my match' : 'Next')} <ArrowRight size={18} />
               </button>
             )}
           </div>
 
           <div className={cn('relative mx-auto flex w-full max-w-[440px] flex-col rounded-[26px] border border-white/80 p-6 shadow-soft md:col-span-full lg:col-span-1 lg:mx-0 lg:max-w-none', tones.mint.fade)}>
             <p className="flex items-center gap-2 text-[13px] font-semibold text-ink"><Sparkles size={16} /> Recommended for you</p>
-            <img src={recommendedPack} alt={`${match.name} pack`} className="mx-auto my-4 w-[88%] mix-blend-multiply" />
+            <img src={recommendedPack} alt={`${match.name} $pack`} className="mx-auto my-4 w-[88%] mix-blend-multiply" />
             <h3 className={cn(heading, 'text-xl')}>{match.name}</h3>
             <p className="mt-1 text-[13px] text-muted">{match.fit}</p>
             <ul className="my-4 grid grid-cols-4 gap-2">
@@ -207,11 +207,11 @@ export default function MatchSection() {
                 <button
                   type="button"
                   onClick={addToCart}
-                  aria-label={added ? 'Added to cart' : 'Add to Cart'}
+                  aria-label={(added ? 'Added to cart' : 'Add to Cart')}
                   className={cn(btn.base, btn.solid, 'ml-auto min-h-10 shrink-0 gap-2 px-0 text-sm @max-[15rem]:size-10 @max-[15rem]:min-h-10 @min-[15rem]:flex-1 @min-[15rem]:px-4')}
                 >
                   {added ? <Check size={18} /> : <ShoppingCart size={18} className="@min-[15rem]:hidden" />}
-                  <span className="@max-[15rem]:hidden">{added ? 'Added' : 'Add to Cart'}</span>
+                  <span className="@max-[15rem]:hidden">{(added ? 'Added' : 'Add to Cart')}</span>
                 </button>
               </div>
             </div>

@@ -5,9 +5,9 @@ import learnWoman from '../../assets/24_need_first_period_photo.png'
 
 const perks = [
   { icon: GraduationCap, text: <>Expert-backed<br />content</> },
-  { icon: Heart, text: <>Simple &amp;<br />judgement-free</> },
+  { icon: Heart, text: <>Simple &<br />judgement-free</> },
   { icon: Users, text: <>For every stage<br />of your journey</> },
-  { icon: Globe, text: <>Available in<br />English &amp; தமிழ்</> },
+  { icon: Globe, text: <>Available in<br />English & தமிழ்</> },
 ]
 
 const topics = [

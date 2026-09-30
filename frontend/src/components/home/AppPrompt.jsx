@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { Bell, CalendarHeart, Repeat, X } from 'lucide-react'
+import { Bell, CalendarHeart, Repeat, Star, Tag, X } from 'lucide-react'
 import { useLocation } from 'react-router-dom'
 import { StoreBadges } from './HomeUi.jsx'
 import { cn } from './homeStyles.js'
@@ -26,10 +26,13 @@ const sessionKey = 'piax-app-prompt-shown'
 const day = 24 * 60 * 60 * 1000
 
 const benefits = [
-  { icon: CalendarHeart, text: 'Track your cycle' },
-  { icon: Bell, text: 'Period reminders' },
-  { icon: Repeat, text: 'Reorder in a tap' },
+  { icon: CalendarHeart, title: 'Cycle tracker', text: 'Know what’s next' },
+  { icon: Bell, title: 'Reminders', text: 'Never be caught out' },
+  { icon: Repeat, title: 'Quick reorder', text: 'Pads in one tap' },
 ]
+
+// Same welcome offer as the site's top strip.
+const offer = { code: 'WELCOME10', text: '10% off your first app order' }
 
 // Storage can be blocked (private mode, strict settings): the prompt then simply behaves per page view.
 function readStore(storage, key) {
@@ -159,7 +162,7 @@ export default function AppPrompt() {
           aria-labelledby="app-prompt-title"
           aria-describedby="app-prompt-text"
           className={cn(
-            'pointer-events-auto relative w-full rounded-3xl border border-line bg-white p-4 font-sans text-body shadow-[0_24px_60px_rgba(15,60,50,.22)] md:w-[400px] md:p-5',
+            'pointer-events-auto relative w-full rounded-3xl border border-line bg-white p-4 font-sans text-body shadow-[0_24px_60px_rgba(15,60,50,.22)] md:w-[420px] md:p-5',
             'motion-safe:animate-app-prompt-in',
           )}
         >
@@ -172,11 +175,15 @@ export default function AppPrompt() {
             <X size={18} />
           </button>
 
-          {/* Desktop: the artwork rises out of a brand-green header panel, above the card's top edge. */}
-          <div aria-hidden="true" className="relative -mx-5 -mt-5 mb-5 h-40 rounded-t-[23px] bg-linear-to-br from-[#1b8a74] via-brand-2 to-brand max-md:hidden">
-            <span className="absolute -top-8 -left-8 size-32 rounded-full bg-white/10" />
-            <span className="absolute right-10 bottom-6 size-16 rounded-full bg-white/10" />
-            <PromoArt className="absolute bottom-0 left-1/2 w-[230px] -translate-x-1/2 drop-shadow-[0_18px_24px_rgba(3,30,25,.35)]" />
+          {/* Desktop: the artwork in a brand-green header panel, with a "free" tag and the rating on it. */}
+          <div aria-hidden="true" className="relative -mx-5 -mt-5 mb-5 h-48 overflow-hidden rounded-t-[23px] bg-linear-to-br from-[#1b8a74] via-brand-2 to-brand max-md:hidden">
+            <span className="absolute -top-10 -left-10 size-40 rounded-full bg-white/10" />
+            <span className="absolute right-8 bottom-8 size-20 rounded-full bg-white/10" />
+            <span className="absolute top-4 left-4 rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold tracking-[.12em] text-white uppercase ring-1 ring-white/25">Free app</span>
+            <span className="absolute bottom-4 left-4 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[12px] font-semibold text-ink shadow-soft">
+              <Star size={14} className="fill-[#f5a524] text-[#f5a524]" /> 4.8 · 10,000+ women
+            </span>
+            <PromoArt className="absolute right-2 -bottom-2 w-[210px] drop-shadow-[0_18px_24px_rgba(3,30,25,.35)]" />
           </div>
 
           <div className="flex items-center gap-4 pr-8">
@@ -184,23 +191,33 @@ export default function AppPrompt() {
               <PromoArt className="w-[64px] translate-y-1" />
             </span>
             <div>
-              <h2 id="app-prompt-title" className="text-[18px] leading-tight font-bold tracking-[-.02em] text-ink">Get the PIAX app</h2>
-              <p className="mt-0.5 text-[12.5px] text-muted">Free on Android &amp; iOS · Trusted by 10,000+ women</p>
+              <h2 id="app-prompt-title" className="text-[18px] leading-tight font-bold tracking-[-.02em] text-ink md:text-[22px]">Get the PIAX app</h2>
+              <p className="mt-0.5 text-[12.5px] text-muted">Your period care, right in your pocket · Android &amp; iOS</p>
             </div>
           </div>
 
-          <p id="app-prompt-text" className="mt-4 text-[14px] leading-[1.45] max-md:sr-only">
-            Track your cycle, get gentle reminders and quick-order your favourite PIAX pads — all from your phone.
+          <p id="app-prompt-text" className="sr-only">
+            Track your cycle, get gentle reminders and quick-order your favourite PIAX pads. {offer.text} — {offer.code}.
           </p>
-          <ul className="mt-3 flex flex-wrap gap-2 max-md:hidden">
-            {benefits.map(({ icon: Icon, text }) => (
-              <li key={text} className="inline-flex items-center gap-1.5 rounded-full bg-brand-soft px-2.5 py-1 text-[12px] font-medium text-brand">
-                <Icon size={14} strokeWidth={1.8} /> {text}
+
+          <ul className="mt-4 grid grid-cols-3 gap-2 max-md:hidden">
+            {benefits.map(({ icon: Icon, title, text }) => (
+              <li key={title} className="flex flex-col items-center gap-1 rounded-2xl bg-mist px-2 py-3 text-center">
+                <span className="flex size-9 items-center justify-center rounded-full bg-brand-soft text-brand"><Icon size={18} strokeWidth={1.8} /></span>
+                <strong className="mt-1 text-[12.5px] leading-tight text-ink">{title}</strong>
+                <span className="text-[11px] leading-tight text-muted">{text}</span>
               </li>
             ))}
           </ul>
 
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3 md:mt-5">
+          {/* Welcome offer: a ticket-style strip with the code. */}
+          <div className="mt-3 flex items-center gap-3 rounded-2xl border border-dashed border-[#f0b6c4] bg-[#fff4f6] px-3 py-2.5 md:mt-4">
+            <span aria-hidden="true" className="flex size-8 shrink-0 items-center justify-center rounded-full bg-[#fde2e7] text-[#c0355a]"><Tag size={16} /></span>
+            <span className="min-w-0 flex-1 text-[12.5px] leading-tight text-body">{offer.text}</span>
+            <strong className="shrink-0 rounded-lg bg-white px-2 py-1 font-mono text-[12px] tracking-wider text-[#c0355a] ring-1 ring-[#f0b6c4]">{offer.code}</strong>
+          </div>
+
+          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-3">
             <StoreBadges only={storesFor[platform]} onSelect={storeTapped} />
             <button
               type="button"

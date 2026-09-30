@@ -48,7 +48,7 @@ export default function ComingSoon() {
               {name} is<br /><em className={accent}>on its way.</em>
             </h1>
             <p className="mb-9 max-w-[560px] text-[17px] text-body">
-              We&apos;re putting the finishing touches on this page. In the meantime, explore PIAX on our home page or get the app to stay updated.
+              We’re putting the finishing touches on this page. In the meantime, explore PIAX on our home page or get the app to stay updated.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to="/" className={cn(btn.base, btn.solid)}><ArrowLeft size={18} /> Back to home</Link>

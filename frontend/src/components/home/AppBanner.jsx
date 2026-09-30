@@ -60,7 +60,7 @@ export default function AppBanner() {
               artwork, so they sit on the banner's bottom edge: full-bleed under the text on phones, centred
               under it on tablets, and in a wider right column from lg up, rising a little above its top. */}
           <div className="relative mt-10 flex items-end justify-center max-md:-mx-6 lg:mt-0 lg:-mr-10">
-            <DoodleNote arrow="down-left" className="top-0 right-4 z-10 hidden text-[#bfe8d5] xl:block">It&apos;s on<br />your phone.</DoodleNote>
+            <DoodleNote arrow="down-left" className="top-0 right-4 z-10 hidden text-[#bfe8d5] xl:block">It’s on<br />your phone.</DoodleNote>
             <AppScreensShowcase className="w-full max-w-[760px] lg:-mt-6 lg:w-[115%] lg:max-w-none xl:w-[112%]" />
           </div>
         </div>

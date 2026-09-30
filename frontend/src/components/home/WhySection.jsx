@@ -5,7 +5,6 @@ import padInHand from '../../assets/home/piax_assets/34_why_pad_in_hand.png'
 import layersArt from '../../assets/35_why_layers.png'
 import globeArt from '../../assets/home/piax_assets/36_why_globe_leaf.png'
 import appArt from '../../assets/home/piax_assets/37_why_app_phone.png'
-import womanPhoto from '../../assets/38_why_woman.png'
 import avatar1 from '../../assets/reviews/review_1.jpg'
 import avatar2 from '../../assets/reviews/review_3.jpg'
 import avatar3 from '../../assets/reviews/review_5.jpg'
@@ -45,7 +44,7 @@ export default function WhySection() {
           <DoodleNote arrow="down-left" className="top-0 right-0 hidden text-left xl:block">Care today<br />for brighter<br />tomorrows.</DoodleNote>
         </CenterHead>
 
-        <div data-stagger className="grid flex-1 gap-4 md:grid-cols-2 lg:gap-6 lg:grid-cols-[repeat(4,minmax(0,1fr))_minmax(0,.85fr)]">
+        <div data-stagger className="grid flex-1 gap-4 md:grid-cols-2 lg:gap-6 lg:grid-cols-4">
           {reasons.map(({ title, text, icon: Icon, art, fit, tone, points }, index) => (
             <article key={index} className={cn('relative isolate flex min-h-[250px] overflow-hidden rounded-[18px] p-6 shadow-soft', tones[tone].bg)}>
               {/* One art slot per card: same size and anchor, fading in from the left so text stays clear. */}
@@ -76,35 +75,19 @@ export default function WhySection() {
               </div>
             </article>
           ))}
-          {/* Free-form photo, no card: it rises a little above the cards, runs out to the page edge and
-              feathers into the background along its left, top and bottom edges. */}
-          <div className="relative hidden lg:block">
-            <img
-              src={womanPhoto}
-              alt="Relaxed woman smiling with eyes closed"
-              loading="lazy"
-              decoding="async"
-              className="absolute -top-12 bottom-0 -left-6 h-[calc(100%+3rem)] w-[calc(100%+1.5rem+var(--page-gutter))] max-w-none object-cover object-[60%_28%]"
-              style={{
-                maskImage: 'linear-gradient(to right, transparent 0%, #000 34%), linear-gradient(to bottom, transparent 0%, #000 20%, #000 90%, transparent 100%)',
-                WebkitMaskImage: 'linear-gradient(to right, transparent 0%, #000 34%), linear-gradient(to bottom, transparent 0%, #000 20%, #000 90%, transparent 100%)',
-                maskComposite: 'intersect',
-                WebkitMaskComposite: 'source-in',
-              }}
-            />
-          </div>
         </div>
 
-        <div className="mt-6 flex flex-wrap items-center justify-center gap-6 rounded-[18px] bg-white/70 px-6 py-5 lg:flex-nowrap lg:justify-start">
-          <div className="flex flex-col items-center gap-4 text-center md:flex-row md:text-left lg:shrink-0 lg:border-r lg:border-line lg:pr-8">
+        <div className="mt-6 flex flex-wrap items-center justify-center gap-6 rounded-[18px] bg-white/70 px-6 py-5 xl:flex-nowrap xl:justify-start">
+          {/* The quote wraps onto two balanced lines so the feature items beside it get room to breathe. */}
+          <div className="flex w-full min-w-0 flex-col items-center justify-center gap-4 text-center md:flex-row md:text-left lg:w-auto lg:shrink-0 lg:justify-start lg:border-r lg:border-line lg:pr-8">
             <div className="flex shrink-0 -space-x-3" role="img" aria-label="PIAX customers">
               {avatars.map((src) => (
                 <img key={src} src={src} alt="" loading="lazy" decoding="async" className="size-11 rounded-full border-2 border-white object-cover object-[center_25%] shadow-soft" />
               ))}
             </div>
-            <p className="max-w-[380px] text-sm leading-[1.45] text-ink">&ldquo;Finally a pad that feels good, works even better, and is kind to the planet.&rdquo;</p>
+            <p className="max-w-[300px] text-sm leading-[1.45] text-balance text-ink lg:w-[220px] xl:w-[260px]">“Finally a pad that feels good, works even better, and is kind to the planet.”</p>
           </div>
-          <ul className="flex flex-1 flex-col justify-center gap-4 md:flex-row md:gap-8">
+          <ul className="flex w-full flex-col items-center justify-evenly gap-4 whitespace-nowrap sm:flex-row sm:flex-wrap sm:gap-x-8 lg:w-auto lg:flex-1 lg:flex-nowrap lg:gap-6">
             <li className={bar}><Users size={26} strokeWidth={1.4} className={barIcon} /><span className={barText}><strong className={barStrong}>10,000+</strong>Happy Customers</span></li>
             <li className={bar}><Leaf size={26} strokeWidth={1.4} className={barIcon} /><span className={barText}><strong className={barStrong}>Sustainable</strong>by Design</span></li>
             <li className={bar}><Heart size={26} strokeWidth={1.4} className={barIcon} /><span className={barText}><strong className={barStrong}>Real Care</strong>Real Impact</span></li>

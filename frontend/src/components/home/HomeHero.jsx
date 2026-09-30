@@ -170,7 +170,7 @@ export default function HomeHero() {
             </h1>
 
             <p className="mb-8 max-w-[500px] text-[clamp(15px,1.35vw,17px)] leading-[1.65] text-[#415551] max-[960px]:mx-auto max-[768px]:max-w-[520px] max-[768px]:text-center max-[640px]:mb-6 max-[640px]:text-[14.5px] max-[640px]:leading-[1.6]">
-              The most comfortable, rash-free period experience — powered by 100% organic cotton pads with an Anion strip and India&apos;s smartest cycle tracking companion app. Customise, track, and get pads delivered on your schedule.
+              The most comfortable, rash-free period experience — powered by 100% organic cotton pads with an Anion strip and India’s smartest cycle tracking companion app. Customise, track, and get pads delivered on your schedule.
             </p>
 
             <div className="mb-6 flex flex-wrap items-center gap-4 max-[1024px]:justify-center max-[640px]:mx-auto max-[640px]:w-full max-[640px]:max-w-[320px] max-[640px]:flex-col max-[640px]:gap-3 max-[375px]:max-w-[290px]">

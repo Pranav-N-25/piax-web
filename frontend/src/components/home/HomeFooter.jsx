@@ -67,7 +67,7 @@ export default function HomeFooter() {
                 {links.map(([label, to, hiring]) => (
                   <Link key={label} to={to} className="flex flex-wrap items-center gap-1.5 text-xs text-body hover:text-brand-2">
                     {label}
-                    {hiring && <span className="rounded-full bg-[#d2ecdf] px-2 py-0.5 text-[9.5px] font-semibold text-brand">We&apos;re Hiring!</span>}
+                    {hiring && <span className="rounded-full bg-[#d2ecdf] px-2 py-0.5 text-[9.5px] font-semibold text-brand">We’re Hiring!</span>}
                   </Link>
                 ))}
               </div>
@@ -79,7 +79,7 @@ export default function HomeFooter() {
             <h3 className={cn(heading, 'mb-2 text-[22px]')}>Stay in the loop.</h3>
             <p className="mb-6 text-sm">Get period tips, product updates and exclusive offers.</p>
             {joined ? (
-              <p className="rounded-[14px] bg-white p-4 font-semibold text-brand">Thank you! You&apos;re on the list. 💚</p>
+              <p className="rounded-[14px] bg-white p-4 font-semibold text-brand">Thank you! You’re on the list. 💚</p>
             ) : (
               <form onSubmit={subscribe}>
                 <div className="flex items-center rounded-full border border-line bg-white py-1 pr-1 pl-5">

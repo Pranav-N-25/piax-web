@@ -37,7 +37,7 @@ export default function BusinessSection() {
           <div>
             <Tag>For business</Tag>
             <h2 className={cn(h2, 'mt-4 mb-4 text-[clamp(32px,3vw,42px)]')}>Partner with PIAX<br /><em className={accent}>for a healthier tomorrow.</em></h2>
-            <p className="mb-8 text-[17px]">Let&apos;s make menstrual care more accessible, sustainable and stigma-free — together.</p>
+            <p className="mb-8 text-[17px]">Let’s make menstrual care more accessible, sustainable and stigma-free — together.</p>
             <ul className={cn(iconRow, 'mb-8')}>
               {perks.map(({ icon: Icon, text }, index) => (
                 <li key={index} className={iconRowItem}><span className={iconRowIcon}><Icon size={24} strokeWidth={1.5} /></span>{text}</li>

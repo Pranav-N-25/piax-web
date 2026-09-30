@@ -28,7 +28,7 @@ export default function NeedsSection() {
         <CenterHead
           tag="Let PIAX guide you"
           title={<>What do you need <em className={accent}>today?</em></>}
-          text={<>Choose a path that&apos;s right for you. We&apos;ll guide you from here.</>}
+          text="Choose a path that’s right for you. We’ll guide you from here."
         />
 
         <div data-stagger className={cn('grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6', cardGrid)}>

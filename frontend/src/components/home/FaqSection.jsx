@@ -77,7 +77,7 @@ export default function FaqSection() {
           <div className={cn(panel, 'flex flex-col items-center gap-2 p-6 text-center text-brand')}>
             <MessagesSquare size={42} strokeWidth={1.3} />
             <h3 className={cn(heading, 'mt-1 text-lg')}>Still have a question?</h3>
-            <p className="mb-4 max-w-60 text-[13px] text-body">We&apos;re here for you. Reach out anytime — our team is happy to help.</p>
+            <p className="mb-4 max-w-60 text-[13px] text-body">We’re here for you. Reach out anytime — our team is happy to help.</p>
             <PillLink to="/support">Contact Support</PillLink>
           </div>
           <div className={cn(panel, 'p-5')}>

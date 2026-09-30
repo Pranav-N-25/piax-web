@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronDown, Heart, Leaf, Menu, Search, ShoppingCart, Tag, Truck, User, X } from 'lucide-react'
+import { ChevronDown, Menu, Search, ShoppingCart, Tag, Truck, User, X } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
@@ -10,9 +10,7 @@ const separator = <b className="mx-1.5 font-normal opacity-60">|</b>
 
 const strip = [
   { icon: Truck, text: 'Free shipping on orders above ₹499', className: '' },
-  { icon: Leaf, text: 'Sustainable & plastic-conscious packaging', className: 'max-md:hidden' },
-  { icon: Heart, text: 'Trusted by 10,000+ women', fill: true, className: 'max-lg:hidden' },
-  { icon: Tag, text: <>Get 10% off on your first order {separator} Code: <strong>WELCOME10</strong></>, className: 'max-lg:hidden' },
+  { icon: Tag, text: 'Get 10% off on your first order', code: 'WELCOME10', className: 'max-lg:hidden' },
 ]
 
 const nav = [
@@ -32,8 +30,8 @@ export default function HomeHeader() {
   return (
     <>
       <div className="bg-[#0c4a40] text-[12.5px] text-[#e6f3ee]">
-        <div className={cn(container, 'flex min-h-10 items-center justify-center')}>
-          {strip.map(({ icon: Icon, text, fill, className }, index) => (
+        <div className={cn(container, 'flex min-h-10 items-center justify-center w-full')}>
+          {strip.map(({ icon: Icon, text, code, fill, className }, index) => (
             <span
               key={index}
               className={cn(
@@ -43,9 +41,9 @@ export default function HomeHeader() {
               )}
             >
               <Icon size={17} fill={fill ? 'currentColor' : 'none'} /> {text}
+              {code && <>{separator} Code: <strong>{code}</strong></>}
             </span>
           ))}
-          <span className="ml-auto whitespace-nowrap max-md:hidden"><u>EN</u> {separator} தமிழ்</span>
         </div>
       </div>
 

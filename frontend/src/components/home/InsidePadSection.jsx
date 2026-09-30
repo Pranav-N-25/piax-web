@@ -7,8 +7,8 @@ import PadLayerExplorer from './insidePad/PadLayerExplorer.jsx'
 const badges = [
   { icon: BadgeCheck, text: <>IS 5405:2019<br />Tested</> },
   { icon: Droplet, text: <>Dermatologically<br />Tested</> },
-  { icon: Leaf, text: <>Hypoallergenic<br />&amp; Rash-Free</> },
-  { icon: Leaf, text: <>Compostable<br />&amp; Oxo-biodegradable</> },
+  { icon: Leaf, text: <>Hypoallergenic<br />& Rash-Free</> },
+  { icon: Leaf, text: <>Compostable<br />& Oxo-biodegradable</> },
 ]
 
 export default function InsidePadSection() {
@@ -24,7 +24,7 @@ export default function InsidePadSection() {
             <p className={eyebrow}>Inside the pad</p>
             <h2 className={cn(h2, 'mb-4')}>8 layers.<br />Thoughtfully designed<br /><em className={accent}>for your comfort.</em></h2>
             <p className="mb-8">Every PIAX pad is crafted with a multi-layer protection system that keeps you dry, comfortable and confident — while being kinder to your skin and the planet.</p>
-            <PillLink to="/sustainability" variant="outline">See full materials &amp; lab reports</PillLink>
+            <PillLink to="/sustainability" variant="outline">See full materials & lab reports</PillLink>
             <ul className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
               {badges.map(({ icon: Icon, text }, index) => (
                 <li key={index} className="flex flex-col items-center gap-2 text-center text-[11px] leading-[1.25]">

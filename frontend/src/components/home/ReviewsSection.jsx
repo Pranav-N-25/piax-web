@@ -47,7 +47,7 @@ export default function ReviewsSection() {
             </h2>
             <p className="text-lg">Real experiences. Real periods. Real confidence.</p>
           </div>
-          <DoodleNote arrow="down-left" className="top-8 right-0 hidden text-[26px] lg:block">&ldquo;Finally a pad<br />that actually understands us.&rdquo;</DoodleNote>
+          <DoodleNote arrow="down-left" className="top-8 right-0 hidden text-[26px] lg:block">“Finally a pad<br />that actually understands us.”</DoodleNote>
         </div>
 
         {/* Template layout: rating panel plus all six reviews in one row on wide screens; 3/2/1 columns below. */}
@@ -76,14 +76,14 @@ export default function ReviewsSection() {
 
           {reviews.map(({ photo, sticker, tone, quote, name, place }) => (
             <article key={name} className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-soft">
-              <img src={photo} alt={`${name}, PIAX customer`} loading="lazy" decoding="async" className="aspect-[173/122] w-full object-cover object-[center_30%]" />
+              <img src={photo} alt={`${name}, $PIAX customer`} loading="lazy" decoding="async" className="aspect-[173/122] w-full object-cover object-[center_30%]" />
               <div className="flex flex-1 flex-col p-4">
                 <span className={cn('mb-3 inline-flex items-center gap-1.5 self-start rounded-xl px-2.5 py-1 font-hand text-[14px] leading-[1.2] font-medium text-ink [font-size-adjust:.34]', tones[tone].bg)}>
                   {sticker}
                   <DoodleHeart className={cn('shrink-0 text-[10px]', tones[tone].icon)} />
                 </span>
                 <Stars />
-                <p className="mt-2 mb-4 text-[13.5px] leading-[1.45] text-ink">&ldquo;{quote}&rdquo;</p>
+                <p className="mt-2 mb-4 text-[13.5px] leading-[1.45] text-ink">“{quote}”</p>
                 <footer className="mt-auto text-xs">
                   <div className="flex flex-wrap items-center gap-x-2.5 gap-y-0.5">
                     <strong className="text-[13px] text-ink">{name}</strong>
