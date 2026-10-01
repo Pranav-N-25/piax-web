@@ -3,11 +3,11 @@ import { ChevronDown, LayoutGrid, List } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import HomeHeader from '../../../components/home/HomeHeader.jsx'
 import HomeFooter from '../../../components/home/HomeFooter.jsx'
-import { AskPiax, ArticleCard, CategoryNav, FeaturedGuide, LearnHero, LearnIcon, Pagination } from '../../../components/learn/LearnUi.jsx'
+import { AskPiax, ArticleCard, CategoryNav, LearnHero, LearnIcon, Pagination } from '../../../components/learn/LearnUi.jsx'
 import { cn, container, poppinsPage, tones } from '../../../components/home/homeStyles.js'
 import { usePageMeta } from '../../../hooks/usePageMeta.js'
 import { useMotion } from '../../../hooks/useMotion.js'
-import { articlesIn, categories, categoryBySlug, featuredIn } from '../../../data/learn/index.js'
+import { articlesIn, categories, categoryBySlug } from '../../../data/learn/index.js'
 
 const PER_PAGE = 9
 
@@ -60,7 +60,6 @@ function LearnCategoryPage() {
 
   const chooseTopic = (name) => { setTopic(name); setPage(1) }
   const changePage = (next) => { setPage(next); listTop.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }) }
-  const featured = featuredIn(slug)
   const related = categories.filter((item) => item.slug !== slug).slice(0, 6)
 
   return (
@@ -71,9 +70,7 @@ function LearnCategoryPage() {
         <CategoryNav />
 
         <div className={cn(container, 'py-10 md:py-14')}>
-          {featured && <FeaturedGuide article={featured} />}
-
-          <div ref={listTop} className="mt-10 grid scroll-mt-28 gap-8 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
+          <div ref={listTop} id="articles" className="grid scroll-mt-28 gap-8 lg:grid-cols-[240px_minmax(0,1fr)] lg:gap-10">
             <aside className="grid content-start gap-8">
               <nav aria-label={`Topics in ${category?.name ?? 'Learn'}`}>
                 <h2 className="mb-3 text-[14px] font-semibold text-ink">{category ? `Topics in ${category.name}` : 'Filter by topic'}</h2>
@@ -97,12 +94,13 @@ function LearnCategoryPage() {
                 </ul>
               </nav>
 
+              {/* Opens the category at its article list, where the reader already is, not at the top of the page. */}
               <nav aria-label="Related topics" className="max-lg:hidden">
                 <h2 className="mb-3 text-[14px] font-semibold text-ink">{category ? 'Related topics' : 'Browse by category'}</h2>
                 <ul className="grid gap-2.5">
                   {related.map((item) => (
                     <li key={item.slug}>
-                      <Link to={`/learn/${item.slug}`} className="group flex items-center gap-3 text-[13.5px] text-body hover:text-brand">
+                      <Link to={`/learn/${item.slug}#articles`} className="group flex items-center gap-3 text-[13.5px] text-body hover:text-brand">
                         <span className={cn('flex size-10 items-center justify-center rounded-xl transition-transform group-hover:scale-105', tones[item.tone].bg)}><LearnIcon name={item.icon} size={20} strokeWidth={1.6} className="text-brand" /></span>
                         {item.name}
                       </Link>

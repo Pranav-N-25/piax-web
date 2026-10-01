@@ -28,6 +28,9 @@ model User {
   createdAt     DateTime       @default(now())
   lastLoginAt   DateTime       @default(now())
   oauthAccounts OAuthAccount[]
+  reviews       Review[]
+  comments      ReviewComment[]
+  helpfulVotes  ReviewHelpful[]
 }
 
 // One row per linked Google / Facebook / Instagram account.
@@ -40,4 +43,47 @@ model OAuthAccount {
 
   @@unique([provider, providerId])
   @@index([userId])
+}
+
+// Product reviews (backend/reviews). One review per person per product; `verified` is set once a delivered
+// order for that product can be matched to the reviewer.
+model Review {
+  id        String          @id @default(uuid())
+  productId String
+  user      User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  rating    Int
+  title     String          @default("")
+  body      String
+  wear      String?
+  flow      String?
+  verified  Boolean         @default(false)
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  comments  ReviewComment[]
+  helpful   ReviewHelpful[]
+
+  @@unique([productId, userId])
+  @@index([productId])
+}
+
+model ReviewComment {
+  id        String   @id @default(uuid())
+  review    Review   @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reviewId  String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+  body      String
+  createdAt DateTime @default(now())
+
+  @@index([reviewId])
+}
+
+model ReviewHelpful {
+  review   Review @relation(fields: [reviewId], references: [id], onDelete: Cascade)
+  reviewId String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+
+  @@id([reviewId, userId])
 }

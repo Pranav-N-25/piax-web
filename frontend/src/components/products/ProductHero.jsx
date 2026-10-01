@@ -14,12 +14,12 @@ const benefits = [
   { icon: Wind, id: 'winged' },
 ].map((benefit) => ({ ...benefit, label: claim(benefit.id) })).filter((benefit) => benefit.label)
 
-// Box layout for the four sizes, back to front: SEREN and NOCTE behind, VERA in front of LUMA.
+// Box layout for the four sizes, back to front: SEREN and NOCTE behind, LUMA in front of VERA.
 const fan = {
   seren: 'right-[2%] top-[4%] w-[44%] rotate-6',
   nocte: 'left-[4%] top-[6%] w-[44%] -rotate-6',
-  luma: 'left-[10%] bottom-[2%] w-[46%] -rotate-2',
-  vera: 'right-[8%] bottom-[4%] w-[52%] rotate-2',
+  vera: 'left-[10%] bottom-[2%] w-[46%] -rotate-2',
+  luma: 'right-[8%] bottom-[4%] w-[52%] rotate-2',
 }
 
 export default function ProductHero() {
@@ -35,7 +35,7 @@ export default function ProductHero() {
               Menstrual care<br />that understands you.
             </h1>
             <p className="mt-5 max-w-[480px] text-base leading-relaxed text-stone md:text-lg">
-              Four sizes, from light days to overnight. Every pad comes in a 4-pad trial, a 10-pad standard and a 30-pad value pack.
+              Four sizes, from light days to overnight. Or mix any 12 pads across all four sizes in a ₹249 combo pack.
             </p>
             <ul className="mt-8 grid max-w-[600px] grid-cols-2 gap-x-6 gap-y-5 min-[640px]:grid-cols-4 min-[640px]:gap-x-4">
               {benefits.map(({ icon: Icon, label }) => (
@@ -51,16 +51,16 @@ export default function ProductHero() {
             <div aria-hidden="true" className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,.9)_0%,rgba(255,255,255,0)_70%)]" />
             <img src={artwork.leavesLeft} alt="" aria-hidden="true" width="78" height="200" className="pointer-events-none absolute top-[2%] -left-[2%] w-[14%] -rotate-12 opacity-80 mix-blend-multiply max-md:hidden" />
             <img src={artwork.leavesRight} alt="" aria-hidden="true" width="90" height="125" className="pointer-events-none absolute -right-[2%] bottom-[6%] w-[16%] rotate-6 opacity-80 mix-blend-multiply max-md:hidden" />
-            {['seren', 'nocte', 'luma', 'vera'].map((id) => {
+            {['seren', 'nocte', 'vera', 'luma'].map((id) => {
               const pad = pads.find((item) => item.id === id)
               return (
                 <img
                   key={id}
                   src={standardPack(pad).image}
-                  alt={`${pad.name} ${pad.lengthLabel} standard pack`}
+                  alt={`${pad.name} ${pad.lengthLabel} box`}
                   width="820"
                   height="720"
-                  fetchPriority={id === 'vera' ? 'high' : undefined}
+                  fetchPriority={id === 'luma' ? 'high' : undefined}
                   className={`absolute object-contain drop-shadow-[0_18px_30px_rgba(0,64,52,.16)] ${fan[id]}`}
                 />
               )

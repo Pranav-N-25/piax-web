@@ -1,4 +1,7 @@
 const CART_STORAGE_KEY = 'piax-cart'
+// Most of one item a single order can hold; matches the quantity steppers.
+export const MAX_ITEM_QUANTITY = 10
+const clamp = (quantity) => Math.max(1, Math.min(MAX_ITEM_QUANTITY, quantity))
 
 export function readCart() {
   try {
@@ -16,16 +19,16 @@ export function persistCart(items) {
 export function addCartItem(items, product, quantity = 1) {
   if (items.some((item) => item.id === product.id)) {
     return items.map((item) => item.id === product.id
-      ? { ...item, quantity: item.quantity + quantity }
+      ? { ...item, quantity: clamp(item.quantity + quantity) }
       : item)
   }
 
-  return [...items, { ...product, quantity }]
+  return [...items, { ...product, quantity: clamp(quantity) }]
 }
 
 export function changeCartQuantity(items, id, amount) {
   return items.map((item) => item.id === id
-    ? { ...item, quantity: Math.max(1, item.quantity + amount) }
+    ? { ...item, quantity: clamp(item.quantity + amount) }
     : item)
 }
 

@@ -26,7 +26,7 @@ export const articles = [
     title: 'How to prepare for your first period',
     excerpt: 'A practical checklist so you feel ready, at home and at school.',
     sections: [
-      { id: 'kit', heading: 'Make a small period kit', body: ['Keep a pouch in your school bag so you are never caught out:'], list: ['3 or 4 pads — a shorter size such as PIAX LUMA (240mm) suits light first periods.', 'A spare pair of underwear.', 'A small pack of tissues or wipes.', 'A zip pouch or paper bag for used pads.'] },
+      { id: 'kit', heading: 'Make a small period kit', body: ['Keep a pouch in your school bag so you are never caught out:'], list: ['3 or 4 pads — a shorter size such as PIAX VERA (240mm) suits light first periods.', 'A spare pair of underwear.', 'A small pack of tissues or wipes.', 'A zip pouch or paper bag for used pads.'] },
       { id: 'use', heading: 'Practise using a pad', body: ['Open a pad at home and try placing it in your underwear before you need it. The sticky side goes on the underwear, and the wings fold around the sides.'] },
       { id: 'talk', heading: 'Know who you can talk to', body: ['Decide who you would go to if your period started at school — a teacher, the school nurse or a friend. Asking for a pad is completely normal.'] },
     ],
@@ -65,7 +65,7 @@ export const articles = [
     sections: [
       { id: 'steps', heading: 'Step by step', body: ['Wash your hands first, then:'], steps: [{ icon: 'Hand', text: 'Peel off the backing and place the pad on your underwear' }, { icon: 'Crosshair', text: 'Position it centrally and adjust for comfort' }, { icon: 'Shrink', text: 'Fold the wings around the sides and press to secure' }, { icon: 'Trash2', text: 'Wrap the used pad and put it in a bin — never flush' }] },
       { id: 'change', heading: 'How often to change', body: ['Change your pad every 4 to 6 hours, even on lighter days, and sooner if it feels full or damp. Regular changes help you stay fresh and comfortable.'] },
-      { id: 'size', heading: 'Pick the right size', body: ['Shorter pads suit lighter days; longer pads give more coverage for heavier days and nights. PIAX comes in four lengths, from LUMA (240mm) to SEREN (360mm), so you can match each day.'] },
+      { id: 'size', heading: 'Pick the right size', body: ['Shorter pads suit lighter days; longer pads give more coverage for heavier days and nights. PIAX comes in four lengths, from VERA (240mm) to SEREN (360mm), so you can match each day.'] },
     ],
     faqs: [['Can I wear the same pad all day?', 'It is best not to. Changing every 4 to 6 hours keeps you comfortable and lowers the chance of irritation.']],
   },
@@ -75,7 +75,7 @@ export const articles = [
     excerpt: 'Why many people use a longer pad at night, and how to choose.',
     sections: [
       { id: 'why', heading: 'Why nights need more length', body: ['When you lie down, flow can move towards the back. A longer pad gives more coverage there, so you can sleep without worrying.'] },
-      { id: 'choose', heading: 'How to choose', body: ['Use your usual day size if your nights are fine. If you notice leaks at the back, try one size longer at night — for example PIAX NOCTE (330–340mm) or SEREN (360mm).'] },
+      { id: 'choose', heading: 'How to choose', body: ['Use your usual day size if your nights are fine. If you notice leaks at the back, try one size longer at night — for example PIAX NOCTE (330mm) or SEREN (360mm).'] },
       { id: 'tips', heading: 'Tips for a comfortable night', list: ['Put on a fresh pad just before bed.', 'Sleeping on your side with knees slightly bent can help.', 'Snug-fitting underwear keeps the pad in place.'] },
     ],
     faqs: [['Do I need a night pad on light days?', 'Usually not. Many people use a night pad only on their heavier days.']],
@@ -98,11 +98,11 @@ export const articles = [
     title: 'Choosing the right pad size for each day',
     excerpt: 'Match the four PIAX lengths to the days of your period.',
     sections: [
-      { id: 'sizes', heading: 'The four PIAX sizes', list: ['PIAX LUMA — 240mm: lighter days and the start or end of your period.', 'PIAX VERA — 280mm: regular, everyday flow.', 'PIAX NOCTE — 330–340mm: heavier days and nights.', 'PIAX SEREN — 360mm: more coverage overnight.'] },
+      { id: 'sizes', heading: 'The four PIAX sizes', list: ['PIAX VERA — 240mm: lighter days and the start or end of your period.', 'PIAX LUMA — 290mm: regular, everyday flow.', 'PIAX NOCTE — 330mm: heavier days and nights.', 'PIAX SEREN — 360mm: more coverage overnight.'] },
       { id: 'mix', heading: 'Most people use more than one size', body: ['Your flow changes over your period, so many people keep two sizes at home: one for the day and a longer one for heavier days or nights.'] },
-      { id: 'try', heading: 'Not sure? Start small', body: ['A 4-pad trial pack lets you try a size before you buy a full pack. You can also take the Find My Pad quiz for a personal suggestion.'], note: 'Length is about coverage. Choose what feels comfortable for you.' },
+      { id: 'try', heading: 'Not sure? Start small', body: ['The 12-pad PIAX Cycle Pack lets you try several sizes in one box before you buy a full box of one. You can also take the Find My Pad quiz for a personal suggestion.'], note: 'Length is about coverage. Choose what feels comfortable for you.' },
     ],
-    faqs: [['Which size should I start with?', 'If you are unsure, VERA (280mm) suits regular days for most people. Try a trial pack first.']],
+    faqs: [['Which size should I start with?', 'If you are unsure, LUMA (290mm) suits regular days for most people. The PIAX Cycle Pack lets you try a few sizes first.']],
   },
 
   // ---------- Period Pain ----------

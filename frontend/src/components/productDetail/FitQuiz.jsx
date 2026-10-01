@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { ArrowLeft, ArrowRight, Calendar, Check, Droplet, Lightbulb, Lock, Moon, Package, RotateCcw, Sparkles, Sun, Wallet } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Calendar, Check, Droplet, Lightbulb, Lock, Moon, Package, RotateCcw, Sparkles, Sun } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { colours, padById, pads } from '../../data/piaxRange.js'
+import { colours, combo, comboItem, padById, pads, standardPack } from '../../data/piaxRange.js'
 import { AddButton, DiscountTag, padItem, Price, tint } from '../products/RangeUi.jsx'
+import { MixLegend } from '../products/ComboPack.jsx'
 import { btn, cn, heading } from '../home/homeStyles.js'
 
-// Four quick questions → a pad and a pack size. Flow maps to the report's usage guide (LUMA light, VERA regular,
+// Three quick questions → a pad, as a full box or inside a combo. Flow maps to the usage guide (VERA light, LUMA regular,
 // NOCTE heavy and nights, SEREN overnight); night use or long hours move one size longer.
 const steps = [
   {
@@ -26,21 +27,26 @@ const steps = [
     ],
   },
   {
-    id: 'pack', label: 'Preference', question: 'How would you like to buy?', hint: 'Every size comes in three pack sizes.',
+    id: 'pack', label: 'Preference', question: 'How would you like to buy?', hint: 'Each size comes in its own box, or mix sizes in the Cycle Pack.',
     options: [
-      { value: 'trial', title: 'Try it first', text: '4-pad Trial Pack', icon: Sparkles },
-      { value: 'standard', title: 'Everyday pack', text: '10-pad Standard Pack', icon: Package },
-      { value: 'value', title: 'Best value', text: '30-pad Value Pack', icon: Wallet },
+      { value: 'box', title: 'One size', text: 'A full box of your match', icon: Package },
+      { value: 'combo', title: 'Mix sizes', text: `${combo.count}-pad Cycle Pack · ₹${combo.price}`, icon: Sparkles },
     ],
   },
 ]
 
 const order = pads.map((pad) => pad.id)
 
+// With `combo`, the match fills two-thirds of the box and the next size up (for heavier days and nights) the rest.
 export function recommendFit({ flow, usage, pack }) {
   const index = Math.min(order.length - 1, flow + (usage === 'day' ? 0 : 1))
   const pad = padById[order[index]]
-  return { pad, pack: pad.packs.find((item) => item.format === pack) ?? pad.packs[1] }
+  if (pack !== 'combo') return { pad, pack: standardPack(pad) }
+  const partner = order[index + 1] ?? order[index - 1]
+  const mix = Object.fromEntries(order.map((id) => [id, 0]))
+  mix[pad.id] = combo.count - 4
+  mix[partner] = 4
+  return { pad, pack: combo, mix }
 }
 
 function Drops({ count }) {
@@ -81,7 +87,7 @@ export default function FitQuiz({ onClose }) {
         <div key={current.id} className="motion-drop mt-7">
           <h3 className={cn(heading, 'text-[clamp(22px,2.2vw,28px)]')}>{current.question}</h3>
           <p className="mt-1.5 text-[14px] text-muted">{current.hint}</p>
-          <div role="radiogroup" aria-label={current.question} className={cn('mt-5 grid gap-3', current.options.length === 4 ? 'grid-cols-2 md:grid-cols-4' : 'sm:grid-cols-3')}>
+          <div role="radiogroup" aria-label={current.question} className={cn('mt-5 grid gap-3', current.options.length === 4 ? 'grid-cols-2 md:grid-cols-4' : current.options.length === 2 ? 'sm:grid-cols-2' : 'sm:grid-cols-3')}>
             {current.options.map((option) => {
               const on = chosen === option.value
               const Icon = option.icon
@@ -109,8 +115,8 @@ export default function FitQuiz({ onClose }) {
             </p>
           )}
           <div className="mt-6 flex items-center justify-between gap-3">
-            <button type="button" onClick={() => setStep((value) => value - 1)} disabled={step === 0} className="inline-flex cursor-pointer items-center gap-1.5 text-[14px] font-semibold text-brand disabled:invisible"><ArrowLeft size={16} /> Back</button>
-            <button type="button" onClick={() => setStep((value) => value + 1)} disabled={chosen === undefined} className={cn(btn.base, btn.solid, 'min-w-[180px]')}>{step === steps.length - 1 ? 'See my match' : 'Next'} <ArrowRight size={18} /></button>
+            <button type="button" onClick={() => setStep((value) => value - 1)} disabled={step === 0} className={cn(btn.base, btn.outline, 'min-w-[180px] disabled:invisible max-sm:min-w-0 max-sm:flex-1')}><ArrowLeft size={18} /> Back</button>
+            <button type="button" onClick={() => setStep((value) => value + 1)} disabled={chosen === undefined} className={cn(btn.base, btn.solid, 'min-w-[180px] max-sm:min-w-0 max-sm:flex-1')}>{step === steps.length - 1 ? 'See my match' : 'Next'} <ArrowRight size={18} /></button>
           </div>
           <p className="mt-4 flex items-center justify-center gap-1.5 text-[12px] text-muted"><Lock size={13} aria-hidden="true" /> Your answers stay on this device.</p>
         </div>
@@ -121,23 +127,25 @@ export default function FitQuiz({ onClose }) {
   )
 }
 
-function Result({ pad, pack, onRestart, onClose }) {
+function Result({ pad, pack, mix, onRestart, onClose }) {
   const { hex } = colours[pad.colour]
   return (
     <div className="motion-drop mt-7 grid items-center gap-6 rounded-[22px] bg-white p-5 shadow-soft sm:grid-cols-[200px_1fr] sm:p-6">
       <div className="relative rounded-2xl p-3" style={tint(hex)}>
         <DiscountTag pack={pack} className="absolute top-2 right-2" />
-        <img src={pack.image} alt={`${pad.name} ${pack.formatName}`} className="aspect-[820/720] w-full object-contain" />
+        <img src={pack.image} alt={mix ? combo.name : `${pad.name} box`} className="aspect-[820/720] w-full object-contain" />
       </div>
       <div>
         <p className="text-[12px] font-semibold tracking-[.16em] text-brand uppercase">Your PIAX match</p>
         <h3 className={cn(heading, 'mt-1 text-[24px]')}>{pad.name} <span className="font-medium text-muted">· {pad.variant}</span></h3>
-        <p className="mt-1 text-[13.5px]">{pad.size} · {pad.lengthLabel} · {pad.flow}. {pack.formatName}, {pack.count} pads.</p>
+        <p className="mt-1 text-[13.5px]">{pad.size} · {pad.lengthLabel} · {pad.flow}. {mix ? `In a ${combo.count}-pad Cycle Pack with the next size up:` : `${pack.count} pads per box.`}</p>
+        {mix && <MixLegend mix={mix} className="mt-2" />}
         <div className="mt-3"><Price pack={pack} /></div>
-        <div className="mt-4 flex flex-wrap items-center gap-3">
-          <div className="w-[180px]"><AddButton item={padItem(pad, pack)} /></div>
-          <Link to={`/products/${pad.id}`} onClick={onClose} className={cn(btn.base, btn.outline, btn.small)}>View {pad.name.replace('PIAX ', '')}</Link>
-          <button type="button" onClick={onRestart} className="inline-flex cursor-pointer items-center gap-1.5 text-[13px] font-semibold text-brand hover:underline"><RotateCcw size={14} /> Start again</button>
+        {/* Three equal buttons: they share one row on wider screens and stack, full width, on phones. */}
+        <div className="mt-4 grid gap-2.5 sm:grid-cols-3">
+          <AddButton item={mix ? comboItem(mix) : padItem(pad, pack)} className="min-h-11" />
+          <Link to={mix ? combo.path : `/products/${pad.id}`} onClick={onClose} className={cn(btn.base, btn.outline, btn.small, 'min-h-11 w-full')}>View product</Link>
+          <button type="button" onClick={onRestart} className={cn(btn.base, btn.outline, btn.small, 'min-h-11 w-full')}><RotateCcw size={15} /> Start again</button>
         </div>
         <p className="mt-3 text-[12px] text-muted">A suggestion based on your answers, not medical advice. Length is about coverage; choose what feels comfortable.</p>
       </div>

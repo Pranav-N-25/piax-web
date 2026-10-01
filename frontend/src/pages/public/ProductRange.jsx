@@ -14,7 +14,7 @@ import { useMotion } from '../../hooks/useMotion.js'
 import { padById, pads } from '../../data/piaxRange.js'
 
 const PAGE_TITLE = 'Shop PIAX pads | Sizes, packs & prices'
-const PAGE_DESCRIPTION = 'The full PIAX range — LUMA, VERA, NOCTE and SEREN pads in trial, standard and value packs, with a side-by-side comparison.'
+const PAGE_DESCRIPTION = 'The full PIAX range — VERA, LUMA, NOCTE and SEREN pads, the 12-pad mix-and-match Cycle Pack, and a side-by-side comparison.'
 
 // /products: the full PIAX range with pack sizes, prices and a side-by-side comparison (the layout of piax.co.in/products).
 // A Filters switch reveals a filter bar for flow, size and day/night use; it is off by default.

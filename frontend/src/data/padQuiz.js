@@ -4,7 +4,7 @@
 // people, so flow is judged by how often a pad needs changing on the heaviest day. Night leaks and how
 // often someone *can* change during the day decide whether they need more length than their flow alone
 // suggests. Period length sizes the cycle kit. Nothing here is medical advice.
-import { padById, pads } from './piaxRange.js'
+import { combo, comboItem, padById, pads } from './piaxRange.js'
 
 export const questions = [
   {
@@ -63,7 +63,7 @@ export const questions = [
   {
     id: 'tried',
     question: 'Have you tried PIAX before?',
-    why: 'New to PIAX? A trial lets you feel every size before you commit.',
+    why: 'New to PIAX? The Cycle Pack lets you feel every size before you commit.',
     options: [
       { value: false, label: 'Not yet', hint: 'I’m new here', icon: 'sparkles' },
       { value: true, label: 'Yes, I have', hint: 'I know what I like', icon: 'check' },
@@ -84,14 +84,14 @@ const reasonsFor = {
     comfort: 'A soft top sheet for a comfortable feel',
     protection: '8-layer construction with a leak-management design',
     fit: 'Wings that fold around your underwear to stay in place',
-    value: 'We picked the 30-pad Value Pack, the lowest price per pad',
+    value: 'Full boxes of one size, the lowest price per pad',
   },
 }
 
-// Smallest pack that covers `count` pads, or enough of the largest pack. Trial packs are for trying, not a cycle's supply;
-// with `value`, the largest pack is always used for its lower price per pad.
+// Smallest pack that covers `count` pads, or enough of the largest pack. Each pad is sold in one box size today,
+// so this is the number of boxes; with `value`, the largest pack is always used for its lower price per pad.
 function packFor(pad, count, value = false) {
-  const sorted = [...pad.packs].filter((pack) => pack.format !== 'trial').sort((a, b) => a.count - b.count)
+  const sorted = [...pad.packs].sort((a, b) => a.count - b.count)
   if (value) {
     const largest = sorted[sorted.length - 1]
     return { pack: largest, quantity: Math.ceil(count / largest.count) }
@@ -132,11 +132,22 @@ export function recommend(answers) {
   // Packs come in fixed sizes, so a kit often covers more than one cycle.
   const cycles = Math.max(1, Math.floor(Math.min(...kit.map((item) => (item.pack.count * item.quantity) / item.count))))
 
-  // New to PIAX: suggest the 4-pad Trial Pack of the day pad first, so the size can be tried before a full pack.
-  const trialPack = padById[day].packs.find((pack) => pack.format === 'trial')
-  const trial = !tried && trialPack
-    ? { pad: padById[day], pack: trialPack, why: `New to PIAX? Try ${padById[day].name.replace('PIAX ', '')} in a ${trialPack.count}-pad Trial Pack for ₹${trialPack.price} before you buy a full pack.` }
-    : null
+  // The PIAX Cycle Pack with the matched sizes, offered with every result: two-thirds day pads, the rest night pads.
+  // With one size for days and nights, the rest is the next size up (or down, from the longest) for heavier moments.
+  // New to PIAX it is a way to try the sizes before full boxes; otherwise one box for the whole cycle.
+  const cycleMix = Object.fromEntries(pads.map((pad) => [pad.id, 0]))
+  const partner = nightPad && nightPad !== day ? nightPad : order[order.indexOf(day) + 1] ?? order[order.indexOf(day) - 1]
+  const share = Math.round(combo.count / 3)
+  cycleMix[day] = combo.count - share
+  cycleMix[partner] = share
+  const cycleNames = [day, partner].map((id) => `${cycleMix[id]} ${padById[id].name.replace('PIAX ', '')}`).join(' + ')
+  const cyclePack = {
+    item: comboItem(cycleMix),
+    mix: cycleMix,
+    why: tried
+      ? `Your day and night sizes together in one box: ${cycleNames}.`
+      : `New to PIAX? Try your sizes together first: ${cycleNames}, before you buy full boxes.`,
+  }
 
   const dayReasons = [
     `Made for ${reasonsFor.flow[flow]}`,
@@ -149,5 +160,5 @@ export function recommend(answers) {
     reasonsFor.priority[priority],
   ]
 
-  return { day: padById[day], night: nightPad && padById[nightPad], dayReasons, nightReasons, dayCount, nightCount, total, kit, kitPrice, cycles, trial }
+  return { day: padById[day], night: nightPad && padById[nightPad], dayReasons, nightReasons, dayCount, nightCount, total, kit, kitPrice, cycles, cyclePack }
 }

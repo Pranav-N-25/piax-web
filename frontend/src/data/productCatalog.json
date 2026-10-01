@@ -1,64 +1,249 @@
 {
-  "source": "PIAX Product Range, Packaging & Brand Positioning — Final Revised Report (August 2026). Approved by PIAX as the website's product source.",
-  "pricingNote": "The Final Revised report gives an indicative MRP range per pack. The printed MRP is the top of the range (mrpRange[1]) and the website sells at the bottom (`mrp` values, = mrpRange[0]); the gap is the discount shown on product cards. Neither strategy report sets a separate promotional discount.",
+  "source": "PIAX product range, fixed by PIAX (October 2026): one box per pad, with a set pad count and price, plus a 12-pad mix-and-match Cycle Pack.",
+  "pricingNote": "Each box sells at `price`; `mrp` is the struck-through MRP shown beside it, and the gap is the \"% OFF\" on cards. The MRPs here are placeholders chosen by the website team: they must match the MRP printed on each pack before launch. The combo is a flat price for exactly 12 pads in any mix of sizes.",
   "colours": {
-    "sage": { "name": "Soft Sage Green", "hex": "#AFC5AE" },
-    "lavender": { "name": "Muted Lavender", "hex": "#C9B6D6" },
-    "navy": { "name": "Deep Night Navy", "hex": "#2B3A5C" },
-    "terracotta": { "name": "Warm Terracotta", "hex": "#C4785B" }
+    "sage": {
+      "name": "Soft Sage Green",
+      "hex": "#AFC5AE"
+    },
+    "lavender": {
+      "name": "Muted Lavender",
+      "hex": "#C9B6D6"
+    },
+    "navy": {
+      "name": "Deep Night Navy",
+      "hex": "#2B3A5C"
+    },
+    "terracotta": {
+      "name": "Warm Terracotta",
+      "hex": "#C4785B"
+    }
   },
-  "packFormats": [
-    { "id": "trial", "name": "Trial Pack", "count": 4, "purpose": "Low-commitment first purchase — try PIAX before you switch." },
-    { "id": "standard", "name": "Standard Pack", "count": 10, "purpose": "The everyday PIAX pack." },
-    { "id": "value", "name": "Value Pack", "count": 30, "purpose": "Stock up on the size you trust, at better value per pad." }
-  ],
   "pads": [
     {
-      "id": "luma", "flowTags": ["Light", "Regular"], "name": "PIAX LUMA", "variant": "Light", "size": "L", "length": 240, "lengthLabel": "240mm",
-      "colour": "sage", "protection": 1, "wear": "Day", "flow": "Light / regular flow", "boxChip": "Light Flow",
+      "id": "vera",
+      "flowTags": [
+        "Light"
+      ],
+      "name": "PIAX VERA",
+      "variant": "Lite",
+      "size": "L",
+      "length": 240,
+      "lengthLabel": "240mm",
+      "colour": "sage",
+      "protection": 1,
+      "wear": "Day",
+      "flow": "Light flow",
+      "boxChip": "Light Flow",
       "text": "Our shortest pad, for lighter days and the beginning or end of your period.",
-      "mrp": { "trial": 49, "standard": 110, "value": 299 },
-      "mrpRange": { "trial": [49, 59], "standard": [110, 120], "value": [299, 319] }
+      "box": {
+        "count": 6,
+        "price": 99,
+        "mrp": 129
+      }
     },
     {
-      "id": "vera", "flowTags": ["Regular"], "name": "PIAX VERA", "variant": "Regular", "size": "XL", "length": 280, "lengthLabel": "280mm",
-      "colour": "lavender", "protection": 2, "wear": "Day", "flow": "Regular flow", "boxChip": "Regular Flow",
+      "id": "luma",
+      "flowTags": [
+        "Regular"
+      ],
+      "name": "PIAX LUMA",
+      "variant": "Everyday",
+      "size": "XL",
+      "length": 290,
+      "lengthLabel": "290mm",
+      "colour": "lavender",
+      "protection": 2,
+      "wear": "Day",
+      "flow": "Regular flow",
+      "boxChip": "Everyday",
       "text": "The everyday core size — the trusted default for most days of your period.",
-      "mrp": { "trial": 59, "standard": 120, "value": 329 },
-      "mrpRange": { "trial": [59, 69], "standard": [120, 130], "value": [329, 349] }
+      "box": {
+        "count": 12,
+        "price": 199,
+        "mrp": 249
+      }
     },
     {
-      "id": "nocte", "flowTags": ["Heavy"], "name": "PIAX NOCTE", "variant": "Night", "size": "XXL", "length": 330, "lengthMax": 340, "lengthLabel": "330–340mm",
-      "colour": "navy", "protection": 3, "wear": "Day & night", "flow": "Heavy flow & nights", "boxChip": "Heavy · Night",
+      "id": "nocte",
+      "flowTags": [
+        "Heavy"
+      ],
+      "name": "PIAX NOCTE",
+      "variant": "Overnight",
+      "size": "XXL",
+      "length": 330,
+      "lengthLabel": "330mm",
+      "colour": "navy",
+      "protection": 3,
+      "wear": "Day & night",
+      "flow": "Heavy flow & nights",
+      "boxChip": "Heavy · Night",
       "text": "More length and coverage for heavier days and for nights.",
-      "mrp": { "trial": 69, "standard": 140, "value": 389 },
-      "mrpRange": { "trial": [69, 79], "standard": [140, 150], "value": [389, 419] }
+      "box": {
+        "count": 12,
+        "price": 199,
+        "mrp": 249
+      }
     },
     {
-      "id": "seren", "flowTags": ["Heavy"], "name": "PIAX SEREN", "variant": "Overnight", "size": "XXXL", "length": 360, "lengthLabel": "360mm",
-      "colour": "terracotta", "protection": 4, "wear": "Night", "flow": "Extra heavy & overnight", "boxChip": "Overnight",
+      "id": "seren",
+      "flowTags": [
+        "Heavy"
+      ],
+      "name": "PIAX SEREN",
+      "variant": "Ultra",
+      "size": "XXXL",
+      "length": 360,
+      "lengthLabel": "360mm",
+      "colour": "terracotta",
+      "protection": 4,
+      "wear": "Night",
+      "flow": "Extra heavy & overnight",
+      "boxChip": "Ultra Night",
       "text": "Our longest pad, for greater coverage and peace of mind through the night.",
-      "mrp": { "trial": 79, "standard": 150, "value": 429 },
-      "mrpRange": { "trial": [79, 89], "standard": [150, 160], "value": [429, 459] }
+      "box": {
+        "count": 6,
+        "price": 149,
+        "mrp": 189
+      }
     }
   ],
   "features": [
-    { "id": "regular-pad", "label": "Regular sanitary pad", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
-    { "id": "length", "label": "Four lengths: 240, 280, 330–340 and 360mm", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page", "seo"] },
-    { "id": "soft-top-sheet", "label": "Soft top sheet", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
-    { "id": "eight-layer", "label": "8-layer construction", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
-    { "id": "anion", "label": "Anion-infused design", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
-    { "id": "winged", "label": "Winged design", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
-    { "id": "leak-management", "label": "Leak-management design", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
-    { "id": "ultra-thin", "label": "Ultra-thin", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
-    { "id": "organic", "label": "Organic", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
-    { "id": "compostable", "label": "Compostable", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
-    { "id": "rash-free", "label": "Rash-free", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
-    { "id": "odour-control", "label": "Odour control", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
-    { "id": "toxin-free", "label": "Toxin-free", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
-    { "id": "bpa-free", "label": "BPA-free", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
-    { "id": "absorbency", "label": "Specific absorbency capacity", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
-    { "id": "leak-proof", "label": "Guaranteed leak-proof", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] }
+    {
+      "id": "regular-pad",
+      "label": "Regular sanitary pad",
+      "status": "validated",
+      "source": "final_revised_report_s19",
+      "approvedFor": [
+        "product_listing",
+        "product_page"
+      ]
+    },
+    {
+      "id": "length",
+      "label": "Four lengths: 240, 290, 330 and 360mm",
+      "status": "validated",
+      "source": "final_revised_report_s19",
+      "approvedFor": [
+        "product_listing",
+        "product_page",
+        "seo"
+      ]
+    },
+    {
+      "id": "soft-top-sheet",
+      "label": "Soft top sheet",
+      "status": "validated",
+      "source": "final_revised_report_s19",
+      "approvedFor": [
+        "product_listing",
+        "product_page"
+      ]
+    },
+    {
+      "id": "eight-layer",
+      "label": "8-layer construction",
+      "status": "validated",
+      "source": "final_revised_report_s19",
+      "approvedFor": [
+        "product_listing",
+        "product_page"
+      ]
+    },
+    {
+      "id": "anion",
+      "label": "Anion-infused design",
+      "status": "validated",
+      "source": "final_revised_report_s19",
+      "approvedFor": [
+        "product_listing",
+        "product_page"
+      ]
+    },
+    {
+      "id": "winged",
+      "label": "Winged design",
+      "status": "validated",
+      "source": "final_revised_report_s19",
+      "approvedFor": [
+        "product_listing",
+        "product_page"
+      ]
+    },
+    {
+      "id": "leak-management",
+      "label": "Leak-management design",
+      "status": "validated",
+      "source": "final_revised_report_s19",
+      "approvedFor": [
+        "product_listing",
+        "product_page"
+      ]
+    },
+    {
+      "id": "ultra-thin",
+      "label": "Ultra-thin",
+      "status": "prohibited",
+      "source": "final_revised_report_s19",
+      "approvedFor": []
+    },
+    {
+      "id": "organic",
+      "label": "Organic",
+      "status": "prohibited",
+      "source": "final_revised_report_s19",
+      "approvedFor": []
+    },
+    {
+      "id": "compostable",
+      "label": "Compostable",
+      "status": "prohibited",
+      "source": "final_revised_report_s19",
+      "approvedFor": []
+    },
+    {
+      "id": "rash-free",
+      "label": "Rash-free",
+      "status": "prohibited",
+      "source": "final_revised_report_s19",
+      "approvedFor": []
+    },
+    {
+      "id": "odour-control",
+      "label": "Odour control",
+      "status": "prohibited",
+      "source": "final_revised_report_s19",
+      "approvedFor": []
+    },
+    {
+      "id": "toxin-free",
+      "label": "Toxin-free",
+      "status": "prohibited",
+      "source": "final_revised_report_s19",
+      "approvedFor": []
+    },
+    {
+      "id": "bpa-free",
+      "label": "BPA-free",
+      "status": "prohibited",
+      "source": "final_revised_report_s19",
+      "approvedFor": []
+    },
+    {
+      "id": "absorbency",
+      "label": "Specific absorbency capacity",
+      "status": "prohibited",
+      "source": "final_revised_report_s19",
+      "approvedFor": []
+    },
+    {
+      "id": "leak-proof",
+      "label": "Guaranteed leak-proof",
+      "status": "prohibited",
+      "source": "final_revised_report_s19",
+      "approvedFor": []
+    }
   ],
   "directionsOfUse": [
     "Peel off the backing and place the pad on your underwear.",
@@ -67,5 +252,84 @@
     "Wrap the used pad appropriately.",
     "Dispose of it in a waste bin. Do not flush."
   ],
-  "futureFormats": ["Day + Night Combo Pack", "Regular + Heavy Combo", "Custom Monthly Pack", "Subscription / Refill Pack", "Travel Pack"]
+  "futureFormats": [
+    "Subscription / Refill Pack",
+    "Travel Pack"
+  ],
+  "combo": {
+    "id": "cycle",
+    "name": "PIAX Cycle Pack",
+    "variant": "Mix & Match",
+    "count": 12,
+    "price": 249,
+    "text": "12 pads in the sizes you choose — light days, regular days and nights in one box.",
+    "presets": [
+      {
+        "id": "balanced",
+        "name": "Whole cycle",
+        "text": "A bit of every size, for start to finish",
+        "mix": {
+          "vera": 3,
+          "luma": 4,
+          "nocte": 3,
+          "seren": 2
+        }
+      },
+      {
+        "id": "days",
+        "name": "Mostly days",
+        "text": "More day pads, a couple for nights",
+        "mix": {
+          "vera": 4,
+          "luma": 6,
+          "nocte": 2,
+          "seren": 0
+        }
+      },
+      {
+        "id": "nights",
+        "name": "Heavy & nights",
+        "text": "Extra length for heavier days and nights",
+        "mix": {
+          "vera": 0,
+          "luma": 4,
+          "nocte": 4,
+          "seren": 4
+        }
+      }
+    ],
+    "mrp": 299,
+    "slug": "cycle-pack",
+    "shortName": "CYCLE PACK",
+    "tagline": "One box for your whole cycle: pick any 12 pads across the four PIAX sizes."
+  },
+  "subscription": {
+    "perks": [
+      "Skip, change or cancel any time",
+      "A reminder before every delivery"
+    ],
+    "note": "Placeholder terms chosen by the website team: a box arrives every month for the chosen length; longer subscriptions save more and 1 year is suggested by default. Confirm the discounts and perks before launch.",
+    "delivery": "Every month",
+    "terms": [
+      {
+        "months": 3,
+        "label": "3 months",
+        "deliveries": 3,
+        "discountPercent": 10
+      },
+      {
+        "months": 6,
+        "label": "6 months",
+        "deliveries": 6,
+        "discountPercent": 12
+      },
+      {
+        "months": 12,
+        "label": "1 year",
+        "deliveries": 12,
+        "discountPercent": 15,
+        "best": true
+      }
+    ]
+  }
 }

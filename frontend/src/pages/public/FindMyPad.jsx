@@ -9,9 +9,10 @@ import AppBanner from '../../components/home/AppBanner.jsx'
 import HomeFooter from '../../components/home/HomeFooter.jsx'
 import { DoodleNote, Foliage, Tag } from '../../components/home/HomeUi.jsx'
 import { accent, btn, cn, container, heading, sectionPlain } from '../../components/home/homeStyles.js'
-import { AddButton, DiscountTag, LengthBar, padItem, Price, tint } from '../../components/products/RangeUi.jsx'
+import { AddButton, DiscountTag, padItem, Price, tint } from '../../components/products/RangeUi.jsx'
 import { questions, recommend } from '../../data/padQuiz.js'
-import { colours, pads } from '../../data/piaxRange.js'
+import { colours, combo, discount, mixParam, pads, perPad } from '../../data/piaxRange.js'
+import { ComboMeter, MixLegend } from '../../components/products/ComboPack.jsx'
 
 const icons = { moon: Moon, sun: Sun, home: House, clock: Clock, bus: Bus, calendar: CalendarDays, feather: Feather, shield: ShieldCheck, heart: Heart, wallet: Wallet, sparkles: Sparkles, check: BadgeCheck }
 const reducedMotion = () => window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
@@ -90,10 +91,10 @@ function Quiz({ answers, onAnswer, onDone }) {
       </div>
 
       <div className="mt-7 flex items-center justify-between gap-3">
-        <button type="button" onClick={back} disabled={step === 0} className={cn(btn.base, btn.outline, btn.small, 'disabled:invisible')}>
+        <button type="button" onClick={back} disabled={step === 0} className={cn(btn.base, btn.outline, btn.small, 'min-h-11 min-w-[150px] disabled:invisible')}>
           <ArrowLeft size={16} /> Back
         </button>
-        <button type="button" onClick={next} disabled={chosen === undefined} className={cn(btn.base, btn.solid, btn.small)}>
+        <button type="button" onClick={next} disabled={chosen === undefined} className={cn(btn.base, btn.solid, btn.small, 'min-h-11 min-w-[150px]')}>
           {last ? 'See my match' : 'Next'} <ArrowRight size={16} />
         </button>
       </div>
@@ -113,7 +114,6 @@ function MatchCard({ label, icon: Icon, pad, reasons, pack }) {
       <div className="flex flex-1 flex-col p-5 sm:p-6">
         <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-brand">{pad.size} · {pad.lengthLabel} · {colourName}</p>
         <h3 className={cn(heading, 'mt-1.5 text-[24px]')}>{pad.name.replace('PIAX ', '')} <span className="font-medium text-muted">· {pad.variant}</span></h3>
-        <LengthBar pad={pad} className="mt-3" />
         <ul className="mt-4 flex flex-col gap-2 text-[13.5px]">
           {reasons.map((reason) => <li key={reason} className="flex items-start gap-2"><Check size={16} className="mt-0.5 shrink-0 text-brand" />{reason}</li>)}
         </ul>
@@ -127,9 +127,65 @@ function MatchCard({ label, icon: Icon, pad, reasons, pack }) {
   )
 }
 
+// Before the quiz: the PIAX Cycle Pack as the easy way to try every size, with a soft glow and a reflection sweep.
+function CyclePackTeaser() {
+  return (
+    <Link to={combo.path} className="group relative mt-8 block max-w-[460px] rounded-[22px] border border-brand/40 bg-[linear-gradient(110deg,#fff_0%,#eaf6f0_100%)] p-4 pr-5 shadow-soft motion-safe:animate-[subscribe-attract_2.8s_ease-in-out_infinite]">
+      <span aria-hidden="true" className="shine pointer-events-none absolute inset-0 rounded-[inherit]" />
+      <span className="relative flex items-center gap-4">
+        <img src={combo.image} alt="" className="w-24 shrink-0 object-contain transition-transform duration-300 group-hover:-rotate-3 group-hover:scale-105" />
+        <span className="min-w-0 flex-1">
+          <span className="text-[11px] font-semibold uppercase tracking-[.16em] text-brand">Not sure of your size?</span>
+          <strong className="mt-0.5 block text-[17px] leading-tight text-ink">Try all 4 sizes in the {combo.name}</strong>
+          <span className="mt-1 flex flex-wrap items-baseline gap-x-2 text-[13px]">
+            <strong className="text-[18px] text-ink">₹{combo.price}</strong>
+            {combo.mrp > combo.price && <del className="text-muted">₹{combo.mrp}</del>}
+            <span className="text-muted">· {combo.count} pads, any mix</span>
+          </span>
+        </span>
+        <ArrowRight size={20} className="shrink-0 text-brand transition-transform group-hover:translate-x-1" aria-hidden="true" />
+      </span>
+      <DoodleNote arrow="left" heart={false} className="-right-6 -bottom-9 text-[19px] max-sm:hidden">Mix &amp; match!</DoodleNote>
+    </Link>
+  )
+}
+
+// After the quiz: the Cycle Pack filled with this person's matched sizes, offered to everyone.
+function CyclePackMatch({ cyclePack }) {
+  const off = discount(combo)
+  return (
+    <article className="relative mt-8 overflow-hidden rounded-[26px] border border-brand/40 bg-[linear-gradient(115deg,#fff_0%,#eaf6f0_60%,#d6ece2_100%)] p-5 shadow-soft motion-safe:animate-[subscribe-attract_2.8s_ease-in-out_infinite] sm:p-7">
+      <span aria-hidden="true" className="shine pointer-events-none absolute inset-0 rounded-[inherit]" />
+      <div className="relative grid items-center gap-6 md:grid-cols-[minmax(0,240px)_minmax(0,1fr)_auto]">
+        <div className="relative">
+          <img src={combo.image} alt={combo.name} className="mx-auto aspect-[820/720] w-full max-w-[240px] object-contain drop-shadow-[0_18px_30px_rgba(0,64,52,.18)]" />
+          {off > 0 && <span className="absolute top-1 right-1 rounded-full bg-[#e8506a] px-2.5 py-1 text-[11.5px] font-bold text-white">{off}% OFF</span>}
+        </div>
+        <div className="min-w-0">
+          <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[.16em] text-brand"><Sparkles size={13} /> Made for your cycle</p>
+          <h3 className={cn(heading, 'mt-1.5 text-[clamp(22px,2.4vw,30px)]')}>Your sizes, <em className={accent}>one box.</em></h3>
+          <p className="mt-1.5 text-[14px]">{cyclePack.why}</p>
+          <ComboMeter mix={cyclePack.mix} className="mt-4 max-w-[420px]" />
+          <MixLegend mix={cyclePack.mix} className="mt-3" />
+        </div>
+        <div className="flex flex-col gap-2.5 md:w-[220px]">
+          <p className="flex items-baseline gap-2 md:justify-end">
+            <strong className="text-[30px] leading-none text-ink">₹{combo.price}</strong>
+            {off > 0 && <del className="text-[15px] text-muted">₹{combo.mrp}</del>}
+          </p>
+          <p className="text-[12.5px] text-muted md:text-right">{combo.count} pads · ₹{perPad(combo)}/pad{off > 0 && <> · <span className="font-semibold text-brand">Save ₹{combo.mrp - combo.price}</span></>}</p>
+          <AddButton item={cyclePack.item} label="Add my Cycle Pack" className="min-h-11" />
+          <Link to={`${combo.path}?mix=${mixParam(cyclePack.mix)}`} className={cn(btn.base, btn.outline, btn.small, 'min-h-11 w-full')}>Customize my mix</Link>
+        </div>
+      </div>
+      <DoodleNote heart className="right-8 top-5 text-[20px] max-lg:hidden">Made just for you</DoodleNote>
+    </article>
+  )
+}
+
 function Results({ answers, onRetake }) {
   const result = recommend(answers)
-  const { day, night, kit, trial } = result
+  const { day, night, kit, cyclePack } = result
   const same = night && night.id === day.id
   const packOf = (pad) => kit.find((item) => item.pad.id === pad.id).pack
 
@@ -155,9 +211,9 @@ function Results({ answers, onRetake }) {
             {summary.map((text) => <li key={text} className="rounded-full border border-line bg-white px-3 py-1 text-[12px] text-body">{text}</li>)}
           </ul>
         </div>
-        <div className="flex flex-wrap gap-3">
-          <Link to={compareLink} className={cn(btn.base, btn.outline, btn.small)}><GitCompareArrows size={16} /> Compare these pads</Link>
-          <button type="button" onClick={onRetake} className={cn(btn.base, btn.outline, btn.small)}><RotateCcw size={16} /> Retake quiz</button>
+        <div className="grid grid-cols-2 gap-3 max-[420px]:grid-cols-1">
+          <Link to={compareLink} className={cn(btn.base, btn.outline, btn.small, 'min-h-11 w-full')}><GitCompareArrows size={16} /> Compare these pads</Link>
+          <button type="button" onClick={onRetake} className={cn(btn.base, btn.outline, btn.small, 'min-h-11 w-full')}><RotateCcw size={16} /> Retake quiz</button>
         </div>
       </div>
 
@@ -191,27 +247,10 @@ function Results({ answers, onRetake }) {
             <AddButton className="mt-4" label="Add my kit to cart" items={kit.map(({ pad, pack, quantity }) => ({ item: padItem(pad, pack), quantity }))} />
           </article>
 
-          {trial && (
-            <article className="rounded-[22px] bg-brand p-5 text-white shadow-soft sm:p-6">
-              <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[.16em] text-brand-soft"><Sparkles size={13} /> Start with a trial</p>
-              <div className="mt-3 flex items-center gap-4">
-                <span className="relative shrink-0">
-                  <img src={trial.pack.image} alt={`${trial.pad.name} trial pack`} className="w-24 rounded-[14px] bg-white/90 object-contain p-1" />
-                  <DiscountTag pack={trial.pack} className="absolute -top-2 -right-2 px-2 py-0.5 text-[10.5px]" />
-                </span>
-                <div>
-                  <h3 className="text-[19px] leading-tight font-bold">{trial.pad.name.replace('PIAX ', '')} · {trial.pack.count} pads</h3>
-                  <p className="mt-1 text-[13px] text-white/85">{trial.why}</p>
-                </div>
-              </div>
-              <div className="mt-4 flex items-center gap-3 [&_del]:text-white/60 [&_p]:text-white/75 [&_strong]:text-white">
-                <div className="flex-1"><Price pack={trial.pack} /></div>
-                <div className="w-[150px]"><AddButton item={padItem(trial.pad, trial.pack)} className="border-white bg-white text-brand" /></div>
-              </div>
-            </article>
-          )}
         </div>
       </div>
+
+      <CyclePackMatch cyclePack={cyclePack} />
 
       <p className="mt-8 flex items-start gap-2 text-[12.5px] text-muted">
         <Info size={15} className="mt-px shrink-0" />
@@ -263,7 +302,8 @@ export default function FindMyPad() {
                       <li key={text} className="flex items-center gap-3"><span className="flex size-6 items-center justify-center rounded-full bg-brand text-white"><Check size={14} strokeWidth={3} /></span>{text}</li>
                     ))}
                   </ul>
-                  <DoodleNote inline arrow="right" className="mt-10 hidden lg:block">No sign-up.<br />Just answers.</DoodleNote>
+                  <CyclePackTeaser />
+                  <DoodleNote inline arrow="right" className="mt-14 hidden lg:block">No sign-up.<br />Just answers.</DoodleNote>
                 </div>
                 <Quiz answers={answers} onAnswer={(id, value) => setAnswers((prev) => ({ ...prev, [id]: value }))} onDone={finish} />
               </div>

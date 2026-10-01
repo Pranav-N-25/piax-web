@@ -15,10 +15,11 @@ const CartContext = createContext(null)
 export function CartProvider({ children }) {
   const [items, setItems] = useState(readCart)
 
-  const update = (nextItems) => { setItems(nextItems); persistCart(nextItems) }
-  const addItem = (product, quantity = 1) => update(addCartItem(items, product, quantity))
-  const changeQuantity = (id, amount) => update(changeCartQuantity(items, id, amount))
-  const removeItem = (id) => update(removeCartItem(items, id))
+  // Updates run on the latest cart, so quick repeated taps (+ + +) all count.
+  const update = (change) => setItems((current) => persistCart(change(current)))
+  const addItem = (product, quantity = 1) => update((current) => addCartItem(current, product, quantity))
+  const changeQuantity = (id, amount) => update((current) => changeCartQuantity(current, id, amount))
+  const removeItem = (id) => update((current) => removeCartItem(current, id))
   const subtotal = getCartSubtotal(items)
   const value = { items, addItem, changeQuantity, removeItem, subtotal, total: getCartTotal(items), itemCount: getCartItemCount(items) }
 

@@ -5,6 +5,7 @@ const express = require('express')
 const nodemailer = require('nodemailer')
 const { PIAX, dealerAcknowledgement, leadNotification } = require('./contactEmails')
 const authRoutes = require('./auth/routes')
+const reviewRoutes = require('./reviews/routes')
 const { appUrl } = require('./auth/config')
 
 const app = express()
@@ -16,6 +17,7 @@ app.use(cookieParser())
 app.disable('x-powered-by')
 
 app.use('/api/auth', authRoutes)
+app.use('/api/reviews', reviewRoutes)
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,

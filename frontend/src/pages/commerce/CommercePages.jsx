@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { ArrowRight, Check, Minus, Plus } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext.jsx'
 import { orderService } from '../../services/orderService.js'
 import { money } from '../../utils/formatters.js'
 import { EmptyState } from '../../components/common/FeedbackStates.jsx'
+import { QuantityStepper } from '../../components/products/RangeUi.jsx'
 import { button, cn, productTones, ui } from '../../components/common/ui.js'
 
 const layout = 'gap-16 md:grid md:grid-cols-[1.5fr_.8fr]'
@@ -15,7 +16,7 @@ const summaryTotal = 'mt-2.5 flex justify-between border-t border-rule pt-4 pb-2
 const demoNote = 'mt-4 text-center text-[11px] text-stone'
 
 export function Cart() {
-  const { items, subtotal, total, changeQuantity, removeItem } = useCart()
+  const { items, subtotal, total, removeItem } = useCart()
   const navigate = useNavigate()
 
   return <div className={ui.page}>
@@ -28,19 +29,17 @@ export function Cart() {
       : <div className={layout}>
         <div>
           {items.map((item) => (
-            <div key={item.id} className="grid grid-cols-[55px_1fr_auto] items-center gap-2.5 border-t border-rule py-4 md:grid-cols-[70px_1fr_auto_auto] md:gap-5">
-              <div className={cn('h-[70px]', productTones[item.tone])} />
-              <div>
-                <h3 className="mb-1.5 font-playfair text-xl leading-[1.25] font-medium">{item.name}</h3>
-                <p className="m-0 text-[13px] text-stone">{item.size} · {item.boxCount} pads</p>
-                <strong className="mt-1.5 block">{money(item.price)}</strong>
+            <div key={item.id} className="grid grid-cols-[64px_1fr] items-center gap-x-4 gap-y-3 border-t border-rule py-4 sm:grid-cols-[80px_1fr_auto_auto] sm:gap-5">
+              {item.image
+                ? <img src={item.image} alt="" className="aspect-square w-full rounded-2xl bg-[#eef5f1] object-contain p-1" />
+                : <div className={cn('h-[70px]', productTones[item.tone])} />}
+              <div className="min-w-0">
+                <h3 className="mb-1 text-[17px] leading-[1.25] font-semibold">{item.name}</h3>
+                <p className="m-0 text-[13px] text-stone">{item.subtitle ?? `${item.size} · ${item.boxCount} pads`}</p>
+                <p className="mt-1.5 text-[13px]"><strong>{money(item.price)}</strong>{item.quantity > 1 && <span className="text-stone"> × {item.quantity} = {money(item.price * item.quantity)}</span>}</p>
               </div>
-              <div className={cn(ui.quantity, 'col-start-2 justify-self-start md:col-start-auto')}>
-                <button className={ui.quantityButton} onClick={() => changeQuantity(item.id, -1)} aria-label="Decrease"><Minus size={15} /></button>
-                <span>{item.quantity}</span>
-                <button className={ui.quantityButton} onClick={() => changeQuantity(item.id, 1)} aria-label="Increase"><Plus size={15} /></button>
-              </div>
-              <button className="col-start-3 row-start-2 cursor-pointer text-xs text-stone md:col-start-auto md:row-start-auto" onClick={() => removeItem(item.id)}>Remove</button>
+              <QuantityStepper item={item} className="col-start-2 w-[160px] sm:col-start-auto" />
+              <button className="col-start-2 cursor-pointer justify-self-start text-xs text-stone hover:text-ink sm:col-start-auto" onClick={() => removeItem(item.id)}>Remove</button>
             </div>
           ))}
         </div>

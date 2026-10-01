@@ -8,18 +8,17 @@ import everydayPhoto from '../../assets/22_need_everyday_photo.png'
 import travelPhoto from '../../assets/23_need_travel_photo.png'
 import firstPhoto from '../../assets/24_need_first_period_photo.png'
 import sensitivePhoto from '../../assets/25_need_sensitive_skin_photo.png'
-import { padById, standardPack } from '../../data/piaxRange.js'
+import { combo, padById, standardPack } from '../../data/piaxRange.js'
 
 const packImage = (padId) => standardPack(padById[padId]).image
-const trialImage = (padId) => padById[padId].packs.find((pack) => pack.format === 'trial').image
 
 const moments = [
   { title: 'Heavy Flow', text: 'More protection for heavier days', icon: Sun, photo: heavyPhoto, pack: packImage('seren'), tone: 'blue' },
   { title: 'Night Protection', text: 'Longer coverage while you sleep', icon: Moon, photo: nightPhoto, pack: packImage('nocte'), tone: 'cream' },
-  { title: 'Everyday Comfort', text: 'Stay fresh and confident day after day', icon: Briefcase, photo: everydayPhoto, pack: packImage('vera'), tone: 'mint' },
-  { title: 'Lighter Days', text: 'Shorter cover for the start and end', icon: Feather, photo: travelPhoto, pack: packImage('luma'), tone: 'lilac' },
-  { title: 'First Period', text: 'Gentle care for new beginnings', icon: GraduationCap, photo: firstPhoto, pack: trialImage('luma'), tone: 'rose' },
-  { title: 'New to PIAX', text: 'Try any size in a 4-pad trial pack', icon: Leaf, photo: sensitivePhoto, pack: trialImage('vera'), tone: 'sage' },
+  { title: 'Everyday Comfort', text: 'Stay fresh and confident day after day', icon: Briefcase, photo: everydayPhoto, pack: packImage('luma'), tone: 'mint' },
+  { title: 'Lighter Days', text: 'Shorter cover for the start and end', icon: Feather, photo: travelPhoto, pack: packImage('vera'), tone: 'lilac' },
+  { title: 'First Period', text: 'Gentle care for new beginnings', icon: GraduationCap, photo: firstPhoto, pack: packImage('vera'), tone: 'rose' },
+  { title: 'New to PIAX', text: 'Try several sizes in the ₹249 Cycle Pack', icon: Leaf, photo: sensitivePhoto, pack: combo.image, tone: 'sage' },
 ]
 
 export default function ShopNeedsSection() {

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Check, GitCompareArrows, Moon, Sun } from 'lucide-react'
 import { colours, pads, sharedFeatures, standardPack } from '../../data/piaxRange.js'
 import { cn, eyebrow, h2, heading } from '../home/homeStyles.js'
-import { AddButton, DiscountTag, LengthBar, PackPicker, padItem, Price, tint } from './RangeUi.jsx'
+import { AddButton, DiscountTag, PackPicker, padItem, Price, QuantityPicker, tint } from './RangeUi.jsx'
 
 const bestPerPad = (pad) => Math.min(...pad.packs.map((pack) => pack.price / pack.count))
 const rupees = (value) => value.toFixed(2).replace(/\.00$/, '')
@@ -39,14 +39,18 @@ function Picker({ shown, onToggle }) {
 
 // The pack a column prices and sells: each column keeps its own pack choice.
 function BuyCell({ pad }) {
-  const [index, setIndex] = useState(() => Math.max(0, pad.packs.findIndex((pack) => pack.format === 'standard')))
+  const [index, setIndex] = useState(0)
+  const [boxes, setBoxes] = useState(1)
   const pack = pad.packs[index]
   return (
     <div className="flex h-full flex-col gap-3">
       <PackPicker pad={pad} index={index} onChange={setIndex} />
       {pad.packs.length === 1 && <p className="text-[12.5px] font-semibold text-ink">{pack.count} pads</p>}
-      <Price pack={pack} />
-      <AddButton item={padItem(pad, pack)} className="mt-auto" />
+      <div className="flex flex-wrap items-end justify-between gap-2">
+        <Price pack={pack} />
+        <QuantityPicker value={boxes} onChange={setBoxes} label={pad.name.replace('PIAX ', '')} />
+      </div>
+      <AddButton item={padItem(pad, pack)} quantity={boxes} className="mt-auto" />
     </div>
   )
 }
@@ -61,21 +65,16 @@ export default function PadCompare({ selected, onToggle, onSelect }) {
 
   const rows = [
     { label: 'Size & length', cell: (pad) => <><strong className="text-ink">{pad.size}</strong> · {pad.lengthLabel}</> },
-    { label: 'Coverage', cell: (pad) => <LengthBar pad={pad} className="mt-1.5 h-2" /> },
     { label: 'Best for', cell: (pad) => pad.flow },
     {
       label: 'Wear it',
       cell: (pad) => (
         <span className="flex items-center gap-1.5">
-          <Sun size={15} className="text-brand" />{pad.wear.includes('night') && <Moon size={15} className="text-brand" />}{pad.wear}
+          {pad.wear.includes('Day') && <Sun size={15} className="text-brand" />}{pad.wear.toLowerCase().includes('night') && <Moon size={15} className="text-brand" />}{pad.wear}
         </span>
       ),
     },
-    {
-      label: 'Colour',
-      cell: (pad) => <span className="flex items-center gap-2"><span className="size-3.5 rounded-full" style={{ background: colours[pad.colour].hex }} />{colours[pad.colour].name}</span>,
-    },
-    { label: 'Pack sizes', cell: (pad) => pad.packs.map((pack) => `${pack.count} pads`).join(' · ') },
+    { label: 'Pads per box', cell: (pad) => pad.packs.map((pack) => `${pack.count} pads`).join(' · ') },
     {
       label: 'Lowest price per pad',
       cell: (pad) => (
@@ -111,7 +110,7 @@ export default function PadCompare({ selected, onToggle, onSelect }) {
               <div key={pad.id} role="columnheader" className="flex flex-col px-4 pt-4 pb-3 md:px-5">
                 <div className="relative w-full max-w-[260px] rounded-[16px] px-3 pt-3" style={tint(colours[pad.colour].hex)}>
                   <DiscountTag pack={standardPack(pad)} className="absolute top-2 right-2" />
-                  <img src={standardPack(pad).image} alt={`${pad.name} standard pack`} loading="lazy" decoding="async" className="mx-auto aspect-[820/720] w-full max-w-[200px] object-contain" />
+                  <img src={standardPack(pad).image} alt={`${pad.name} box`} loading="lazy" decoding="async" className="mx-auto aspect-[820/720] w-full max-w-[200px] object-contain" />
                 </div>
                 <h3 className={cn(heading, 'mt-3 text-[18px]')}>{pad.name.replace('PIAX ', '')} <span className="font-medium text-muted">· {pad.variant}</span></h3>
               </div>

@@ -31,19 +31,24 @@ CATALOG = ROOT / 'src/data/productCatalog.json'
 
 
 def load_products():
-    """One box per pad and pack format, from the product catalogue.
+    """One box per pad, plus the mix-and-match combo box, from the product catalogue.
     Row: slug, box colour, ink colour (None = derived from the box), pads line, size line, variant label, variant chip, colour dots."""
     import json
     catalog = json.loads(CATALOG.read_text())
     colours = catalog['colours']
     rows = []
     for pad in catalog['pads']:
-        for pack in catalog['packFormats']:
-            rows.append((
-                f"{pad['id']}-{pack['id']}-{pack['count']}", colours[pad['colour']]['hex'], None,
-                f"{pack['count']} Pads", f"{pad['size']} - {pad['lengthLabel']}",
-                pad['name'].replace('PIAX ', ''), pad['boxChip'], [],
-            ))
+        rows.append((
+            f"{pad['id']}-{pad['box']['count']}", colours[pad['colour']]['hex'], None,
+            f"{pad['box']['count']} Pads", f"{pad['size']} - {pad['lengthLabel']}",
+            pad['name'].replace('PIAX ', ''), pad['boxChip'], [],
+        ))
+    combo = catalog['combo']
+    rows.append((
+        f"{combo['id']}-{combo['count']}", WHITE_BOX, '#1F4D44',
+        f"{combo['count']} Pads", ' · '.join(pad['size'] for pad in catalog['pads']),
+        'CYCLE', combo['variant'], [colours[pad['colour']]['hex'] for pad in catalog['pads']],
+    ))
     return rows
 
 # Areas of the reference photo, in source pixels.

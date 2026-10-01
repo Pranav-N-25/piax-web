@@ -175,16 +175,21 @@ export default function AppPrompt() {
             <X size={18} />
           </button>
 
-          {/* Desktop: the artwork in a brand-green header panel, with a "free" tag and the rating on it. */}
+          {/* Desktop: a brand-green header panel with a "free" tag and the rating. The phone artwork sits outside the
+              panel's clipping and rises above the card's top edge, tilted slightly, so it reads as standing out in 3D. */}
           <div aria-hidden="true" className="relative -mx-5 -mt-5 mb-5 h-48 overflow-hidden rounded-t-[23px] bg-linear-to-br from-[#1b8a74] via-brand-2 to-brand max-md:hidden">
             <span className="absolute -top-10 -left-10 size-40 rounded-full bg-white/10" />
             <span className="absolute right-8 bottom-8 size-20 rounded-full bg-white/10" />
+            {/* Soft floor shadow where the phone meets the panel. */}
+            <span className="absolute right-20 -bottom-6 h-12 w-48 rounded-[50%] bg-[#031e19]/35 blur-xl" />
             <span className="absolute top-4 left-4 rounded-full bg-white/15 px-3 py-1 text-[11px] font-semibold tracking-[.12em] text-white uppercase ring-1 ring-white/25">Free app</span>
-            <span className="absolute bottom-4 left-4 flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[12px] font-semibold text-ink shadow-soft">
-              <Star size={14} className="fill-[#f5a524] text-[#f5a524]" /> 4.8 · 10,000+ women
-            </span>
-            <PromoArt className="absolute right-2 -bottom-2 w-[210px] drop-shadow-[0_18px_24px_rgba(3,30,25,.35)]" />
           </div>
+          <div aria-hidden="true" className="pointer-events-none absolute right-14 top-[-60px] z-[5] w-[230px] [perspective:900px] motion-safe:animate-phone-float max-md:hidden">
+            <PromoArt className="w-full origin-bottom [transform:rotateY(-12deg)_rotateZ(-2deg)] drop-shadow-[0_26px_30px_rgba(3,30,25,.4)]" />
+          </div>
+          <span aria-hidden="true" className="absolute top-[156px] left-4 z-[6] flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[12px] font-semibold text-ink shadow-soft max-md:hidden">
+            <Star size={14} className="fill-[#f5a524] text-[#f5a524]" /> 4.8 · 10,000+ women
+          </span>
 
           <div className="flex items-center gap-4 pr-8">
             <span aria-hidden="true" className="flex size-16 shrink-0 items-end justify-center overflow-hidden rounded-2xl bg-linear-to-br from-[#1b8a74] to-brand md:hidden">

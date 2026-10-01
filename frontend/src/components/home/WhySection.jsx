@@ -22,7 +22,7 @@ const reasons = [
   },
   {
     title: <>Made for<br />Every Day</>, text: 'Four lengths, each in its own colour, so every day of your period has a pad that fits.', icon: Sprout, art: globeArt, fit: 'object-cover object-[center_30%]', tone: 'cream',
-    points: [[Leaf, 'LUMA 240mm · VERA 280mm'], [Recycle, 'NOCTE 330–340mm · SEREN 360mm'], [Sprout, 'Trial packs of 4 to start']],
+    points: [[Leaf, 'VERA 240mm · LUMA 290mm'], [Recycle, 'NOCTE 330mm · SEREN 360mm'], [Sprout, 'Mix any 12 in the Cycle Pack']],
   },
   {
     title: <>Powered<br />by Intelligence</>, text: 'Track, understand and make better choices with PIAX AI and personalized insights.', icon: Brain, art: appArt, fit: 'object-cover object-top', tone: 'lilac',

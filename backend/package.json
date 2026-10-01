@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "dev": "node --watch index.js"
+    "dev": "node --watch index.js",
+    "reviews:sample": "node scripts/seed-sample-reviews.js",
+    "reviews:clear-samples": "node scripts/seed-sample-reviews.js --clear"
   },
   "keywords": [],
   "author": "",

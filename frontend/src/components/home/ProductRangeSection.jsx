@@ -1,14 +1,17 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { colours, packFormats, pads } from '../../data/piaxRange.js'
-import { AddButton, CompareButton, DiscountTag, FavouriteButton, InstitutionalBanner, LengthBar, PackPicker, padItem, Price, tint } from '../products/RangeUi.jsx'
+import { colours, pads } from '../../data/piaxRange.js'
+import { AddButton, CompareButton, DiscountTag, FavouriteButton, InstitutionalBanner, PackPicker, padItem, Price, QuantityPicker, tint } from '../products/RangeUi.jsx'
+import { ComboProductCard } from '../products/ComboPack.jsx'
+import { RatingBadge } from '../reviews/Stars.jsx'
 import { DoodleNote, Foliage } from './HomeUi.jsx'
 import { accent, cn, container, eyebrow, h2, heading, section } from './homeStyles.js'
 
 // One pad with its pack picker, price and Add to cart. Also used by the product detail page's range section.
 // `animDelay` staggers the card's entrance on pages that run useMotion (ignored elsewhere).
 export function PadCard({ pad, comparing, onCompare, animDelay = 0 }) {
-  const [index, setIndex] = useState(() => Math.max(0, pad.packs.findIndex((pack) => pack.format === 'standard')))
+  const [index, setIndex] = useState(0)
+  const [boxes, setBoxes] = useState(1)
   const pack = pad.packs[index]
   const { hex, name: colourName } = colours[pad.colour]
   const short = pad.name.replace('PIAX ', '')
@@ -39,33 +42,21 @@ export function PadCard({ pad, comparing, onCompare, animDelay = 0 }) {
       <div className="flex flex-1 flex-col p-5">
         <p className="text-[11px] font-semibold uppercase tracking-[.16em]" style={{ color: pad.colour === 'slate' ? hex : '#0b5b4e' }}>{pad.flow}</p>
         <h3 className={cn(heading, 'mt-1.5 text-[22px]')}><Link to={`/products/${pad.id}`} className="hover:text-brand">{short} <span className="font-medium text-muted">· {pad.variant}</span></Link></h3>
+        <RatingBadge productId={pad.id} showEmpty className="mt-1.5" />
         <p className="mt-2 text-[13px] leading-[1.4]">{pad.text}</p>
 
-        <LengthBar pad={pad} className="mt-4" />
         <PackPicker pad={pad} index={index} onChange={setIndex} className="mt-4" />
 
         <div className="mt-auto pt-5">
-          {pad.packs.length === 1 && <p className="mb-2 text-[12.5px] font-semibold text-ink">{pack.count} pads</p>}
-          <Price pack={pack} />
-          <AddButton className="mt-4" item={padItem(pad, pack)} />
+          {pad.packs.length === 1 && <p className="mb-2 text-[12.5px] font-semibold text-ink">{pack.count} pads per box</p>}
+          <div className="flex items-end justify-between gap-3">
+            <Price pack={pack} />
+            <QuantityPicker value={boxes} onChange={setBoxes} label={short} />
+          </div>
+          <AddButton className="mt-4" item={padItem(pad, pack)} quantity={boxes} />
         </div>
       </div>
     </article>
-  )
-}
-
-// The three pack sizes every pad comes in, from trying PIAX to stocking up.
-function PackFormats() {
-  return (
-    <ul id="packs" data-stagger className="grid scroll-mt-28 gap-5 md:grid-cols-3">
-      {packFormats.map((format, index) => (
-        <li key={format.id} data-anim style={{ '--d': `${index * 0.12}s` }} className="rounded-[22px] bg-white p-5 shadow-soft transition-[translate,box-shadow] duration-300 hover:-translate-y-1 hover:shadow-[0_18px_36px_-14px_rgba(15,60,50,.25)]">
-          <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-brand">{format.count} pads</p>
-          <h4 className={cn(heading, 'mt-1 text-[19px]')}>{format.name}</h4>
-          <p className="mt-2 text-[13px] leading-[1.4]">{format.purpose}</p>
-        </li>
-      ))}
-    </ul>
   )
 }
 
@@ -89,17 +80,18 @@ export default function ProductRangeSection({ titleAs: Title = 'h2', compare = [
 
         {shownPads.length === 0 && emptyState ? emptyState : (
           // Keyed on the visible pads, so a filter change replays the cards' entrance.
-          <div key={shownPads.map((pad) => pad.id).join()} data-stagger className="grid gap-5 sm:grid-cols-2 xl:grid-cols-4">
+          // The combo is listed as a fifth product, after the pads.
+          <div key={shownPads.map((pad) => pad.id).join()} data-stagger className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {shownPads.map((pad, index) => <PadCard key={pad.id} pad={pad} comparing={compare.includes(pad.id)} onCompare={onCompare} animDelay={0.1 + index * 0.1} />)}
+            <ComboProductCard animDelay={0.1 + shownPads.length * 0.1} />
           </div>
         )}
 
+        {/* With a comparison table (/products), the bulk banner sits right above it; otherwise it closes the section. */}
+        {afterPads && <div data-anim><InstitutionalBanner className="mt-14" /></div>}
         {afterPads && <div data-anim>{afterPads}</div>}
 
-        <h3 className={cn(heading, 'mt-14 mb-6 text-[clamp(22px,2vw,28px)]')} data-anim>Every size, three pack sizes</h3>
-        <PackFormats />
-
-        <div data-anim><InstitutionalBanner className="mt-10" /></div>
+        {!afterPads && <div data-anim><InstitutionalBanner className="mt-10" /></div>}
       </div>
     </section>
   )

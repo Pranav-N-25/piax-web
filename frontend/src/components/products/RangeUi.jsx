@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
-import { ArrowRight, Building2, Check, Heart, ShoppingCart } from 'lucide-react'
+import { ArrowRight, Building2, Check, Heart, Minus, Plus, ShoppingCart, Trash2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext.jsx'
+import { MAX_ITEM_QUANTITY } from '../../services/cartService.js'
 import { useFavourites } from '../../hooks/useFavourites.js'
-import { colours, discount, padById, pads, perPad, standardPack } from '../../data/piaxRange.js'
+import { colours, discount, padById, perPad, standardPack } from '../../data/piaxRange.js'
 import { btn, cn } from '../home/homeStyles.js'
 
 // Shared pieces for everything that sells the PIAX range: the /products page, the comparison table
@@ -11,7 +12,7 @@ import { btn, cn } from '../home/homeStyles.js'
 
 // Cart entry for a pad pack.
 export const padItem = (pad, pack) => ({
-  id: pack.id, name: pad.name, subtitle: `${pad.size} (${pad.lengthLabel}) – ${pack.formatName}, ${pack.count} pads`,
+  id: pack.id, name: `${pad.name} ${pad.variant}`, subtitle: `${pad.size} · ${pad.lengthLabel} · ${pack.count} pads per box`,
   price: pack.price, mrp: pack.mrp, boxCount: pack.count, image: pack.image,
 })
 
@@ -26,17 +27,45 @@ function useAdded() {
   return [added, () => setAdded(true)]
 }
 
-// Adds one item, or several `{ item, quantity }` entries at once (a whole kit).
-export function AddButton({ item, items, label = 'Add to cart', className = '' }) {
+const stepButton = 'flex size-8 cursor-pointer items-center justify-center rounded-full text-ink transition-colors hover:bg-brand-soft disabled:cursor-default disabled:opacity-35 disabled:hover:bg-transparent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand'
+
+// − boxes + beside a price: how many boxes Add to cart adds (1 to MAX_ITEM_QUANTITY).
+export function QuantityPicker({ value, onChange, label, className = '' }) {
+  return (
+    <div role="group" aria-label={`${label} boxes`} className={cn('flex shrink-0 items-center gap-0.5 rounded-full border border-line bg-white p-0.5', className)}>
+      <button type="button" onClick={() => onChange(Math.max(1, value - 1))} disabled={value <= 1} aria-label={`One box fewer of ${label}`} className={stepButton}><Minus size={15} /></button>
+      <output aria-live="polite" className="w-6 text-center text-[14px] font-semibold tabular-nums text-ink">{value}</output>
+      <button type="button" onClick={() => onChange(Math.min(MAX_ITEM_QUANTITY, value + 1))} disabled={value >= MAX_ITEM_QUANTITY} aria-label={`One box more of ${label}`} className={stepButton}><Plus size={15} /></button>
+    </div>
+  )
+}
+
+// − quantity + for an item in the cart, changing the cart directly (the cart page). At 1 the minus becomes a bin.
+export function QuantityStepper({ item, className = '' }) {
+  const { items, changeQuantity, removeItem } = useCart()
+  const quantity = items.find((entry) => entry.id === item.id)?.quantity ?? 0
+  return (
+    <div role="group" aria-label={`${item.name} quantity`} className={cn('flex items-center justify-between gap-1 rounded-full border border-line bg-white p-0.5', className)}>
+      <button type="button" onClick={() => (quantity <= 1 ? removeItem(item.id) : changeQuantity(item.id, -1))} aria-label={quantity <= 1 ? `Remove ${item.name} from cart` : `One less ${item.name}`} className={stepButton}>
+        {quantity <= 1 ? <Trash2 size={15} /> : <Minus size={15} />}
+      </button>
+      <output aria-live="polite" className="min-w-6 text-center text-[14px] font-semibold tabular-nums text-ink">{quantity}</output>
+      <button type="button" onClick={() => changeQuantity(item.id, 1)} disabled={quantity >= MAX_ITEM_QUANTITY} aria-label={`One more ${item.name}`} className={stepButton}><Plus size={15} /></button>
+    </div>
+  )
+}
+
+// Adds one item (`quantity` boxes of it), or several `{ item, quantity }` entries at once (a whole kit).
+export function AddButton({ item, items, quantity = 1, label = 'Add to cart', disabled = false, className = '' }) {
   const { addItem } = useCart()
   const [added, markAdded] = useAdded()
   const add = () => {
     if (items) items.forEach((entry) => addItem(entry.item, entry.quantity))
-    else addItem(item)
+    else addItem(item, quantity)
     markAdded()
   }
   return (
-    <button type="button" onClick={add} className={cn(btn.base, btn.solid, btn.small, 'w-full', className)}>
+    <button type="button" onClick={add} disabled={disabled} className={cn(btn.base, btn.solid, btn.small, 'w-full', className)}>
       {added ? <Check size={16} /> : <ShoppingCart size={16} />}{added ? 'Added' : label}
     </button>
   )
@@ -47,12 +76,12 @@ export function Price({ pack }) {
   const off = discount(pack)
   return (
     <div>
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="flex items-baseline gap-2 whitespace-nowrap">
         <strong className="text-[22px] leading-none text-ink">₹{pack.price}</strong>
         {off > 0 && <del className="text-sm text-[#8d9a96]">₹{pack.mrp}</del>}
       </div>
       <p className="mt-1.5 text-[11.5px] text-muted">
-        ₹{perPad(pack)}/pad
+        ₹{perPad(pack)}/pad{off > 0 && <> · <span className="font-semibold text-brand">Save ₹{pack.mrp - pack.price}</span></>}
       </p>
     </div>
   )
@@ -81,17 +110,6 @@ export function Dots({ keys, className = '' }) {
 
 // Soft fade from white into a pad's colour, behind its box photo.
 export const tint = (hex) => ({ background: `linear-gradient(180deg, #fff 0%, ${hex}38 100%)` })
-
-const LONGEST = Math.max(...pads.map((pad) => pad.length))
-
-// Pad length against the longest pad in the range.
-export function LengthBar({ pad, className = '' }) {
-  return (
-    <div className={cn('h-1.5 overflow-hidden rounded-full bg-mist', className)} aria-hidden="true">
-      <span className="block h-full rounded-full" style={{ width: `${(pad.length / LONGEST) * 100}%`, background: colours[pad.colour].hex }} />
-    </div>
-  )
-}
 
 // Pack-size switch for pads sold in more than one count.
 export function PackPicker({ pad, index, onChange, className = '' }) {
@@ -166,7 +184,7 @@ export function CompareButton({ on, name, onToggle }) {
 export function InstitutionalBanner({ className = '' }) {
   return (
     <div className={cn('grid items-center gap-6 overflow-hidden rounded-[24px] bg-brand p-6 text-white md:grid-cols-[180px_1fr_auto] md:p-8', className)}>
-      <img src={standardPack(padById.vera).image} alt="PIAX VERA standard pack" loading="lazy" decoding="async" className="mx-auto w-[180px] rounded-[16px] bg-white/90 p-2" />
+      <img src={standardPack(padById.vera).image} alt="PIAX VERA box" loading="lazy" decoding="async" className="mx-auto w-[180px] rounded-[16px] bg-white/90 p-2" />
       <div>
         <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[.16em] text-brand-soft"><Building2 size={14} /> For schools, workplaces &amp; NGOs</p>
         <h3 className="mt-2 text-[22px] font-bold leading-tight">Buying PIAX in bulk?</h3>

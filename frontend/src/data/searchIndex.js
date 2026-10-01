@@ -1,6 +1,6 @@
 // Everything the header search can find: pads, pack sizes, pages, FAQ answers and PIAX app features.
 // Built from the same data the pages use, so results never drift from what the site shows.
-import { packFormats, pads, standardPack } from './piaxRange.js'
+import { combo, pads, standardPack } from './piaxRange.js'
 import { faqs } from './faqs.js'
 import { appFeatures, appLinks } from './appFeatures.js'
 import { articlePath, articlesIn, categories } from './learn/index.js'
@@ -15,17 +15,18 @@ const padEntries = pads.map((pad) => ({
   image: standardPack(pad).image,
 }))
 
-const packEntries = packFormats.map((format) => ({
-  id: `pack-${format.id}`,
+const packEntries = [{
+  id: 'pack-cycle',
   type: 'Pack',
-  title: `${format.name} · ${format.count} pads`,
-  text: format.purpose,
-  keywords: `${format.id} ${format.count} pack box price value trial sample bulk`,
-  to: '/products#packs',
-}))
+  title: `${combo.name} · ${combo.count} pads · ₹${combo.price}`,
+  text: combo.text,
+  keywords: `cycle pack combo mix match custom customise customize mixed sizes ${combo.count} pack box price value ${combo.presets.map((preset) => preset.name).join(' ')}`,
+  to: combo.path,
+  image: combo.image,
+}]
 
 const pageEntries = [
-  { id: 'page-shop', title: 'Shop PIAX pads', text: 'All four sizes, every pack, prices and a side-by-side comparison.', keywords: 'shop buy products range price compare cart order', to: '/products' },
+  { id: 'page-shop', title: 'Shop PIAX pads', text: 'All four sizes, the Cycle Pack, prices and a side-by-side comparison.', keywords: 'shop buy products range price compare cart order', to: '/products' },
   { id: 'page-compare', title: 'Compare pads', text: 'See sizes, lengths and price per pad side by side.', keywords: 'compare comparison difference which size', to: '/products#compare' },
   { id: 'page-find', title: 'Find My Pad quiz', text: 'Answer a few questions and get your size and cycle kit.', keywords: 'find my pad size quiz recommend match which', to: '/find-my-pad' },
   { id: 'page-about', title: 'About PIAX', text: 'Our mission, founder’s story and journey.', keywords: 'about company founder mission story team piax life', to: '/about' },
@@ -72,4 +73,4 @@ const learnEntries = categories.map((category) => ({
 export const searchIndex = [...padEntries, ...packEntries, ...pageEntries, ...learnEntries, ...articleEntries, ...faqEntries, ...appEntries]
 
 // Shown before anything is typed, and when nothing matches.
-export const popularSearches = ['Night pads', 'Heavy flow', 'Trial pack', 'Which size?', 'Bulk order', 'Track my cycle']
+export const popularSearches = ['Night pads', 'Heavy flow', 'Cycle Pack', 'Which size?', 'Bulk order', 'Track my cycle']

@@ -88,7 +88,7 @@ export default function FindMySizeModal({ open, onClose, products, onAdd }) {
             <button type="button" onClick={() => { onAdd(product); close() }} className={button.primary}>
               <ShoppingBag size={16} /> Add to Cart
             </button>
-            <Link to={`/products/${product.slug}`} onClick={close} className={button.secondary}>View details</Link>
+            <Link to={`/products/${product.slug}`} onClick={close} className={button.secondary}>View product</Link>
             <button type="button" onClick={() => { setStep(0); setAnswers({}) }} className={button.ghost}>
               <RotateCcw size={16} /> Start again
             </button>

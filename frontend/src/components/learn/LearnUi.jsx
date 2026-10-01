@@ -92,23 +92,6 @@ export function CategoryNav() {
   )
 }
 
-export function FeaturedGuide({ article }) {
-  const category = categoryBySlug[article.category]
-  return (
-    <section aria-labelledby="featured-title" className={cn('relative grid overflow-hidden rounded-[28px] md:grid-cols-[minmax(0,1.1fr)_minmax(0,.9fr)]', tones[category.tone].bg)} data-anim>
-      <div className="relative z-10 p-7 md:p-10">
-        <p className={eyebrow}>Featured guide</p>
-        <h2 id="featured-title" className={cn(heading, 'text-[clamp(26px,2.8vw,38px)]')}>{article.title}</h2>
-        <p className="mt-3 max-w-[460px] text-[15.5px]">{article.excerpt}</p>
-        <Link to={articlePath(article)} className={cn(btn.base, btn.solid, 'mt-6')}>Read full guide <ArrowRight size={18} /></Link>
-      </div>
-      <div className="relative min-h-[220px] max-md:hidden">
-        <img src={category.image} alt="" className="absolute inset-0 size-full object-cover object-[center_25%] [mask-image:linear-gradient(90deg,transparent,#000_28%)]" />
-      </div>
-    </section>
-  )
-}
-
 // Article card with an illustrated header in the category's colour (layout: grid card or wide list row).
 export function ArticleCard({ article, layout = 'grid', index = 0 }) {
   const category = categoryBySlug[article.category]

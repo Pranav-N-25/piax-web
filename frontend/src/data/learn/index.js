@@ -6,7 +6,6 @@ export { categories, categoryBySlug, learnPromises }
 
 export const articlesIn = (slug) => (slug ? allArticles.filter((article) => article.category === slug) : allArticles)
 export const findArticle = (category, slug) => allArticles.find((article) => article.category === category && article.slug === slug) ?? null
-export const featuredIn = (slug) => articlesIn(slug).find((article) => article.featured) ?? articlesIn(slug)[0]
 
 // Same category first, then the featured guides of other categories.
 export function relatedTo(article, limit = 4) {

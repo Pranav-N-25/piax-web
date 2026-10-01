@@ -42,7 +42,7 @@ const steps = [
   },
 ]
 
-// Each flow maps to a pad in the range; the recommendation shows its Standard (10-pad) pack.
+// Each flow maps to a pad in the range; the recommendation shows its box.
 const toMatch = (padId, fit) => {
   const pad = padById[padId]
   const pack = standardPack(pad)
@@ -50,8 +50,8 @@ const toMatch = (padId, fit) => {
 }
 
 const matches = {
-  Light: toMatch('luma', 'Best for light flow'),
-  Regular: toMatch('vera', 'Best for regular flow'),
+  Light: toMatch('vera', 'Best for light flow'),
+  Regular: toMatch('luma', 'Best for regular flow'),
   Heavy: toMatch('nocte', 'Best for heavy flow & nights'),
   'Very Heavy': toMatch('seren', 'Best for very heavy flow'),
 }
@@ -66,7 +66,7 @@ const specs = [
 const perks = [
   { icon: Truck, text: <>Free shipping<br />on orders above ₹499</> },
   { icon: Leaf, text: <>Plain, discreet<br />packaging</> },
-  { icon: Shield, text: <>Try any size<br />in a 4-pad trial pack</> },
+  { icon: Shield, text: <>Mix any 12 pads<br />in the ₹249 Cycle Pack</> },
   { icon: Heart, text: <>Trusted by<br />10,000+ women</> },
 ]
 
