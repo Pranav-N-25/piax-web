@@ -9,7 +9,7 @@ import AppBanner from '../../components/home/AppBanner.jsx'
 import HomeFooter from '../../components/home/HomeFooter.jsx'
 import { DoodleNote, Foliage, Tag } from '../../components/home/HomeUi.jsx'
 import { accent, btn, cn, container, heading, sectionPlain } from '../../components/home/homeStyles.js'
-import { AddButton, bundleItem, LengthBar, padItem, Price, tint } from '../../components/products/RangeUi.jsx'
+import { AddButton, DiscountTag, LengthBar, padItem, Price, tint } from '../../components/products/RangeUi.jsx'
 import { questions, recommend } from '../../data/padQuiz.js'
 import { colours, pads } from '../../data/piaxRange.js'
 
@@ -107,10 +107,11 @@ function MatchCard({ label, icon: Icon, pad, reasons, pack }) {
     <article className="flex flex-col overflow-hidden rounded-[22px] bg-white shadow-soft">
       <div className="relative px-5 pt-5" style={tint(hex)}>
         <span className="flex w-fit items-center gap-1.5 rounded-full bg-white px-3 py-1 text-[12px] font-semibold text-ink shadow-soft"><Icon size={14} className="text-brand" /> {label}</span>
+        <DiscountTag pack={pack} className="absolute top-5 right-5" />
         <img src={pack.image} alt={`${pad.name} ${pad.variant} box in ${colourName}`} className="mx-auto mt-2 aspect-[820/720] w-full max-w-[280px] object-contain" />
       </div>
       <div className="flex flex-1 flex-col p-5 sm:p-6">
-        <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-brand">{pad.size} · {pad.length}mm · {colourName}</p>
+        <p className="text-[11px] font-semibold uppercase tracking-[.16em] text-brand">{pad.size} · {pad.lengthLabel} · {colourName}</p>
         <h3 className={cn(heading, 'mt-1.5 text-[24px]')}>{pad.name.replace('PIAX ', '')} <span className="font-medium text-muted">· {pad.variant}</span></h3>
         <LengthBar pad={pad} className="mt-3" />
         <ul className="mt-4 flex flex-col gap-2 text-[13.5px]">
@@ -128,7 +129,7 @@ function MatchCard({ label, icon: Icon, pad, reasons, pack }) {
 
 function Results({ answers, onRetake }) {
   const result = recommend(answers)
-  const { day, night, kit, bundle } = result
+  const { day, night, kit, trial } = result
   const same = night && night.id === day.id
   const packOf = (pad) => kit.find((item) => item.pad.id === pad.id).pack
 
@@ -190,19 +191,22 @@ function Results({ answers, onRetake }) {
             <AddButton className="mt-4" label="Add my kit to cart" items={kit.map(({ pad, pack, quantity }) => ({ item: padItem(pad, pack), quantity }))} />
           </article>
 
-          {bundle && (
+          {trial && (
             <article className="rounded-[22px] bg-brand p-5 text-white shadow-soft sm:p-6">
-              <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[.16em] text-brand-soft"><Sparkles size={13} /> Smart pick</p>
+              <p className="flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[.16em] text-brand-soft"><Sparkles size={13} /> Start with a trial</p>
               <div className="mt-3 flex items-center gap-4">
-                <img src={bundle.image} alt={`${bundle.name} box`} className="w-24 shrink-0 rounded-[14px] bg-white/90 object-contain p-1" />
+                <span className="relative shrink-0">
+                  <img src={trial.pack.image} alt={`${trial.pad.name} trial pack`} className="w-24 rounded-[14px] bg-white/90 object-contain p-1" />
+                  <DiscountTag pack={trial.pack} className="absolute -top-2 -right-2 px-2 py-0.5 text-[10.5px]" />
+                </span>
                 <div>
-                  <h3 className="text-[19px] leading-tight font-bold">{bundle.name.replace('PIAX ', '')} · {bundle.count} pads</h3>
-                  <p className="mt-1 text-[13px] text-white/85">{bundle.why}</p>
+                  <h3 className="text-[19px] leading-tight font-bold">{trial.pad.name.replace('PIAX ', '')} · {trial.pack.count} pads</h3>
+                  <p className="mt-1 text-[13px] text-white/85">{trial.why}</p>
                 </div>
               </div>
               <div className="mt-4 flex items-center gap-3 [&_del]:text-white/60 [&_p]:text-white/75 [&_strong]:text-white">
-                <div className="flex-1"><Price pack={bundle} /></div>
-                <div className="w-[150px]"><AddButton item={bundleItem(bundle)} className="border-white bg-white text-brand" /></div>
+                <div className="flex-1"><Price pack={trial.pack} /></div>
+                <div className="w-[150px]"><AddButton item={padItem(trial.pad, trial.pack)} className="border-white bg-white text-brand" /></div>
               </div>
             </article>
           )}
@@ -224,10 +228,6 @@ export default function FindMyPad() {
   const [done, setDone] = useState(false)
   const [final, setFinal] = useState(null)
   const top = useRef(null)
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
 
   const finish = (all) => {
     setFinal(all ?? answers)

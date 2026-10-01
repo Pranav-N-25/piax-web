@@ -1,0 +1,43 @@
+// Production user store for PIAX sign-in (replaces the development JSON store in auth/userStore.js).
+// Not yet migrated: set DATABASE_URL, then run `npx prisma migrate dev`.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  CUSTOMER
+  BUSINESS
+  ADMIN
+}
+
+model User {
+  id            String         @id @default(uuid())
+  name          String         @default("")
+  email         String?        @unique
+  emailVerified Boolean        @default(false)
+  phone         String?        @unique
+  passwordHash  String?
+  role          Role           @default(CUSTOMER)
+  tokenVersion  Int            @default(0)
+  createdAt     DateTime       @default(now())
+  lastLoginAt   DateTime       @default(now())
+  oauthAccounts OAuthAccount[]
+}
+
+// One row per linked Google / Facebook / Instagram account.
+model OAuthAccount {
+  id         String @id @default(uuid())
+  provider   String
+  providerId String
+  user       User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+
+  @@unique([provider, providerId])
+  @@index([userId])
+}

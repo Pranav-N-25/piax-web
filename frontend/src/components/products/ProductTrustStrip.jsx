@@ -3,14 +3,14 @@ import { artwork } from './productImages.js'
 import { container, sectionGap } from './productStyles.js'
 import { cn } from '../common/ui.js'
 
-const items = [
+const defaultItems = [
   { icon: artwork.trustDelivery, title: 'Fast & reliable delivery', text: 'Pan India' },
   { icon: artwork.trustPackage, title: 'Secure & safe packaging', text: 'Discreet delivery' },
-  { icon: artwork.trustLab, title: 'Lab tested', text: 'IS 5405:2019' },
-  { icon: artwork.trustLeaf, title: 'Sustainable materials', text: 'for a cleaner planet' },
+  { icon: artwork.trustLab, title: '8-layer construction', text: 'in every PIAX pad' },
+  { icon: artwork.trustLeaf, title: 'Four sizes', text: '240mm to 360mm' },
 ]
 
-export default function ProductTrustStrip() {
+export default function ProductTrustStrip({ items = defaultItems }) {
   return (
     <section aria-label="Why shop with PIAX" className={cn(container, sectionGap)}>
       <Reveal as="ul" className="grid grid-cols-1 gap-5 rounded-2xl bg-foam px-6 py-6 min-[480px]:grid-cols-2 lg:grid-cols-4 lg:gap-0 lg:px-4 lg:py-7">

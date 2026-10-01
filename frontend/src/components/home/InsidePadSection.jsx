@@ -5,10 +5,10 @@ import { cn, container, eyebrow, h2, section, accent } from './homeStyles.js'
 import PadLayerExplorer from './insidePad/PadLayerExplorer.jsx'
 
 const badges = [
-  { icon: BadgeCheck, text: <>IS 5405:2019<br />Tested</> },
-  { icon: Droplet, text: <>Dermatologically<br />Tested</> },
-  { icon: Leaf, text: <>Hypoallergenic<br />& Rash-Free</> },
-  { icon: Leaf, text: <>Compostable<br />& Oxo-biodegradable</> },
+  { icon: Leaf, text: <>Soft<br />top sheet</> },
+  { icon: BadgeCheck, text: <>Anion-infused<br />design</> },
+  { icon: Droplet, text: <>Leak-management<br />design</> },
+  { icon: Leaf, text: <>Winged<br />design</> },
 ]
 
 export default function InsidePadSection() {
@@ -24,7 +24,7 @@ export default function InsidePadSection() {
             <p className={eyebrow}>Inside the pad</p>
             <h2 className={cn(h2, 'mb-4')}>8 layers.<br />Thoughtfully designed<br /><em className={accent}>for your comfort.</em></h2>
             <p className="mb-8">Every PIAX pad is crafted with a multi-layer protection system that keeps you dry, comfortable and confident — while being kinder to your skin and the planet.</p>
-            <PillLink to="/sustainability" variant="outline">See full materials & lab reports</PillLink>
+            <PillLink to="/find-my-pad" variant="outline">Find your size</PillLink>
             <ul className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4">
               {badges.map(({ icon: Icon, text }, index) => (
                 <li key={index} className="flex flex-col items-center gap-2 text-center text-[11px] leading-[1.25]">

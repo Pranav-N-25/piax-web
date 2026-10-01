@@ -1,9 +1,10 @@
 import { useState } from 'react'
-import { ArrowLeft, ArrowRight, Check, CircleCheck, Droplet, Heart, Leaf, Shield, ShoppingCart, Sparkles, Sprout, Truck, Wind } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, CircleCheck, Droplet, Heart, Leaf, Shield, ShoppingCart, Sparkles, Truck, Wind } from 'lucide-react'
 import { useCart } from '../../context/CartContext.jsx'
 import { DoodleNote, Foliage, Tag } from './HomeUi.jsx'
 import { accent, btn, cn, container, heading, section, tones } from './homeStyles.js'
-import { padById } from '../../data/piaxRange.js'
+import { padById, standardPack } from '../../data/piaxRange.js'
+import { DiscountTag } from '../products/RangeUi.jsx'
 
 const steps = [
   {
@@ -33,39 +34,39 @@ const steps = [
     question: 'What matters most to you?',
     hint: 'Pick the one thing you never compromise on.',
     options: [
-      { value: 'Comfort', text: 'Soft & ultra-thin', drops: 1 },
-      { value: 'Protection', text: 'Zero leaks', drops: 2 },
-      { value: 'Skin care', text: 'Rash-free & gentle', drops: 1 },
-      { value: 'Planet', text: 'Compostable choice', drops: 1 },
+      { value: 'Comfort', text: 'Soft top sheet', drops: 1 },
+      { value: 'Protection', text: 'Leak-management design', drops: 2 },
+      { value: 'Fit', text: 'Winged design that stays put', drops: 1 },
+      { value: 'Value', text: 'Better price per pad', drops: 1 },
     ],
   },
 ]
 
-// Each flow maps to a pad in the range; the recommendation shows its first (smallest) pack.
+// Each flow maps to a pad in the range; the recommendation shows its Standard (10-pad) pack.
 const toMatch = (padId, fit) => {
   const pad = padById[padId]
-  const pack = pad.packs[0]
-  return { id: pack.id, name: `${pad.name} ${pad.variant}`, size: pad.size, fit: `${fit} | ${pad.length}mm · ${pack.count} pads`, price: pack.price, mrp: pack.mrp, boxCount: pack.count, image: pack.image }
+  const pack = standardPack(pad)
+  return { id: pack.id, name: `${pad.name} ${pad.variant}`, size: pad.size, fit: `${fit} | ${pad.lengthLabel} · ${pack.count} pads`, price: pack.price, mrp: pack.mrp, boxCount: pack.count, image: pack.image }
 }
 
 const matches = {
-  Light: toMatch('vera', 'Best for light flow'),
-  Regular: toMatch('luma', 'Best for regular flow'),
+  Light: toMatch('luma', 'Best for light flow'),
+  Regular: toMatch('vera', 'Best for regular flow'),
   Heavy: toMatch('nocte', 'Best for heavy flow & nights'),
   'Very Heavy': toMatch('seren', 'Best for very heavy flow'),
 }
 
 const specs = [
-  { icon: Shield, text: <>Extra long<br />coverage</> },
-  { icon: Leaf, text: <>Ultra-thin<br />& comfortable</> },
-  { icon: Wind, text: <>Rash-free<br />& breathable</> },
-  { icon: Sprout, text: <>Sustainable<br />& compostable</> },
+  { icon: Wind, text: <>Soft<br />top sheet</> },
+  { icon: Shield, text: <>8-layer<br />construction</> },
+  { icon: Sparkles, text: <>Anion-infused<br />design</> },
+  { icon: Leaf, text: <>Winged<br />design</> },
 ]
 
 const perks = [
   { icon: Truck, text: <>Free shipping<br />on orders above ₹499</> },
-  { icon: Leaf, text: <>Sustainable<br />& plastic-conscious packaging</> },
-  { icon: Shield, text: <>Lab tested<br />(IS 5405:2019)</> },
+  { icon: Leaf, text: <>Plain, discreet<br />packaging</> },
+  { icon: Shield, text: <>Try any size<br />in a 4-pad trial pack</> },
   { icon: Heart, text: <>Trusted by<br />10,000+ women</> },
 ]
 
@@ -192,6 +193,7 @@ export default function MatchSection() {
 
           <div className={cn('relative mx-auto flex w-full max-w-[440px] flex-col rounded-[26px] border border-white/80 p-6 shadow-soft md:col-span-full lg:col-span-1 lg:mx-0 lg:max-w-none', tones.mint.fade)}>
             <p className="flex items-center gap-2 text-[13px] font-semibold text-ink"><Sparkles size={16} /> Recommended for you</p>
+            <DiscountTag pack={match} className="absolute top-5 right-5" />
             <img key={match.id} src={match.image} alt={`${match.name} box of ${match.boxCount} pads`} className="mx-auto my-4 w-[88%] motion-safe:animate-[home-rise_.45s_ease-out]" />
             <h3 className={cn(heading, 'text-xl')}>{match.name}</h3>
             <p className="mt-1 text-[13px] text-muted">{match.fit}</p>
@@ -208,9 +210,6 @@ export default function MatchSection() {
               <div className="flex flex-row flex-nowrap items-center gap-2 @min-[15rem]:gap-3">
                 <strong className="shrink-0 text-[22px] leading-none text-ink">₹{match.price}</strong>
                 <del className="shrink-0 text-sm text-[#8d9a96]">₹{match.mrp}</del>
-                <span className="shrink-0 whitespace-nowrap rounded-md bg-[#fde2e7] px-2 py-[3px] text-[11px] font-bold text-[#c0355a]">
-                  {Math.round((1 - match.price / match.mrp) * 100)}% OFF
-                </span>
                 <button
                   type="button"
                   onClick={addToCart}

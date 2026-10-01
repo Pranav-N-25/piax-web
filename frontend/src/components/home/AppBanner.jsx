@@ -1,14 +1,17 @@
-import { Bell, CalendarHeart, MessageCircleHeart, Repeat, Smartphone } from 'lucide-react'
+import { Bell, CalendarHeart, MessageCircleHeart, Smartphone, Stethoscope, Zap } from 'lucide-react'
+import { appFeature, appLinks } from '../../data/appFeatures.js'
 import { DoodleNote, Foliage, StoreBadges } from './HomeUi.jsx'
 import { accent, cn, container, h2, sectionPlain } from './homeStyles.js'
 import AppScreensShowcase from './AppScreensShowcase.jsx'
 
+// Feature names come from the app's own feature list (data/appFeatures.js).
 const features = [
-  { icon: CalendarHeart, text: 'Track your cycle' },
-  { icon: MessageCircleHeart, text: 'Ask PIAX AI' },
-  { icon: Bell, text: 'Smart reminders' },
-  { icon: Repeat, text: 'Reorder in a tap' },
-]
+  { icon: CalendarHeart, key: 'tracking' },
+  { icon: MessageCircleHeart, key: 'ai' },
+  { icon: Bell, key: 'reminders' },
+  { icon: Zap, key: 'quick-delivery' },
+  { icon: Stethoscope, key: 'doctors' },
+].map(({ icon, key }) => ({ icon, text: appFeature(key).title }))
 
 const platforms = [
   { name: 'Android', path: 'M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.87 3.23a11.4 11.4 0 0 0-9.82 0L5.22 5.92a.38.38 0 0 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52ZM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5Z' },
@@ -31,7 +34,7 @@ export default function AppBanner() {
               Your period care,<br /><em className={cn(accent, 'text-[#bfe8d5]')}>right in your pocket.</em>
             </h2>
             <p className="mb-6 max-w-[520px] text-[17px] text-white/85">
-              Track your cycle, ask PIAX AI, get gentle reminders and restock your favourite packs — all from one app on your phone.
+              Track your cycle, ask PIAX AI, set gentle reminders, talk to a specialist and get pads delivered from a store near you — all in one app.
             </p>
 
             <div className="mb-8 flex flex-wrap items-center gap-3">
@@ -53,7 +56,9 @@ export default function AppBanner() {
               ))}
             </ul>
             <StoreBadges tone="light" />
-            <p className="mt-4 text-xs text-white/70">Free to download on Android phones and iPhone.</p>
+            <p className="mt-4 text-xs text-white/70">
+              Free to download. Or <a href={appLinks.web} target="_blank" rel="noopener" className="font-semibold text-white underline underline-offset-2">open PIAX in your browser</a>.
+            </p>
           </div>
 
           {/* PIAX app screens on three phones, animated. The phones are cut off flat at the bottom of the

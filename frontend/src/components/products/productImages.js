@@ -17,6 +17,7 @@ import trustDelivery from '../../assets/home/piax_assets/16_trust_icon_delivery.
 import trustPackage from '../../assets/home/piax_assets/18_trust_icon_package.png'
 import trustLab from '../../assets/home/piax_assets/14_trust_icon_lab.png'
 import trustLeaf from '../../assets/home/piax_assets/15_trust_icon_leaf.png'
+import trustPayment from '../../assets/home/piax_assets/17_trust_icon_payment.png'
 
 // Each product image lists one or more layers; bundles stack several packs.
 export const productImages = {
@@ -32,5 +33,5 @@ export const productImages = {
 
 export const artwork = {
   packWithPad, singlePad, shieldPad, phone, leavesLeft, leavesRight, leafSprig, customBox, trialPack,
-  trustDelivery, trustPackage, trustLab, trustLeaf,
+  trustDelivery, trustPackage, trustLab, trustLeaf, trustPayment,
 }

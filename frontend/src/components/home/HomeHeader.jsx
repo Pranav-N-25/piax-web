@@ -1,10 +1,15 @@
 import { useState } from 'react'
-import { ChevronDown, Menu, Search, ShoppingCart, Tag, Truck, User, X } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Menu, Search, ShoppingCart, Tag, Truck, X } from 'lucide-react'
+import { Link, NavLink } from 'react-router-dom'
 import { useCart } from '../../context/CartContext.jsx'
-import { useAuth } from '../../context/AuthContext.jsx'
+import AccountMenu from '../auth/AccountMenu.jsx'
+import HeaderSearch from '../navigation/HeaderSearch.jsx'
 import { btn, cn, container } from './homeStyles.js'
 import headerLogo from '../../assets/piax_logo.png'
+
+// The header sets its own type so it looks the same on every page, whatever font the page itself uses.
+// Poppins is the brand face for navigation (CLAUDE.md typography).
+const headerType = 'font-poppins leading-normal antialiased'
 
 const separator = <b className="mx-1.5 font-normal opacity-60">|</b>
 
@@ -14,22 +19,21 @@ const strip = [
 ]
 
 const nav = [
-  { to: '/products', label: 'Shop', menu: true },
+  { to: '/products', label: 'Shop' },
   { to: '/find-my-pad', label: 'Find My Pad' },
   { to: '/ai', label: 'PIAX AI' },
-  { to: '/learn', label: 'Learn', menu: true },
-  { to: '/business', label: 'For Business', menu: true },
-  { to: '/about', label: 'About', menu: true },
+  { to: '/learn', label: 'Learn' },
+  { to: '/business', label: 'For Business' },
+  { to: '/about', label: 'About' },
 ]
 
 export default function HomeHeader() {
   const [open, setOpen] = useState(false)
   const { itemCount } = useCart()
-  const { currentUser } = useAuth()
 
   return (
     <>
-      <div className="bg-[#0c4a40] text-[12.5px] text-[#e6f3ee]">
+      <div className={cn(headerType, 'bg-[#0c4a40] text-[12.5px] text-[#e6f3ee]')}>
         <div className={cn(container, 'flex min-h-10 items-center justify-center w-full')}>
           {strip.map(({ icon: Icon, text, code, fill, className }, index) => (
             <span
@@ -47,7 +51,7 @@ export default function HomeHeader() {
         </div>
       </div>
 
-      <header className="sticky top-0 z-30 bg-white shadow-[0_1px_0_rgba(15,60,50,.06)]">
+      <header className={cn(headerType, 'sticky top-0 z-30 bg-white text-ink shadow-[0_1px_0_rgba(15,60,50,.06)]')}>
         <div className={cn(container, 'flex min-h-16 items-center gap-4 lg:gap-6')}>
           <Link to="/" aria-label="PIAX home">
             <img src={headerLogo} alt="PIAX — Feel different. Feel you." width="1200" height="403" className="h-10 w-auto md:h-11" />
@@ -61,32 +65,30 @@ export default function HomeHeader() {
               open ? 'flex' : 'hidden',
             )}
           >
-            {nav.map(({ to, label, menu }) => (
-              <Link
+            {nav.map(({ to, label }) => (
+              // NavLink marks the current page (and its sub-pages) with aria-current="page" and the active pill.
+              <NavLink
                 key={label}
                 to={to}
                 onClick={() => setOpen(false)}
-                className="inline-flex min-h-9 items-center gap-1 whitespace-nowrap rounded-full px-3 py-2 text-[15px] font-medium text-ink hover:bg-mist hover:text-brand-2"
+                className={({ isActive }) => cn(
+                  'inline-flex min-h-9 items-center whitespace-nowrap rounded-full px-3 py-2 text-[14px] font-medium transition-colors xl:px-3.5',
+                  isActive ? 'bg-brand-soft text-brand' : 'text-ink hover:bg-mist hover:text-brand-2',
+                )}
               >
-                {label}{menu && <ChevronDown size={16} />}
-              </Link>
+                {label}
+              </NavLink>
             ))}
           </nav>
 
-          <label className="ml-auto hidden min-h-10 max-w-[200px] flex-1 items-center gap-2.5 rounded-full border border-[#dfe8e3] bg-[#f5f8f6] px-4 text-ink md:flex xl:max-w-[272px]">
-            <Search size={20} />
-            <input
-              type="search"
-              placeholder="Search pads, sizes, or your questions..."
-              aria-label="Search"
-              className="w-full min-w-0 bg-transparent text-[13px] outline-none"
-            />
-          </label>
+          <HeaderSearch className="ml-auto hidden max-w-[200px] flex-1 md:block lg:hidden xl:block xl:max-w-[272px]" />
 
           <div className="flex items-center gap-4 max-md:ml-auto md:gap-6">
-            <Link to={currentUser ? '/app/profile' : '/login'} className="relative flex flex-col items-center gap-0.5 text-[11px] text-ink">
-              <User size={24} strokeWidth={1.6} /><span className="max-md:hidden">Account</span>
+            {/* Phones (and the lg width where the field is hidden): search opens its own page. */}
+            <Link to="/search" aria-label="Search" className="flex flex-col items-center gap-0.5 text-[11px] text-ink hover:text-brand md:hidden lg:flex xl:hidden">
+              <Search size={24} strokeWidth={1.6} /><span className="max-md:sr-only">Search</span>
             </Link>
+            <AccountMenu />
             <Link to="/cart" className="relative flex flex-col items-center gap-0.5 text-[11px] text-ink">
               <ShoppingCart size={24} strokeWidth={1.6} /><span className="max-md:hidden">Cart</span>
               <b className="absolute -top-2 -right-2.5 flex size-5 items-center justify-center rounded-full border-2 border-white bg-brand text-[10px] text-white">

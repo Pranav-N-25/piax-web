@@ -4,6 +4,11 @@ Recolours the reference box photo (src/assets/13_recommended_xl_pack.png) to eac
 product's colour, keeping the photo's lighting, then replaces the pad count, size and
 variant printed on the front with that product's details.
 
+The reference photo also prints claims PIAX has not validated (ultra-thin, organic, compostable,
+oxo-biodegradable, extra absorbent). Those areas are wiped and reprinted with the front-panel
+content approved in the Final Revised product report: soft top sheet, anion-infused design,
+8-layer construction, winged design and the brand promise.
+
     python3 scripts/generate-pack-images.py            # run from frontend/
 
 Needs Pillow and the Poppins font (the typeface printed on the real box).
@@ -22,28 +27,35 @@ OUT_WIDTH = 820
 FONT_DIRS = [Path.home() / '.fonts', Path('/usr/share/fonts'), Path('/usr/local/share/fonts'), Path.home() / '.local/share/fonts']
 
 WHITE_BOX = '#F6F8F7'
-TEAL = '#155A57'
-LAVENDER, SAGE, TAUPE, SLATE = '#DBBCDF', '#AFC5AE', '#BEA28D', '#496995'
+CATALOG = ROOT / 'src/data/productCatalog.json'
 
-# slug, box colour, ink colour (None = derived from the box), pads line, size line, variant label, variant chip, colour dots
-PRODUCTS = [
-    ('vera-lite-20', LAVENDER, None, '20 Pads', 'L - 245mm', 'VERA', 'Lite', []),
-    ('luma-everyday-20', SAGE, None, '20 Pads', 'XL - 280mm', 'LUMA', 'Everyday', []),
-    ('luma-everyday-30', SAGE, None, '30 Pads', 'XL - 280mm', 'LUMA', 'Everyday', []),
-    ('nocte-overnight-15', TAUPE, None, '15 Pads', 'XXL - 330mm', 'NOCTE', 'Overnight', []),
-    ('nocte-overnight-30', TAUPE, None, '30 Pads', 'XXL - 330mm', 'NOCTE', 'Overnight', []),
-    ('seren-ultra-12', SLATE, None, '12 Pads', 'XXXL - 360mm', 'SEREN', 'Ultra', []),
-    ('discovery-4', WHITE_BOX, TEAL, '4 Pads', '1 of each size', 'Trial', 'Discovery', [LAVENDER, SAGE, TAUPE, SLATE]),
-    ('cycle-pack-15', WHITE_BOX, TEAL, '15 Pads', '3 L · 8 XL · 4 XXL', 'Hero', 'Cycle Pack', [LAVENDER, SAGE, TAUPE]),
-    ('stock-up-30', WHITE_BOX, TEAL, '30 Pads', '20 XL · 10 XXL', 'Value', 'Stock-Up', [SAGE, TAUPE]),
-    ('luma-institutional-200', WHITE_BOX, TEAL, '200 Pads', 'XL - 280mm', 'LUMA', 'Institutional', []),
-]
+
+def load_products():
+    """One box per pad and pack format, from the product catalogue.
+    Row: slug, box colour, ink colour (None = derived from the box), pads line, size line, variant label, variant chip, colour dots."""
+    import json
+    catalog = json.loads(CATALOG.read_text())
+    colours = catalog['colours']
+    rows = []
+    for pad in catalog['pads']:
+        for pack in catalog['packFormats']:
+            rows.append((
+                f"{pad['id']}-{pack['id']}-{pack['count']}", colours[pad['colour']]['hex'], None,
+                f"{pack['count']} Pads", f"{pad['size']} - {pad['lengthLabel']}",
+                pad['name'].replace('PIAX ', ''), pad['boxChip'], [],
+            ))
+    return rows
 
 # Areas of the reference photo, in source pixels.
 PADS_TEXT = (666, 514, 780, 590)      # "6 Pads / L - 280mm"
 VARIANT_TEXT = (668, 598, 900, 668)   # "Regular [Extra Long]"
 STRIPS = [(295, 690, 445, 895), (995, 620, 1100, 715)]  # anion strips on the two pads
 BARCODE = (970, 825, 1195, 862)       # black-on-white sticker on the lower box, left as printed
+# Unvalidated claims printed on the reference box, wiped before the approved content is set.
+TAGLINE_TEXT = (660, 326, 1160, 388)  # "Soft & Ultra-thin Anion infused pads"
+CLAIMS_TEXT = (662, 396, 1090, 484)   # "Organic | Max Comfort / Perfume-free | Compostable"
+FEATURE_TEXT = (782, 510, 980, 574)   # "| 8 Layer Protection / Extra Absorbent"
+SIDE_TEXT = (458, 148, 580, 470)      # side panel: "Made with care / Oxo biodegradable / Skin friendly"
 TEXT_ANGLE = 2.5                      # the front face is turned slightly; its print rises to the right
 INK_LUM = 0.12                        # lightness of the printed ink on the reference box
 
@@ -147,12 +159,26 @@ def recolour(source, mint, backdrop, box, ink, keep_strips):
             t = max(0.0, min(1.0, (lum(back) - lum(c)) / depth)) if depth > 0 else 1.0
             dst[x, y] = (*mix(shade(back), ink, t), a)
 
-    # Wipe the old pad count and variant: rebuild each row of the front face from its edges.
-    for x0, y0, x1, y1 in (PADS_TEXT, VARIANT_TEXT):
+    # Wipe the old pad count, variant and claims: rebuild each row of the front face from its edges.
+    for x0, y0, x1, y1 in (PADS_TEXT, VARIANT_TEXT, TAGLINE_TEXT, CLAIMS_TEXT, FEATURE_TEXT):
         for y in range(y0, y1 + 1):
             left, right = dst[x0 - 2, y], dst[x1 + 2, y]
             for x in range(x0, x1 + 1):
                 dst[x, y] = mix(left, right, (x - x0) / (x1 - x0))[:3] + (left[3],)
+    # The side panel meets the transparent background on its left, so rebuild it column by column instead,
+    # from the panel just above the print down to where the pad in front starts. The pad itself is kept.
+    def is_pad(x, y):
+        r, g, b, a = src[x, y]
+        return a and lum((r, g, b)) > 0.55 and (max(r, g, b) - min(r, g, b)) / max(r, g, b, 1) < 0.08
+
+    x0, y0, x1, y1 = SIDE_TEXT
+    for x in range(x0, x1 + 1):
+        # The panel itself is pale, so only look for the pad where it actually overlaps (from y 430 down).
+        end = next((y for y in range(max(y0, 430), y1 + 1) if is_pad(x, y)), y1 + 1)
+        top = dst[x, y0 - 2]
+        bottom = dst[x, end + 1] if end > y1 else top
+        for y in range(y0, end):
+            dst[x, y] = mix(top, bottom, (y - y0) / max(1, end - y0))[:3] + (top[3],)
     return out
 
 
@@ -172,6 +198,18 @@ def print_details(image, ink, box, pads, size_line, label, chip, dots):
     x0, y0 = PADS_TEXT[0] + 4, PADS_TEXT[1] + 10
     width = PADS_TEXT[2] - x0 - 2
 
+    # Approved front-panel content in place of the wiped claims.
+    tagline = 'Anion-infused design · 8-layer construction'
+    d.text((TAGLINE_TEXT[0] + 2, TAGLINE_TEXT[1] + 31), tagline, font=fit(d, tagline, 'Regular', 31, TAGLINE_TEXT[2] - TAGLINE_TEXT[0] - 20), fill=ink, anchor='lm')
+    promise = font('SemiBold', 38)
+    d.text((CLAIMS_TEXT[0] + 2, CLAIMS_TEXT[1] + 4), 'Comfort. Care.', font=promise, fill=ink, anchor='lt')
+    d.text((CLAIMS_TEXT[0] + 2, CLAIMS_TEXT[1] + 46), 'Confidence.', font=promise, fill=ink, anchor='lt')
+    fx, fy = FEATURE_TEXT[0] + 6, FEATURE_TEXT[1] + 14
+    d.line((fx, fy - 2, fx, fy + 46), fill=ink, width=2)
+    feature_font = font('Regular', 21)
+    d.text((fx + 12, fy), 'Soft top sheet', font=feature_font, fill=ink, anchor='lt')
+    d.text((fx + 12, fy + 26), 'Winged design', font=feature_font, fill=ink, anchor='lt')
+
     d.text((x0, y0), pads, font=fit(d, pads, 'SemiBold', 38, width), fill=ink, anchor='lt')
     d.text((x0, y0 + 42), size_line, font=fit(d, size_line, 'Regular', 20, width), fill=ink, anchor='lt')
 
@@ -189,7 +227,7 @@ def print_details(image, ink, box, pads, size_line, label, chip, dots):
         dx = x0 + 4 + i * 20
         d.ellipse((dx - 7, VARIANT_TEXT[3] + 6, dx + 7, VARIANT_TEXT[3] + 20), fill=rgb(colour), outline=ink, width=1)
 
-    centre = ((PADS_TEXT[0] + VARIANT_TEXT[2]) / 2, (PADS_TEXT[1] + VARIANT_TEXT[3]) / 2)
+    centre = ((TAGLINE_TEXT[0] + TAGLINE_TEXT[2]) / 2, (TAGLINE_TEXT[1] + VARIANT_TEXT[3]) / 2)
     layer = layer.rotate(TEXT_ANGLE, resample=Image.BICUBIC, center=centre)
     layer = layer.filter(ImageFilter.GaussianBlur(0.35))  # match the photo's softness
     image.alpha_composite(layer)
@@ -201,7 +239,7 @@ def main():
     source = Image.open(SOURCE).convert('RGBA')
     mint, backdrop = analyse(source)
     only = os.environ.get('ONLY')
-    for slug, box_hex, ink_hex, pads, size_line, label, chip, dots in PRODUCTS:
+    for slug, box_hex, ink_hex, pads, size_line, label, chip, dots in load_products():
         if only and only not in slug:
             continue
         box = rgb(box_hex)

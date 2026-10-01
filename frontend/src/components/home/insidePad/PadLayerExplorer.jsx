@@ -151,8 +151,10 @@ function useLayerTour(enabled) {
 export default function PadLayerExplorer({ revealed = true }) {
   const [hovered, setHovered] = useState(null)
   const [selected, setSelected] = useState(null)
+  // Set once the visitor touches or swipes the card row on a phone, so the tour never fights their finger.
+  const [swiped, setSwiped] = useState(false)
   const userId = hovered ?? selected
-  const tourId = useLayerTour(revealed && userId === null)
+  const tourId = useLayerTour(revealed && userId === null && !swiped)
   const activeId = userId ?? tourId
 
   const rootRef = useRef(null)
@@ -161,9 +163,8 @@ export default function PadLayerExplorer({ revealed = true }) {
   const cardRefs = useRef([])
   const geometry = useConnectorGeometry(rootRef, padRef, cardRefs)
 
-  // On phones the cards are a swipe row: bring the tapped layer's card into view.
-  const selectFromPad = (id) => {
-    setSelected(id)
+  // On phones the cards are a swipe row: centre a layer's card in it. Scrolls the row sideways only, never the page.
+  const showCard = (id) => {
     const list = listRef.current
     const card = cardRefs.current[id - 1]
     if (!list || !card || window.matchMedia(desktopQuery).matches) return
@@ -172,6 +173,18 @@ export default function PadLayerExplorer({ revealed = true }) {
       behavior: window.matchMedia(reducedMotionQuery).matches ? 'auto' : 'smooth',
     })
   }
+
+  const selectFromPad = (id) => {
+    setSelected(id)
+    showCard(id)
+  }
+
+  // As the tour moves to the next layer, keep its description in view on phones.
+  useEffect(() => {
+    if (tourId) showCard(tourId)
+    // showCard only reads refs.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tourId])
 
   const handleKeyDown = (event) => {
     if (event.key === 'Escape') {
@@ -222,6 +235,8 @@ export default function PadLayerExplorer({ revealed = true }) {
 
       <ol data-stagger
         ref={listRef}
+        onTouchStart={() => setSwiped(true)}
+        onWheel={(event) => { if (event.deltaX) setSwiped(true) }}
         aria-label="The 8 layers inside a PIAX pad"
         className={cn(gutterBleed, 'relative flex snap-x snap-mandatory gap-3 overflow-x-auto pb-2 [scrollbar-width:none] md:mx-0 md:grid md:gap-2 md:overflow-visible md:p-0 [&::-webkit-scrollbar]:hidden')}
       >

@@ -1,13 +1,14 @@
-import { BookOpen, Calendar, FileText, Heart, Languages, Lock, MessageCircle, MessagesSquare, Pill, ShieldCheck, Sparkles } from 'lucide-react'
-import { DoodleBurst, Foliage, PillLink, Tag } from './HomeUi.jsx'
-import { cn, container, h2, heading, section, accent, tones } from './homeStyles.js'
+import { BookOpen, Calendar, FileText, Heart, Lock, MessageCircle, MessagesSquare, Pill, ShieldCheck, Sparkles, Stethoscope } from 'lucide-react'
+import { DoodleBurst, Foliage, Tag } from './HomeUi.jsx'
+import { btn, cn, container, h2, heading, section, accent, tones } from './homeStyles.js'
 import AiPhoneMockup from './AiPhoneMockup.jsx'
+import { aiAssistants, aiDisclaimer, appLinks } from '../../data/appFeatures.js'
 
 const features = [
-  { icon: MessageCircle, title: 'Evidence-based answers', text: 'Trusted, clinician-reviewed information' },
-  { icon: Lock, title: 'Private and confidential', text: 'Your data stays yours' },
-  { icon: Heart, title: 'Personalized to you', text: 'Answers that consider your cycle, symptoms and lifestyle' },
-  { icon: Languages, title: 'Available in English & தமிழ்', text: 'Talk in the language you’re comfortable with' },
+  { icon: MessageCircle, title: 'Quick, everyday answers', text: 'Cycles, cramps, workouts and diet' },
+  { icon: Lock, title: 'Private to you', text: 'Never used for ads' },
+  { icon: Heart, title: 'Specialist assistants', text: `${aiAssistants.slice(0, 3).join(', ')} and more` },
+  { icon: Stethoscope, title: 'Real doctors, too', text: 'Book a private consultation with a gynaecologist in the app' },
 ]
 
 const supports = [
@@ -16,7 +17,7 @@ const supports = [
   { icon: Heart, title: 'Self-Care Tips', text: 'Small steps for a healthier you', tone: 'lilac' },
   { icon: Pill, title: 'Product Recommendations', text: 'Find the right PIAX pad for your needs', tone: 'mint' },
   { icon: MessagesSquare, title: 'When to See a Doctor', text: 'Know when to seek professional help', tone: 'peach' },
-  { icon: BookOpen, title: 'Trusted Resources', text: 'Backed by experts, always', tone: 'blue' },
+  { icon: BookOpen, title: 'Wellness Tips', text: 'Food, movement and rest ideas for each phase', tone: 'blue' },
 ]
 
 export default function AskAiSection() {
@@ -39,8 +40,8 @@ export default function AskAiSection() {
               </li>
             ))}
           </ul>
-          <PillLink to="/ai" className="min-w-[230px]">Ask PIAX Now</PillLink>
-          <p className="mt-4 text-[11.5px] text-muted">Not a replacement for a doctor. For educational support only.</p>
+          <a href={appLinks.web} target="_blank" rel="noopener" className={cn(btn.base, btn.solid, 'min-w-[230px]')}>Ask PIAX Now</a>
+          <p className="mt-4 text-[11.5px] text-muted">{aiDisclaimer}</p>
         </div>
 
         <div className="relative flex items-center justify-center pt-8">

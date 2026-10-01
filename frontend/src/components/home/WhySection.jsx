@@ -13,16 +13,16 @@ const avatars = [avatar1, avatar2, avatar3]
 
 const reasons = [
   {
-    title: <>Unmatched<br />Comfort</>, text: 'Ultra-thin, ultra-soft and rash-free — even on your heaviest days.', icon: Feather, art: padInHand, fit: 'object-cover object-[center_35%]', tone: 'pink',
-    points: [[Leaf, 'Soft bamboo top sheet'], [Wind, 'Breathable layers'], [Heart, 'Gentle on sensitive skin']],
+    title: <>Unmatched<br />Comfort</>, text: 'A soft top sheet and a comfort-focused design, from light days to heavy nights.', icon: Feather, art: padInHand, fit: 'object-cover object-[center_35%]', tone: 'pink',
+    points: [[Leaf, 'Soft top sheet'], [Wind, 'Winged design'], [Heart, 'Four sizes to choose from']],
   },
   {
-    title: <>Reliable<br />Protection</>, text: '8-layer technology with leak-lock channels for worry-free days and nights.', icon: ShieldCheck, art: layersArt, fit: 'object-contain object-[70%_center] scale-125', tone: 'mint',
-    points: [[Layers, '8-layer absorption'], [Droplet, 'Leak-lock channels'], [Calendar, 'Up to 12 hours protection']],
+    title: <>Reliable<br />Protection</>, text: '8-layer construction with a leak-management design, for days and nights.', icon: ShieldCheck, art: layersArt, fit: 'object-contain object-[70%_center] scale-125', tone: 'mint',
+    points: [[Layers, '8-layer construction'], [Droplet, 'Leak-management design'], [Calendar, 'Longer sizes for nights']],
   },
   {
-    title: <>Kind to<br />the Planet</>, text: 'Sustainable materials and compostable pads for a cleaner, greener tomorrow.', icon: Sprout, art: globeArt, fit: 'object-cover object-[center_30%]', tone: 'cream',
-    points: [[Leaf, 'Plant-based materials'], [Recycle, 'Compostable & oxo-biodegradable'], [Sprout, 'Smaller environmental footprint']],
+    title: <>Made for<br />Every Day</>, text: 'Four lengths, each in its own colour, so every day of your period has a pad that fits.', icon: Sprout, art: globeArt, fit: 'object-cover object-[center_30%]', tone: 'cream',
+    points: [[Leaf, 'LUMA 240mm · VERA 280mm'], [Recycle, 'NOCTE 330–340mm · SEREN 360mm'], [Sprout, 'Trial packs of 4 to start']],
   },
   {
     title: <>Powered<br />by Intelligence</>, text: 'Track, understand and make better choices with PIAX AI and personalized insights.', icon: Brain, art: appArt, fit: 'object-cover object-top', tone: 'lilac',
@@ -89,7 +89,7 @@ export default function WhySection() {
           </div>
           <ul className="flex w-full flex-col items-center justify-evenly gap-4 whitespace-nowrap sm:flex-row sm:flex-wrap sm:gap-x-8 lg:w-auto lg:flex-1 lg:flex-nowrap lg:gap-6">
             <li className={bar}><Users size={26} strokeWidth={1.4} className={barIcon} /><span className={barText}><strong className={barStrong}>10,000+</strong>Happy Customers</span></li>
-            <li className={bar}><Leaf size={26} strokeWidth={1.4} className={barIcon} /><span className={barText}><strong className={barStrong}>Sustainable</strong>by Design</span></li>
+            <li className={bar}><Leaf size={26} strokeWidth={1.4} className={barIcon} /><span className={barText}><strong className={barStrong}>Comfort</strong>by Design</span></li>
             <li className={bar}><Heart size={26} strokeWidth={1.4} className={barIcon} /><span className={barText}><strong className={barStrong}>Real Care</strong>Real Impact</span></li>
           </ul>
           <PillLink to="/products">Explore Our Products</PillLink>

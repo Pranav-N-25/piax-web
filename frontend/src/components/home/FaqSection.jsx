@@ -4,17 +4,8 @@ import { Link } from 'react-router-dom'
 import { DoodleNote, Foliage, PillLink, Tag } from './HomeUi.jsx'
 import { cn, container, h2, heading, section, accent } from './homeStyles.js'
 import faqWoman from '../../assets/faq_woman_with_pack.png'
+import { faqs } from '../../data/faqs.js'
 
-const faqs = [
-  ['Is it normal to have cramps during periods?', 'Yes, mild to moderate cramps are common during periods. They usually happen due to uterine contractions. If the pain is severe or affects your daily life, it’s best to consult a healthcare professional.'],
-  ['Why is my cycle irregular?', 'Stress, sleep, diet, exercise, travel and hormonal changes can all shift your cycle. Occasional changes are normal; if it stays irregular for three months or more, talk to a doctor.'],
-  ['How do I choose the right pad size?', 'Pick by flow and time of day — Regular for light days, L or XL for heavier flow, and XXL for overnight. Our 30-second PIAX match quiz can recommend one for you.'],
-  ['Are PIAX pads safe for sensitive skin?', 'Yes. PIAX pads have a soft bamboo top sheet, are dermatologically tested, hypoallergenic and free from harsh chemicals.'],
-  ['Can I use PIAX pads at night?', 'Absolutely. Our Night Protection pads offer longer coverage and leak-lock channels for up to 12 hours of worry-free sleep.'],
-  ['Are PIAX pads eco-friendly?', 'PIAX pads use plant-based materials and a compostable, oxo-biodegradable back sheet, shipped in plastic-conscious packaging.'],
-  ['How can I track my period with the PIAX app?', 'Download the PIAX app, log your last period and symptoms, and get cycle predictions, reminders and personalised insights.'],
-  ['Where can I buy PIAX products?', 'Shop on the PIAX website and app, on quick-commerce platforms, and at partner retail stores across India.'],
-]
 
 const channels = [
   { icon: BookOpen, title: 'Help Center', text: 'Explore articles', to: '/support' },
@@ -25,10 +16,14 @@ const channels = [
 const panel = 'rounded-[18px] bg-white/55'
 
 export default function FaqSection() {
-  const [open, setOpen] = useState(0)
+  // Search results link to /?faq=<index>#faq to open that answer.
+  const [open, setOpen] = useState(() => {
+    const asked = Number(new URLSearchParams(window.location.search).get('faq'))
+    return Number.isInteger(asked) && asked >= 0 && asked < faqs.length ? asked : 0
+  })
 
   return (
-    <section className={section}>
+    <section id="faq" className={section}>
       <Foliage art="twigRight" className="bottom-8 -left-8 w-[clamp(80px,8vw,120px)] -scale-x-100 opacity-45 max-lg:hidden" />
       <div className={cn(container, 'grid items-stretch gap-8 lg:gap-10 md:grid-cols-[1fr_1.4fr] lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)_minmax(0,1.05fr)]')}>
         <div className="flex flex-col items-start">

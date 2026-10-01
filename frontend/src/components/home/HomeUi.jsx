@@ -1,3 +1,4 @@
+import { appLinks } from '../../data/appFeatures.js'
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { btn, cn, h2, roundArrow, sectionHead } from './homeStyles.js'
@@ -119,10 +120,10 @@ export function RoundArrow({ to = '/products', label, className = 'bg-brand-soft
 
 export function Divider({ children = 'Care for a brighter you' }) {
   return (
-    <div className="mt-10 flex items-center justify-center gap-6" aria-hidden="true">
-      <span className="h-px w-[min(200px,22vw)] bg-[#c8d9d1]" />
-      <em className="text-[10px] not-italic uppercase tracking-[.38em] text-[#8a9c97]">{children}</em>
-      <span className="h-px w-[min(200px,22vw)] bg-[#c8d9d1]" />
+    <div className="mt-10 flex items-center justify-center gap-3 md:gap-6" aria-hidden="true">
+      <span className="h-px w-8 shrink bg-[#c8d9d1] md:w-[min(200px,22vw)]" />
+      <em className="text-center text-[10px] not-italic uppercase tracking-[.24em] text-[#8a9c97] md:tracking-[.38em]">{children}</em>
+      <span className="h-px w-8 shrink bg-[#c8d9d1] md:w-[min(200px,22vw)]" />
     </div>
   )
 }
@@ -149,7 +150,7 @@ export function CenterHead({ tag, title, text, className = '', children }) {
 // Store links go live with the app listings; until then they point nowhere, like the social icons.
 const stores = [
   { label: 'Download on the', name: 'App Store', href: '#', path: 'M15.53 3.83c.84-1.01 1.4-2.43 1.25-3.83-1.21.05-2.67.8-3.54 1.82-.78.9-1.45 2.34-1.27 3.71 1.34.1 2.72-.69 3.56-1.7Zm-3.38 3.07c-.95 0-2.42-1.08-3.96-1.04-2.04.03-3.91 1.18-4.96 3.01-2.12 3.68-.55 9.1 1.52 12.09 1.01 1.45 2.21 3.09 3.79 3.04 1.52-.07 2.09-.99 3.94-.99 1.83 0 2.35.99 3.96.95 1.64-.03 2.68-1.48 3.68-2.95 1.16-1.69 1.64-3.33 1.66-3.42-.04-.01-3.18-1.22-3.22-4.86-.03-3.04 2.48-4.49 2.6-4.56-1.43-2.09-3.63-2.32-4.39-2.38-2-.15-3.68 1.1-4.62 1.1Z' },
-  { label: 'Get it on', name: 'Google Play', href: '#', path: 'M22.02 13.3 18.1 15.52l-3.52-3.5 3.55-3.52 3.89 2.2a1.49 1.49 0 0 1 0 2.6ZM1.34.92a1.49 1.49 0 0 0-.11.57v21.02c0 .22.04.42.12.6l11.15-11.09L1.34.92Zm12.2 10.07 3.26-3.24L3.45.2A1.47 1.47 0 0 0 2.5.02l11.04 10.97Zm0 2.07-11 10.93c.3.04.62-.02.91-.18l13.32-7.54-3.23-3.21Z' },
+  { label: 'Get it on', name: 'Google Play', href: appLinks.android, path: 'M22.02 13.3 18.1 15.52l-3.52-3.5 3.55-3.52 3.89 2.2a1.49 1.49 0 0 1 0 2.6ZM1.34.92a1.49 1.49 0 0 0-.11.57v21.02c0 .22.04.42.12.6l11.15-11.09L1.34.92Zm12.2 10.07 3.26-3.24L3.45.2A1.47 1.47 0 0 0 2.5.02l11.04 10.97Zm0 2.07-11 10.93c.3.04.62-.02.91-.18l13.32-7.54-3.23-3.21Z' },
 ]
 
 // App Store / Google Play badges. `tone="light"` inverts them for dark backgrounds; `only` limits them to
@@ -161,6 +162,7 @@ export function StoreBadges({ tone = 'dark', only, onSelect, className = '' }) {
         <a
           key={name}
           href={href}
+          {...(href.startsWith('http') && { target: '_blank', rel: 'noopener' })}
           onClick={() => onSelect?.(name)}
           aria-label={`${label} ${name}`}
           className={cn(

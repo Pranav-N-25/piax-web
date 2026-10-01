@@ -234,3 +234,55 @@ html::-webkit-scrollbar {
 @keyframes step-road { to { stroke-dashoffset: 24; } }
 @keyframes step-bump { 50% { transform: translateY(-1.5px); } }
 @keyframes step-speed { 0% { transform: translateX(8px); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateX(-6px); opacity: 0; } }
+
+/* ---------- Page motion (Shop and About; hooks/useMotion.js) ----------
+   The same calm rise as the Business page ([data-enter] above): every element marked `data-anim` fades up
+   28px over .8s once it scrolls into view, one after another via its `--d` delay. Hidden states only apply
+   under a `[data-motion]` root, which useMotion sets when motion is allowed, so content stays visible without
+   JavaScript and for visitors who prefer reduced motion. */
+@keyframes motion-drop {
+  from { opacity: 0; transform: translate3d(0, -10px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  [data-motion] [data-anim]:not([data-in]) { opacity: 0; }
+  [data-motion] [data-anim][data-in] { animation: home-rise .8s cubic-bezier(.22, 1, .36, 1) var(--d, 0s) backwards; }
+  .motion-drop { animation: motion-drop .35s cubic-bezier(.22, 1, .36, 1); }
+}
+
+/* ---------- Compare bar (components/products/CompareBar.jsx) ----------
+   Slides up from the bottom edge with a small overshoot, then glows: a light travels around the border
+   (a conic gradient turned by the animated --glow-angle) over a softly pulsing halo. */
+@property --glow-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes compare-bar-in {
+  0% { opacity: 0; transform: translate3d(0, 140%, 0) scale(.94); }
+  70% { opacity: 1; transform: translate3d(0, -8px, 0) scale(1.01); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes compare-glow-spin { to { --glow-angle: 360deg; } }
+@keyframes compare-glow-pulse {
+  0%, 100% { opacity: .6; transform: scale(.98); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+@keyframes compare-ready {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(191, 232, 213, .7), 0 6px 18px -6px rgba(191, 232, 213, .6); }
+  50% { box-shadow: 0 0 0 7px rgba(191, 232, 213, 0), 0 6px 24px -4px rgba(191, 232, 213, .9); }
+}
+.compare-glow-border {
+  background: conic-gradient(from var(--glow-angle), #0c4a40, #bfe8d5, #6fd3b4, rgba(191, 232, 213, .1), #0c4a40);
+}
+.compare-glow-halo {
+  background: linear-gradient(90deg, rgba(0, 127, 109, .8), rgba(111, 211, 180, .85), rgba(0, 127, 109, .8));
+  opacity: .7;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .compare-bar-in { animation: compare-bar-in .65s cubic-bezier(.22, 1, .36, 1) both; }
+  .compare-glow-border { animation: compare-glow-spin 4s linear infinite; }
+  .compare-glow-halo { animation: compare-glow-pulse 2.8s ease-in-out infinite; }
+  .compare-ready { animation: compare-ready 2s ease-in-out infinite; }
+}

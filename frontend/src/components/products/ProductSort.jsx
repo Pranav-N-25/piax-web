@@ -4,7 +4,7 @@ import { sortOptions } from '../../utils/productFilters.js'
 import { button, focusRing } from './productStyles.js'
 import { cn } from '../common/ui.js'
 
-export default function ProductSort({ count, sort, onSortChange, activeFilterCount, onOpenFilters }) {
+export default function ProductSort({ count, sort, onSortChange, activeFilterCount, onOpenFilters, options = sortOptions }) {
   const sortId = useId()
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
@@ -23,7 +23,7 @@ export default function ProductSort({ count, sort, onSortChange, activeFilterCou
             onChange={(event) => onSortChange(event.target.value)}
             className={cn('h-10 cursor-pointer appearance-none rounded-full border border-rule bg-white pr-9 pl-4 text-sm text-charcoal hover:border-sage', focusRing)}
           >
-            {sortOptions.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
+            {options.map(({ value, label }) => <option key={value} value={value}>{label}</option>)}
           </select>
           <ChevronDown size={16} className="pointer-events-none absolute top-1/2 right-3 -translate-y-1/2 text-charcoal" />
         </div>

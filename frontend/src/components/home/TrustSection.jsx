@@ -8,8 +8,8 @@ import packageIcon from '../../assets/18_trust_icon_package.png'
 import supportIcon from '../../assets/19_trust_icon_support.png'
 
 const points = [
-  { title: 'Lab Tested', text: 'Meets IS 5405:2019 standards for safety and quality', icon: labIcon },
-  { title: 'Sustainable & Compostable', text: 'Thoughtfully made for a healthier planet', icon: leafIcon },
+  { title: '8-Layer Construction', text: 'With a soft top sheet and an anion-infused design', icon: labIcon },
+  { title: 'Four Sizes', text: 'From 240mm for light days to 360mm for overnight', icon: leafIcon },
   { title: 'Fast & Reliable Delivery', text: 'Across India, right to your doorstep', icon: deliveryIcon },
   { title: 'Secure Payments', text: '100% safe and encrypted transactions', icon: paymentIcon },
   { title: 'Discreet Packaging', text: 'Your privacy is always protected', icon: packageIcon },

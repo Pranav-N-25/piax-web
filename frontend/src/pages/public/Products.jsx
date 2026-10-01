@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { usePageMeta } from '../../hooks/usePageMeta.js'
 import { X } from 'lucide-react'
 import { useSearchParams } from 'react-router-dom'
 import ProductsHeader from '../../components/products/ProductsHeader.jsx'
@@ -26,25 +27,6 @@ import { countActiveFilters, emptyFilters, filterProducts, searchProducts, sortP
 
 const PAGE_TITLE = 'PIAX Products — Sustainable Menstrual & Wellness Products'
 const PAGE_DESCRIPTION = 'Explore PIAX menstrual and wellness products designed for comfort, protection, different flows and everyday period care.'
-
-function usePageMeta(title, description) {
-  useEffect(() => {
-    const previousTitle = document.title
-    let meta = document.querySelector('meta[name="description"]')
-    const previousDescription = meta?.getAttribute('content')
-    if (!meta) {
-      meta = document.createElement('meta')
-      meta.setAttribute('name', 'description')
-      document.head.appendChild(meta)
-    }
-    document.title = title
-    meta.setAttribute('content', description)
-    return () => {
-      document.title = previousTitle
-      if (previousDescription) meta.setAttribute('content', previousDescription)
-    }
-  }, [title, description])
-}
 
 export default function Products() {
   usePageMeta(PAGE_TITLE, PAGE_DESCRIPTION)

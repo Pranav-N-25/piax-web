@@ -4,7 +4,7 @@ import { countActiveFilters } from '../../utils/productFilters.js'
 import { button } from './productStyles.js'
 
 // Bottom sheet holding the filter panel on phones and tablets. Filters apply live.
-export default function ProductFilterDrawer({ open, onClose, filters, resultCount, onToggle, onClearGroup, onClearAll }) {
+export default function ProductFilterDrawer({ open, onClose, filters, resultCount, onToggle, onClearGroup, onClearAll, groups, options, hint = 'Narrow down by flow, size, type and features.' }) {
   const active = countActiveFilters(filters)
   return (
     <Dialog
@@ -12,7 +12,7 @@ export default function ProductFilterDrawer({ open, onClose, filters, resultCoun
       onClose={onClose}
       variant="sheet"
       title="Filters"
-      description={active ? `${active} selected` : 'Narrow down by flow, size, type and features.'}
+      description={active ? `${active} selected` : hint}
       footer={(
         <div className="flex gap-3">
           <button type="button" onClick={onClearAll} disabled={active === 0} className={`${button.secondary} flex-1 disabled:cursor-default disabled:border-rule disabled:text-stone`}>
@@ -24,7 +24,7 @@ export default function ProductFilterDrawer({ open, onClose, filters, resultCoun
         </div>
       )}
     >
-      <ProductFilters filters={filters} onToggle={onToggle} onClearGroup={onClearGroup} onClearAll={onClearAll} showHeading={false} />
+      <ProductFilters filters={filters} onToggle={onToggle} onClearGroup={onClearGroup} onClearAll={onClearAll} groups={groups} options={options} showHeading={false} />
     </Dialog>
   )
 }

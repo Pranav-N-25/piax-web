@@ -44,6 +44,10 @@ export const tile = 'flex flex-col items-center gap-2 rounded-[14px] p-5 text-ce
 export const tileTitle = 'text-[15px] font-semibold leading-[1.08] tracking-[-.025em] text-ink'
 export const tileText = 'mb-2 min-h-[30px] text-[11.5px] leading-[1.3] text-body'
 
+// Pages whose content is set in Poppins (Shop, About): redefines the sans face for everything inside,
+// including shared sections that use `font-sans`. Doodle notes and Playfair headings keep their own faces.
+export const poppinsPage = "font-poppins [--font-sans:'Poppins',system-ui,sans-serif]"
+
 export const btn = {
   base: 'inline-flex min-h-12 cursor-pointer items-center justify-center gap-2.5 whitespace-nowrap rounded-full border-[1.5px] border-brand px-5 text-[15px] font-semibold transition-[transform,box-shadow,background] duration-200 hover:-translate-y-0.5 hover:shadow-lift disabled:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none',
   solid: 'bg-brand text-white',

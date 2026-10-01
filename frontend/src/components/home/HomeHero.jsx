@@ -173,7 +173,7 @@ export default function HomeHero() {
             </h1>
 
             <p className="mb-8 max-w-[500px] text-[clamp(15px,1.35vw,17px)] leading-[1.65] text-[#415551] max-[960px]:mx-auto max-[768px]:max-w-[520px] max-[768px]:text-center max-[640px]:mb-6 max-[640px]:text-[14.5px] max-[640px]:leading-[1.6]">
-              The most comfortable, rash-free period experience — powered by 100% organic cotton pads with an Anion strip and India’s smartest cycle tracking companion app. Customise, track, and get pads delivered on your schedule.
+              Comfort-focused pads in four sizes, with a soft top sheet and an anion-infused design — plus the PIAX app to track your cycle. Find your size, track your period and get pads delivered.
             </p>
 
             <div className="mb-6 flex flex-wrap items-center gap-4 max-[1024px]:justify-center max-[640px]:mx-auto max-[640px]:w-full max-[640px]:max-w-[320px] max-[640px]:flex-col max-[640px]:gap-3 max-[375px]:max-w-[290px]">
@@ -195,8 +195,8 @@ export default function HomeHero() {
 
             <ul className="mb-8 flex list-none flex-wrap gap-x-6 gap-y-2 max-[960px]:justify-center max-[600px]:flex-col max-[600px]:items-center max-[600px]:gap-2">
               {[
-                { Icon: CottonIcon, label: 'Organic cotton top sheet' },
-                { Icon: ShieldCheckIcon, label: 'Rash-free, perfume-free' },
+                { Icon: CottonIcon, label: 'Soft top sheet' },
+                { Icon: ShieldCheckIcon, label: 'Four sizes, 240–360mm' },
                 { Icon: TruckIcon, label: 'Convenient home delivery' },
               ].map(({ Icon, label }) => (
                 <li key={label} className="inline-flex items-center gap-2 text-[13.5px] font-semibold text-[#10594d]">

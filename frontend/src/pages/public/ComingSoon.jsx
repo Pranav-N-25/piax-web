@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { ArrowLeft, Sparkles } from 'lucide-react'
 import { Link, useLocation } from 'react-router-dom'
 import HomeHeader from '../../components/home/HomeHeader.jsx'
@@ -27,10 +26,6 @@ const pageNames = {
 export default function ComingSoon() {
   const { pathname } = useLocation()
   const name = pageNames[pathname.split('/')[1]] ?? 'This page'
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [pathname])
 
   return (
     <div className="overflow-x-clip bg-mist font-sans text-base leading-[1.45] text-body">

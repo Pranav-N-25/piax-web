@@ -7,15 +7,16 @@ import cyclePhone from '../../assets/06_card_cycle_phone.png'
 import aiRobot from '../../assets/07_card_ai_robot.png'
 import locationPin from '../../assets/08_card_location_pin.png'
 import stockBoxes from '../../assets/09_card_stock_boxes.png'
+import { appLinks } from '../../data/appFeatures.js'
 
 // `clean` art has a transparent background and pure-white parts, so it skips the multiply blend
 // that would tint its whites with the card colour.
 const needs = [
   { title: 'I need pads', text: 'Shop PIAX pads now', tone: 'pink', art: shieldPad, to: '/products', clean: true },
   { title: 'Help me find my size', text: 'Get a personalised recommendation', tone: 'mint', art: padBox, to: '/find-my-pad', clean: true },
-  { title: 'I want to track my cycle', text: 'Understand your body better', tone: 'lilac', art: cyclePhone, to: '/app/cycle' },
+  { title: 'I want to track my cycle', text: 'Understand your body better', tone: 'lilac', art: cyclePhone, to: appLinks.web },
   { title: 'I have a health question', text: 'Ask PIAX AI', tone: 'blue', art: aiRobot, to: '/ai' },
-  { title: 'I need pads urgently', text: 'Find nearby availability', tone: 'peach', art: locationPin, to: '/support' },
+  { title: 'I need pads urgently', text: 'Emergency delivery from a partner store near you', tone: 'peach', art: locationPin, to: appLinks.web },
   { title: 'I want to stock PIAX', text: 'For retailers, distributors & more', tone: 'sage', art: stockBoxes, to: '/business' },
 ]
 
@@ -43,8 +44,15 @@ export default function NeedsSection() {
               <img src={art} alt="" className={cn('h-[118px] w-full object-contain', !clean && 'mix-blend-multiply')} />
               <h3 className="mt-4 mb-2 max-w-[150px] text-lg font-bold leading-[1.08] tracking-[-.025em] text-ink">{title}</h3>
               <p className="mb-6 max-w-40 text-sm leading-[1.3] text-body">{text}</p>
-              {to.startsWith('#')
-                ? <a className={cn(roundArrow, 'mt-auto', tones[tone].accent)} href={to} aria-label={title}><ArrowRight size={18} /></a>
+              {to.startsWith('#') || to.startsWith('http')
+                ? (
+                  <a
+                    className={cn(roundArrow, 'mt-auto', tones[tone].accent)}
+                    href={to}
+                    aria-label={to.startsWith('http') ? `${title} — opens the PIAX app` : title}
+                    {...(to.startsWith('http') && { target: '_blank', rel: 'noopener' })}
+                  ><ArrowRight size={18} /></a>
+                )
                 : <RoundArrow to={to} label={title} className={cn('mt-auto', tones[tone].accent)} />}
             </article>
           ))}

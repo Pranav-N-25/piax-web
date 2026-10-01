@@ -1,0 +1,71 @@
+{
+  "source": "PIAX Product Range, Packaging & Brand Positioning — Final Revised Report (August 2026). Approved by PIAX as the website's product source.",
+  "pricingNote": "The Final Revised report gives an indicative MRP range per pack. The printed MRP is the top of the range (mrpRange[1]) and the website sells at the bottom (`mrp` values, = mrpRange[0]); the gap is the discount shown on product cards. Neither strategy report sets a separate promotional discount.",
+  "colours": {
+    "sage": { "name": "Soft Sage Green", "hex": "#AFC5AE" },
+    "lavender": { "name": "Muted Lavender", "hex": "#C9B6D6" },
+    "navy": { "name": "Deep Night Navy", "hex": "#2B3A5C" },
+    "terracotta": { "name": "Warm Terracotta", "hex": "#C4785B" }
+  },
+  "packFormats": [
+    { "id": "trial", "name": "Trial Pack", "count": 4, "purpose": "Low-commitment first purchase — try PIAX before you switch." },
+    { "id": "standard", "name": "Standard Pack", "count": 10, "purpose": "The everyday PIAX pack." },
+    { "id": "value", "name": "Value Pack", "count": 30, "purpose": "Stock up on the size you trust, at better value per pad." }
+  ],
+  "pads": [
+    {
+      "id": "luma", "flowTags": ["Light", "Regular"], "name": "PIAX LUMA", "variant": "Light", "size": "L", "length": 240, "lengthLabel": "240mm",
+      "colour": "sage", "protection": 1, "wear": "Day", "flow": "Light / regular flow", "boxChip": "Light Flow",
+      "text": "Our shortest pad, for lighter days and the beginning or end of your period.",
+      "mrp": { "trial": 49, "standard": 110, "value": 299 },
+      "mrpRange": { "trial": [49, 59], "standard": [110, 120], "value": [299, 319] }
+    },
+    {
+      "id": "vera", "flowTags": ["Regular"], "name": "PIAX VERA", "variant": "Regular", "size": "XL", "length": 280, "lengthLabel": "280mm",
+      "colour": "lavender", "protection": 2, "wear": "Day", "flow": "Regular flow", "boxChip": "Regular Flow",
+      "text": "The everyday core size — the trusted default for most days of your period.",
+      "mrp": { "trial": 59, "standard": 120, "value": 329 },
+      "mrpRange": { "trial": [59, 69], "standard": [120, 130], "value": [329, 349] }
+    },
+    {
+      "id": "nocte", "flowTags": ["Heavy"], "name": "PIAX NOCTE", "variant": "Night", "size": "XXL", "length": 330, "lengthMax": 340, "lengthLabel": "330–340mm",
+      "colour": "navy", "protection": 3, "wear": "Day & night", "flow": "Heavy flow & nights", "boxChip": "Heavy · Night",
+      "text": "More length and coverage for heavier days and for nights.",
+      "mrp": { "trial": 69, "standard": 140, "value": 389 },
+      "mrpRange": { "trial": [69, 79], "standard": [140, 150], "value": [389, 419] }
+    },
+    {
+      "id": "seren", "flowTags": ["Heavy"], "name": "PIAX SEREN", "variant": "Overnight", "size": "XXXL", "length": 360, "lengthLabel": "360mm",
+      "colour": "terracotta", "protection": 4, "wear": "Night", "flow": "Extra heavy & overnight", "boxChip": "Overnight",
+      "text": "Our longest pad, for greater coverage and peace of mind through the night.",
+      "mrp": { "trial": 79, "standard": 150, "value": 429 },
+      "mrpRange": { "trial": [79, 89], "standard": [150, 160], "value": [429, 459] }
+    }
+  ],
+  "features": [
+    { "id": "regular-pad", "label": "Regular sanitary pad", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
+    { "id": "length", "label": "Four lengths: 240, 280, 330–340 and 360mm", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page", "seo"] },
+    { "id": "soft-top-sheet", "label": "Soft top sheet", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
+    { "id": "eight-layer", "label": "8-layer construction", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
+    { "id": "anion", "label": "Anion-infused design", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
+    { "id": "winged", "label": "Winged design", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
+    { "id": "leak-management", "label": "Leak-management design", "status": "validated", "source": "final_revised_report_s19", "approvedFor": ["product_listing", "product_page"] },
+    { "id": "ultra-thin", "label": "Ultra-thin", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
+    { "id": "organic", "label": "Organic", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
+    { "id": "compostable", "label": "Compostable", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
+    { "id": "rash-free", "label": "Rash-free", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
+    { "id": "odour-control", "label": "Odour control", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
+    { "id": "toxin-free", "label": "Toxin-free", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
+    { "id": "bpa-free", "label": "BPA-free", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
+    { "id": "absorbency", "label": "Specific absorbency capacity", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] },
+    { "id": "leak-proof", "label": "Guaranteed leak-proof", "status": "prohibited", "source": "final_revised_report_s19", "approvedFor": [] }
+  ],
+  "directionsOfUse": [
+    "Peel off the backing and place the pad on your underwear.",
+    "Position the pad centrally and adjust for comfort.",
+    "Fold the wings around the sides of your underwear and secure.",
+    "Wrap the used pad appropriately.",
+    "Dispose of it in a waste bin. Do not flush."
+  ],
+  "futureFormats": ["Day + Night Combo Pack", "Regular + Heavy Combo", "Custom Monthly Pack", "Subscription / Refill Pack", "Travel Pack"]
+}

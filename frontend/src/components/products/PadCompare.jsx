@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { Check, Droplet, GitCompareArrows, Moon, Sun } from 'lucide-react'
-import { colours, pads, sharedFeatures } from '../../data/piaxRange.js'
+import { Check, GitCompareArrows, Moon, Sun } from 'lucide-react'
+import { colours, pads, sharedFeatures, standardPack } from '../../data/piaxRange.js'
 import { cn, eyebrow, h2, heading } from '../home/homeStyles.js'
-import { AddButton, LengthBar, PackPicker, padItem, Price, tint } from './RangeUi.jsx'
+import { AddButton, DiscountTag, LengthBar, PackPicker, padItem, Price, tint } from './RangeUi.jsx'
 
 const bestPerPad = (pad) => Math.min(...pad.packs.map((pack) => pack.price / pack.count))
 const rupees = (value) => value.toFixed(2).replace(/\.00$/, '')
@@ -37,19 +37,9 @@ function Picker({ shown, onToggle }) {
   )
 }
 
-function Protection({ level }) {
-  return (
-    <span className="flex items-center gap-0.5" role="img" aria-label={`${level} of 4 drops, relative to the range`}>
-      {[1, 2, 3, 4].map((drop) => (
-        <Droplet key={drop} size={16} strokeWidth={1.8} className={drop <= level ? 'fill-brand text-brand' : 'text-line'} />
-      ))}
-    </span>
-  )
-}
-
 // The pack a column prices and sells: each column keeps its own pack choice.
 function BuyCell({ pad }) {
-  const [index, setIndex] = useState(0)
+  const [index, setIndex] = useState(() => Math.max(0, pad.packs.findIndex((pack) => pack.format === 'standard')))
   const pack = pad.packs[index]
   return (
     <div className="flex h-full flex-col gap-3">
@@ -70,10 +60,9 @@ export default function PadCompare({ selected, onToggle, onSelect }) {
   const cheapest = Math.min(...shown.map(bestPerPad))
 
   const rows = [
-    { label: 'Size & length', cell: (pad) => <><strong className="text-ink">{pad.size}</strong> · {pad.length}mm</> },
+    { label: 'Size & length', cell: (pad) => <><strong className="text-ink">{pad.size}</strong> · {pad.lengthLabel}</> },
     { label: 'Coverage', cell: (pad) => <LengthBar pad={pad} className="mt-1.5 h-2" /> },
     { label: 'Best for', cell: (pad) => pad.flow },
-    { label: 'Protection level', cell: (pad) => <Protection level={pad.protection} /> },
     {
       label: 'Wear it',
       cell: (pad) => (
@@ -120,8 +109,9 @@ export default function PadCompare({ selected, onToggle, onSelect }) {
             <div role="columnheader" className={cn(labelCell, 'items-end text-[11px] uppercase tracking-[.16em] text-muted')}>{shown.length} pads</div>
             {shown.map((pad) => (
               <div key={pad.id} role="columnheader" className="flex flex-col px-4 pt-4 pb-3 md:px-5">
-                <div className="w-full max-w-[260px] rounded-[16px] px-3 pt-3" style={tint(colours[pad.colour].hex)}>
-                  <img src={pad.packs[0].image} alt={`${pad.name} ${pad.variant} box`} loading="lazy" decoding="async" className="mx-auto aspect-[820/720] w-full max-w-[200px] object-contain" />
+                <div className="relative w-full max-w-[260px] rounded-[16px] px-3 pt-3" style={tint(colours[pad.colour].hex)}>
+                  <DiscountTag pack={standardPack(pad)} className="absolute top-2 right-2" />
+                  <img src={standardPack(pad).image} alt={`${pad.name} standard pack`} loading="lazy" decoding="async" className="mx-auto aspect-[820/720] w-full max-w-[200px] object-contain" />
                 </div>
                 <h3 className={cn(heading, 'mt-3 text-[18px]')}>{pad.name.replace('PIAX ', '')} <span className="font-medium text-muted">· {pad.variant}</span></h3>
               </div>

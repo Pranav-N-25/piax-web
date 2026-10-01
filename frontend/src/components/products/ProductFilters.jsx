@@ -2,7 +2,7 @@ import ProductFilterGroup from './ProductFilterGroup.jsx'
 import { countActiveFilters, filterOptions } from '../../utils/productFilters.js'
 import { focusRing } from './productStyles.js'
 
-const groups = [
+const defaultGroups = [
   { name: 'flows', title: 'Flow Type', withAll: true },
   { name: 'sizes', title: 'Size', withAll: true },
   { name: 'types', title: 'Type' },
@@ -10,7 +10,8 @@ const groups = [
 ]
 
 // Filter panel content, shared by the desktop sidebar and the mobile drawer.
-export default function ProductFilters({ filters, onToggle, onClearGroup, onClearAll, showHeading = true }) {
+// `groups` and `options` default to the full catalogue's filters; a page can pass its own.
+export default function ProductFilters({ filters, onToggle, onClearGroup, onClearAll, showHeading = true, groups = defaultGroups, options = filterOptions }) {
   const active = countActiveFilters(filters)
   return (
     <div>
@@ -34,7 +35,7 @@ export default function ProductFilters({ filters, onToggle, onClearGroup, onClea
             name={name}
             title={title}
             withAll={withAll}
-            options={filterOptions[name]}
+            options={options[name]}
             selected={filters[name]}
             onToggle={onToggle}
             onClear={onClearGroup}

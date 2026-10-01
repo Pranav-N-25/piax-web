@@ -1,21 +1,18 @@
 import { useEffect, useState } from 'react'
-import { Check, GitCompareArrows, Heart, ShoppingCart } from 'lucide-react'
+import { ArrowRight, Building2, Check, Heart, ShoppingCart } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { useCart } from '../../context/CartContext.jsx'
 import { useFavourites } from '../../hooks/useFavourites.js'
-import { colours, discount, pads, perPad } from '../../data/piaxRange.js'
+import { colours, discount, padById, pads, perPad, standardPack } from '../../data/piaxRange.js'
 import { btn, cn } from '../home/homeStyles.js'
 
 // Shared pieces for everything that sells the PIAX range: the /products page, the comparison table
 // and the Find My Pad results.
 
-// Cart entries for a pad pack or a bundle.
+// Cart entry for a pad pack.
 export const padItem = (pad, pack) => ({
-  id: pack.id, name: `${pad.name} ${pad.variant}`, subtitle: `${pad.size} (${pad.length}mm) – ${pack.count} pads`,
+  id: pack.id, name: pad.name, subtitle: `${pad.size} (${pad.lengthLabel}) – ${pack.formatName}, ${pack.count} pads`,
   price: pack.price, mrp: pack.mrp, boxCount: pack.count, image: pack.image,
-})
-export const bundleItem = (bundle) => ({
-  id: bundle.id, name: bundle.name, subtitle: `${bundle.contents} – ${bundle.count} pads`,
-  price: bundle.price, mrp: bundle.mrp, boxCount: bundle.count, image: bundle.image,
 })
 
 // Brief "Added" confirmation on an add-to-cart button.
@@ -45,6 +42,7 @@ export function AddButton({ item, items, label = 'Add to cart', className = '' }
   )
 }
 
+// Price, struck-through MRP and price per pad. The "% OFF" itself is shown once, as DiscountTag on the photo.
 export function Price({ pack }) {
   const off = discount(pack)
   return (
@@ -52,12 +50,22 @@ export function Price({ pack }) {
       <div className="flex flex-wrap items-center gap-2">
         <strong className="text-[22px] leading-none text-ink">₹{pack.price}</strong>
         {off > 0 && <del className="text-sm text-[#8d9a96]">₹{pack.mrp}</del>}
-        {off > 0 && <span className="rounded-md bg-[#fde2e7] px-2 py-[3px] text-[11px] font-bold text-[#c0355a]">{off}% OFF</span>}
       </div>
       <p className="mt-1.5 text-[11.5px] text-muted">
-        ₹{perPad(pack)}/pad{pack.chemist && <> · ₹{pack.chemist} at chemists</>}
+        ₹{perPad(pack)}/pad
       </p>
     </div>
+  )
+}
+
+// "% OFF" corner tag on a product photo, for the pack currently shown. Renders nothing without a discount.
+export function DiscountTag({ pack, className = '' }) {
+  const off = discount(pack)
+  if (!off) return null
+  return (
+    <span className={cn('z-10 inline-flex items-center rounded-full bg-[#e8506a] px-2.5 py-1 text-[11.5px] font-bold text-white shadow-[0_6px_14px_-6px_rgba(200,50,80,.7)]', className)}>
+      {off}% OFF<span className="sr-only">, was ₹{pack.mrp}</span>
+    </span>
   )
 }
 
@@ -98,7 +106,7 @@ export function PackPicker({ pad, index, onChange, className = '' }) {
           aria-checked={optionIndex === index}
           onClick={() => onChange(optionIndex)}
           className={cn(
-            'flex-1 cursor-pointer rounded-full border px-3 py-1.5 text-[12.5px] font-semibold transition-colors',
+            'flex-1 cursor-pointer whitespace-nowrap rounded-full border px-2 py-1.5 text-[12px] font-semibold transition-colors',
             optionIndex === index ? 'border-brand bg-brand text-white' : 'border-line bg-white text-body hover:border-brand',
           )}
         >
@@ -106,6 +114,15 @@ export function PackPicker({ pad, index, onChange, className = '' }) {
         </button>
       ))}
     </div>
+  )
+}
+
+// Compare symbol (Material Symbols "compare"): two halves of a picture, split down the middle.
+export function CompareIcon({ size = 18, className = '' }) {
+  return (
+    <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor" aria-hidden="true" className={className}>
+      <path d="M10 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h5v2h2V1h-2v2zm0 15H5l5-6v6zm9-15h-5v2h5v13l-5-6v9h5c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z" />
+    </svg>
   )
 }
 
@@ -140,7 +157,24 @@ export function CompareButton({ on, name, onToggle }) {
       onClick={onToggle}
       className={cn(photoButton, on ? 'bg-brand text-white' : 'text-body hover:text-brand')}
     >
-      <GitCompareArrows size={17} strokeWidth={2} />
+      <CompareIcon size={17} />
     </button>
+  )
+}
+
+// Bulk enquiries from schools, workplaces and NGOs, linking to the business enquiry form.
+export function InstitutionalBanner({ className = '' }) {
+  return (
+    <div className={cn('grid items-center gap-6 overflow-hidden rounded-[24px] bg-brand p-6 text-white md:grid-cols-[180px_1fr_auto] md:p-8', className)}>
+      <img src={standardPack(padById.vera).image} alt="PIAX VERA standard pack" loading="lazy" decoding="async" className="mx-auto w-[180px] rounded-[16px] bg-white/90 p-2" />
+      <div>
+        <p className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[.16em] text-brand-soft"><Building2 size={14} /> For schools, workplaces &amp; NGOs</p>
+        <h3 className="mt-2 text-[22px] font-bold leading-tight">Buying PIAX in bulk?</h3>
+        <p className="mt-2 max-w-[520px] text-[14px] text-white/85">
+          Tell us which sizes and how many you need, and our team will come back with business pricing.
+        </p>
+      </div>
+      <Link to="/business" className={cn(btn.base, 'border-white bg-white text-brand')}>Get a bulk quote <ArrowRight size={18} /></Link>
+    </div>
   )
 }

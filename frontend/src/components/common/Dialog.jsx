@@ -13,7 +13,9 @@ const panels = {
 }
 
 // Accessible dialog: portal, focus trap, Escape to close, scroll lock and focus restore.
-export default function Dialog({ open, onClose, title, description, variant = 'modal', className = '', children, footer }) {
+// `bare` drops the standard header and body padding for custom layouts: the title stays for screen readers and a
+// floating close button is kept.
+export default function Dialog({ open, onClose, title, description, variant = 'modal', className = '', children, footer, bare = false }) {
   const panelRef = useRef(null)
   const titleId = useId()
   const descriptionId = useId()
@@ -66,23 +68,41 @@ export default function Dialog({ open, onClose, title, description, variant = 'm
         aria-modal="true"
         aria-labelledby={titleId}
         aria-describedby={description ? descriptionId : undefined}
-        className={cn('flex flex-col overflow-hidden bg-white text-charcoal shadow-[0_24px_60px_rgba(12,40,34,.25)]', panels[variant], className)}
+        className={cn('relative flex flex-col overflow-hidden bg-white text-charcoal shadow-[0_24px_60px_rgba(12,40,34,.25)]', panels[variant], className)}
       >
-        <header className="flex items-start justify-between gap-4 border-b border-rule px-6 pt-6 pb-4">
-          <div>
-            <h2 id={titleId} className="text-lg font-semibold text-charcoal">{title}</h2>
-            {description && <p id={descriptionId} className="mt-1 text-sm text-stone">{description}</p>}
-          </div>
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close"
-            className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-foam text-charcoal hover:bg-mint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf"
-          >
-            <X size={18} />
-          </button>
-        </header>
-        <div className="flex-1 overflow-y-auto px-6 py-5">{children}</div>
+        {bare ? (
+          <>
+            <h2 id={titleId} className="sr-only">{title}</h2>
+            {description && <p id={descriptionId} className="sr-only">{description}</p>}
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="absolute top-4 right-4 z-20 flex size-10 cursor-pointer items-center justify-center rounded-full bg-white/90 text-charcoal shadow-soft backdrop-blur transition-transform hover:rotate-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf motion-reduce:transition-none"
+            >
+              <X size={18} />
+            </button>
+            <div className="flex min-h-0 flex-1 overflow-y-auto">{children}</div>
+          </>
+        ) : (
+          <>
+          <header className="flex items-start justify-between gap-4 border-b border-rule px-6 pt-6 pb-4">
+            <div>
+              <h2 id={titleId} className="text-lg font-semibold text-charcoal">{title}</h2>
+              {description && <p id={descriptionId} className="mt-1 text-sm text-stone">{description}</p>}
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close"
+              className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-foam text-charcoal hover:bg-mint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-leaf"
+            >
+              <X size={18} />
+            </button>
+          </header>
+          <div className="flex-1 overflow-y-auto px-6 py-5">{children}</div>
+          </>
+        )}
         {footer && <footer className="border-t border-rule px-6 py-4">{footer}</footer>}
       </section>
     </div>,

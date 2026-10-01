@@ -1,12 +1,21 @@
 require('dotenv').config()
+const cookieParser = require('cookie-parser')
 const cors = require('cors')
 const express = require('express')
 const nodemailer = require('nodemailer')
 const { PIAX, dealerAcknowledgement, leadNotification } = require('./contactEmails')
+const authRoutes = require('./auth/routes')
+const { appUrl } = require('./auth/config')
 
 const app = express()
-app.use(cors({ origin: process.env.CORS_ORIGIN?.split(',') ?? true }))
+// Session cookies cross from the website to this API, so CORS names the allowed sites instead of allowing any.
+const origins = [appUrl, ...(process.env.CORS_ORIGIN?.split(',').map((origin) => origin.trim()).filter(Boolean) ?? [])]
+app.use(cors({ origin: origins, credentials: true }))
 app.use(express.json({ limit: '20kb' }))
+app.use(cookieParser())
+app.disable('x-powered-by')
+
+app.use('/api/auth', authRoutes)
 
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,

@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { ArrowLeft, ArrowRight, Briefcase, Flower2, GraduationCap, Heart, Leaf, Moon, Plane, Sun } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Briefcase, Feather, Flower2, GraduationCap, Heart, Leaf, Moon, Sun } from 'lucide-react'
 import { DoodleNote, Foliage, PillLink, RoundArrow } from './HomeUi.jsx'
 import { cn, container, eyebrow, h2, section, accent, tones } from './homeStyles.js'
 import heavyPhoto from '../../assets/20_need_heavy_flow_photo.png'
@@ -8,18 +8,18 @@ import everydayPhoto from '../../assets/22_need_everyday_photo.png'
 import travelPhoto from '../../assets/23_need_travel_photo.png'
 import firstPhoto from '../../assets/24_need_first_period_photo.png'
 import sensitivePhoto from '../../assets/25_need_sensitive_skin_photo.png'
-import { bundles, padById } from '../../data/piaxRange.js'
+import { padById, standardPack } from '../../data/piaxRange.js'
 
-const packImage = (padId) => padById[padId].packs[0].image
-const bundleImage = (id) => bundles.find((bundle) => bundle.id === id).image
+const packImage = (padId) => standardPack(padById[padId]).image
+const trialImage = (padId) => padById[padId].packs.find((pack) => pack.format === 'trial').image
 
 const moments = [
   { title: 'Heavy Flow', text: 'More protection for heavier days', icon: Sun, photo: heavyPhoto, pack: packImage('seren'), tone: 'blue' },
   { title: 'Night Protection', text: 'Longer coverage while you sleep', icon: Moon, photo: nightPhoto, pack: packImage('nocte'), tone: 'cream' },
-  { title: 'Everyday Comfort', text: 'Stay fresh and confident day after day', icon: Briefcase, photo: everydayPhoto, pack: packImage('luma'), tone: 'mint' },
-  { title: 'Travel', text: 'Compact care on the go', icon: Plane, photo: travelPhoto, pack: packImage('vera'), tone: 'lilac' },
-  { title: 'First Period', text: 'Gentle care for new beginnings', icon: GraduationCap, photo: firstPhoto, pack: bundleImage('piax-discovery-4'), tone: 'rose' },
-  { title: 'Sensitive Skin', text: 'Rash-free, ultra-gentle comfort', icon: Leaf, photo: sensitivePhoto, pack: bundleImage('piax-cycle-pack-15'), tone: 'sage' },
+  { title: 'Everyday Comfort', text: 'Stay fresh and confident day after day', icon: Briefcase, photo: everydayPhoto, pack: packImage('vera'), tone: 'mint' },
+  { title: 'Lighter Days', text: 'Shorter cover for the start and end', icon: Feather, photo: travelPhoto, pack: packImage('luma'), tone: 'lilac' },
+  { title: 'First Period', text: 'Gentle care for new beginnings', icon: GraduationCap, photo: firstPhoto, pack: trialImage('luma'), tone: 'rose' },
+  { title: 'New to PIAX', text: 'Try any size in a 4-pad trial pack', icon: Leaf, photo: sensitivePhoto, pack: trialImage('vera'), tone: 'sage' },
 ]
 
 export default function ShopNeedsSection() {
@@ -78,7 +78,7 @@ export default function ShopNeedsSection() {
           <PillLink to="/products">View all products</PillLink>
           <ul className="flex items-center justify-end gap-6 text-[13px] md:before:h-px md:before:flex-1 md:before:bg-[#c9dbd3] md:before:content-['']">
             <li className="flex items-center gap-2"><Heart size={20} strokeWidth={1.5} className="text-brand" /> Safe</li>
-            <li className="flex items-center gap-2"><Leaf size={20} strokeWidth={1.5} className="text-brand" /> Sustainable</li>
+            <li className="flex items-center gap-2"><Leaf size={20} strokeWidth={1.5} className="text-brand" /> Four sizes</li>
             <li className="flex items-center gap-2"><Flower2 size={20} strokeWidth={1.5} className="text-brand" /> For every you</li>
           </ul>
         </div>

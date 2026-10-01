@@ -22,8 +22,8 @@ const promises = [
 ]
 
 const values = [
-  { icon: Leaf, title: 'Sustainable', text: '& responsible' },
-  { icon: ShieldCheck, title: 'Safe &', text: 'lab-tested' },
+  { icon: Leaf, title: 'Four sizes,', text: '240–360mm' },
+  { icon: ShieldCheck, title: '8-layer', text: 'construction' },
   { icon: Heart, title: 'Loved by', text: '10,000+ women' },
   { icon: Truck, title: 'Pan-India', text: 'delivery' },
   { icon: Globe, title: 'Small choices.', text: 'A big difference.' },

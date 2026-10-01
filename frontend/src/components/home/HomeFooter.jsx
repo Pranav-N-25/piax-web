@@ -10,7 +10,7 @@ const columns = [
   { title: 'For Business', links: [['Become a Distributor', '/business'], ['Retail Partnership', '/business'], ['Quick Commerce', '/business'], ['Institutional Sales', '/business'], ['CSR Collaborations', '/business'], ['Vending Solutions', '/business'], ['Bulk Enquiries', '/business']] },
   { title: 'Support', links: [['FAQ', '/support'], ['Contact Us', '/support'], ['Track Order', '/app/orders'], ['Returns & Refunds', '/support'], ['Shipping Information', '/support'], ['Product Safety', '/support'], ['Report an Issue', '/support']] },
   { title: 'Company', links: [['About PIAX', '/about'], ['Our Mission', '/about'], ['Sustainability', '/sustainability'], ['Careers', '/about', true], ['Blog', '/learn'], ['Media & Press', '/about'], ['Partner with Us', '/business']] },
-  { title: 'Legal', links: [['Privacy Policy', '/support'], ['Terms of Use', '/support'], ['Refund Policy', '/support'], ['Shipping Policy', '/support'], ['Cookie Policy', '/support'], ['Clinical Disclaimer', '/support'], ['Responsible AI Use', '/support']] },
+  { title: 'Legal', links: [['Privacy Policy', '/privacy'], ['Terms of Use', '/terms'], ['Refund Policy', '/support'], ['Shipping Policy', '/support'], ['Cookie Policy', '/support'], ['Clinical Disclaimer', '/support'], ['Responsible AI Use', '/support']] },
 ]
 
 const socials = [
@@ -21,7 +21,7 @@ const socials = [
 ]
 
 const values = [
-  { icon: Leaf, text: <>Sustainable<br />by design</> },
+  { icon: Leaf, text: <>Comfort<br />by design</> },
   { icon: Heart, text: <>Healthier<br />communities</> },
   { icon: Users, text: <>A more equal<br />tomorrow</> },
   { icon: Globe, text: <>For people<br />and the planet</> },
@@ -48,7 +48,7 @@ export default function HomeFooter() {
           <div className="relative">
             <img src={footerLogo} alt="PIAX — Feel different. Feel you." width="1200" height="403" loading="lazy" className="h-auto w-[170px]" />
             <p className="mt-2 mb-4 font-serif text-[19px] leading-[1.2] font-semibold italic text-brand-2">For a healthier you.<br />A brighter tomorrow.</p>
-            <p className="text-[12.5px]">Sustainable menstrual and wellness solutions for every stage of your journey.</p>
+            <p className="text-[12.5px]">Comfort-focused menstrual and wellness care for every stage of your journey.</p>
             <div className="mt-6 mb-4 flex gap-3">
               {socials.map(({ label, path }) => (
                 <a key={label} href="#" aria-label={label} className="flex size-9 items-center justify-center rounded-full bg-[#d6ebe1] text-brand hover:bg-brand hover:text-white">
